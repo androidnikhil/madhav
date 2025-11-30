@@ -1,0 +1,93 @@
+<div class="w-full bg-gray-100">
+    <div class="marquee-container relative h-24 overflow-hidden">
+        <div class="animate-marquee absolute top-0 left-0 flex items-center h-full">
+            <!-- First set of logos -->
+            <img class="mx-6 sm:mx-8 md:mx-12 lg:mx-16 h-12 sm:h-14 md:h-16 w-auto flex-shrink-0" src="/wp-content/uploads/2025/08/shopify.webp" alt="Shopify">
+            <img class="mx-6 sm:mx-8 md:mx-12 lg:mx-16 h-10 sm:h-12 md:h-14 w-auto flex-shrink-0" src="/wp-content/uploads/2025/08/google-seo-icon-image.webp" alt="SEO">
+            <img class="mx-6 sm:mx-8 md:mx-12 lg:mx-16 h-10 sm:h-12 md:h-14 w-auto flex-shrink-0" src="/wp-content/uploads/2025/08/wordpress.webp" alt="Wordpress">
+            <img class="mx-6 sm:mx-8 md:mx-12 lg:mx-16 h-8 sm:h-9 md:h-10 w-auto flex-shrink-0" src="/wp-content/uploads/2025/08/php-logo-512.webp" alt="Php">
+            <img class="mx-6 sm:mx-8 md:mx-12 lg:mx-16 h-10 sm:h-12 md:h-14 w-auto flex-shrink-0" src="/wp-content/uploads/2025/08/google-ads-logo-png.webp" alt="Google Ads">
+            <img class="mx-6 sm:mx-8 md:mx-12 lg:mx-16 h-6 sm:h-7 md:h-8 w-auto flex-shrink-0" src="/wp-content/uploads/2025/08/meta.webp" alt="Meta Ads">
+            <img class="mx-6 sm:mx-8 md:mx-12 lg:mx-16 h-6 sm:h-7 md:h-8 w-auto flex-shrink-0" src="/wp-content/uploads/2025/08/flutter.webp" alt="Flutter">
+
+            <!-- Second set of logos (for seamless loop) -->
+            <img class="mx-6 sm:mx-8 md:mx-12 lg:mx-16 h-12 sm:h-14 md:h-16 w-auto flex-shrink-0" src="/wp-content/uploads/2025/08/shopify.webp" alt="Shopify" aria-hidden="true">
+            <img class="mx-6 sm:mx-8 md:mx-12 lg:mx-16 h-10 sm:h-12 md:h-14 w-auto flex-shrink-0" src="/wp-content/uploads/2025/08/google-seo-icon-image.webp" alt="SEO" aria-hidden="true">
+            <img class="mx-6 sm:mx-8 md:mx-12 lg:mx-16 h-10 sm:h-12 md:h-14 w-auto flex-shrink-0" src="/wp-content/uploads/2025/08/wordpress.webp" alt="Wordpress" aria-hidden="true">
+            <img class="mx-6 sm:mx-8 md:mx-12 lg:mx-16 h-8 sm:h-9 md:h-10 w-auto flex-shrink-0" src="/wp-content/uploads/2025/08/php-logo-512.webp" alt="Php" aria-hidden="true">
+            <img class="mx-6 sm:mx-8 md:mx-12 lg:mx-16 h-10 sm:h-12 md:h-14 w-auto flex-shrink-0" src="/wp-content/uploads/2025/08/google-ads-logo-png.webp" alt="Google Ads" aria-hidden="true">
+            <img class="mx-6 sm:mx-8 md:mx-12 lg:mx-16 h-6 sm:h-7 md:h-8 w-auto flex-shrink-0" src="/wp-content/uploads/2025/08/meta.webp" alt="Meta Ads" aria-hidden="true">
+            <img class="mx-6 sm:mx-8 md:mx-12 lg:mx-16 h-6 sm:h-7 md:h-8 w-auto flex-shrink-0" src="/wp-content/uploads/2025/08/flutter.webp" alt="Flutter" aria-hidden="true">
+
+            <!-- Third set of logos (for large screens) -->
+            <img class="mx-6 sm:mx-8 md:mx-12 lg:mx-16 h-12 sm:h-14 md:h-16 w-auto flex-shrink-0" src="/wp-content/uploads/2025/08/shopify.webp" alt="Shopify" aria-hidden="true">
+            <img class="mx-6 sm:mx-8 md:mx-12 lg:mx-16 h-10 sm:h-12 md:h-14 w-auto flex-shrink-0" src="/wp-content/uploads/2025/08/google-seo-icon-image.webp" alt="SEO" aria-hidden="true">
+            <img class="mx-6 sm:mx-8 md:mx-12 lg:mx-16 h-10 sm:h-12 md:h-14 w-auto flex-shrink-0" src="/wp-content/uploads/2025/08/wordpress.webp" alt="Wordpress" aria-hidden="true">
+            <img class="mx-6 sm:mx-8 md:mx-12 lg:mx-16 h-8 sm:h-9 md:h-10 w-auto flex-shrink-0" src="/wp-content/uploads/2025/08/php-logo-512.webp" alt="Php" aria-hidden="true">
+            <img class="mx-6 sm:mx-8 md:mx-12 lg:mx-16 h-10 sm:h-12 md:h-14 w-auto flex-shrink-0" src="/wp-content/uploads/2025/08/google-ads-logo-png.webp" alt="Google Ads" aria-hidden="true">
+            <img class="mx-6 sm:mx-8 md:mx-12 lg:mx-16 h-6 sm:h-7 md:h-8 w-auto flex-shrink-0" src="/wp-content/uploads/2025/08/meta.webp" alt="Meta Ads" aria-hidden="true">
+            <img class="mx-6 sm:mx-8 md:mx-12 lg:mx-16 h-6 sm:h-7 md:h-8 w-auto flex-shrink-0" src="/wp-content/uploads/2025/08/flutter.webp" alt="Flutter" aria-hidden="true">
+
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Custom animation for the marquee effect */
+    @keyframes marquee {
+        0% {
+            transform: translateX(0%);
+        }
+        100% {
+            transform: translateX(-33.33%);
+        }
+    }
+    
+    /* Apply animation */
+    .animate-marquee {
+        animation: marquee 25s linear infinite;
+        width: 300%; /* Ensure enough width for seamless loop */
+    }
+    
+    /* Pause animation on hover - using specific marquee class */
+    .marquee-container:hover .animate-marquee {
+        animation-play-state: paused;
+    }
+    
+    /* Responsive height adjustments - using specific marquee class */
+    @media (max-width: 640px) {
+        .marquee-container {
+            height: 5rem;
+        }
+        .marquee-container .animate-marquee {
+            animation-duration: 20s;
+        }
+    }
+    
+    @media (min-width: 641px) and (max-width: 768px) {
+        .marquee-container {
+            height: 5.5rem;
+        }
+        .marquee-container .animate-marquee {
+            animation-duration: 22s;
+        }
+    }
+    
+    @media (min-width: 769px) {
+        .marquee-container {
+            height: 6rem;
+        }
+        .marquee-container .animate-marquee {
+            animation-duration: 25s;
+        }
+    }
+    
+    /* Additional specificity to avoid conflicts */
+    .marquee-container img {
+        transition: opacity 0.3s ease;
+    }
+    
+    .marquee-container:hover img {
+        opacity: 0.8;
+    }
+</style>

@@ -1,0 +1,424 @@
+<style>
+    .result-container {
+        max-width: 1200px;
+        margin: 30px auto;
+        padding: 0 20px;
+    }
+    .result-card {
+        background: white;
+        border-radius: 24px;
+        overflow: hidden;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        animation: slideUp 0.5s ease;
+    }
+    @keyframes slideUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    .result-header {
+        padding: 30px;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+    .result-header.valid {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    }
+    .result-header.invalid {
+        background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    }
+    .result-header h2 {
+        font-size: 28px;
+        font-weight: 800;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    .status-badge {
+        padding: 8px 20px;
+        border-radius: 50px;
+        font-weight: 700;
+        font-size: 14px;
+        letter-spacing: 0.5px;
+    }
+    .status-badge.valid {
+        background: white;
+        color: #059669;
+    }
+    .status-badge.invalid {
+        background: white;
+        color: #dc2626;
+    }
+    .certificate-image-container {
+        padding: 40px;
+        background: #f8fafc;
+        text-align: center;
+    }
+    .certificate-image-container img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 12px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+    }
+    .certificate-image-container img:hover {
+        transform: scale(1.02);
+    }
+    .certificate-actions {
+        padding: 20px 40px 40px;
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    .action-btn {
+        padding: 12px 30px;
+        border-radius: 12px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+        border: none;
+    }
+    .download-btn {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+    }
+    .download-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    }
+    .share-btn {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        color: white;
+    }
+    .share-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+    }
+    .certificate-info {
+        padding: 0 40px 40px;
+        background: white;
+    }
+    .info-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        padding: 20px;
+        background: #f8fafc;
+        border-radius: 12px;
+    }
+    .info-item {
+        text-align: center;
+        padding: 15px;
+    }
+    .info-label {
+        font-size: 12px;
+        font-weight: 600;
+        color: #64748b;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 5px;
+    }
+    .info-value {
+        font-size: 16px;
+        font-weight: 700;
+        color: #1e293b;
+    }
+    .error-content {
+        padding: 60px 40px;
+        text-align: center;
+    }
+    .error-icon {
+        width: 80px;
+        height: 80px;
+        margin: 0 auto 20px;
+        color: #ef4444;
+    }
+    .error-text {
+        color: #475569;
+        font-size: 16px;
+        line-height: 1.6;
+        max-width: 500px;
+        margin: 0 auto 20px;
+    }
+    .try-again-btn {
+        display: inline-block;
+        padding: 12px 32px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        text-decoration: none;
+        border-radius: 12px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+    .try-again-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    }
+    
+    /* FIXED PRINT STYLES - Only show certificate image */
+    @media print {
+        /* Remove all page margins */
+        @page {
+            margin: 0;
+            size: landscape;
+        }
+        
+        /* Reset body */
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Hide header, footer, nav, etc */
+        header, footer, nav, .result-header, .certificate-actions, 
+        .certificate-info, .status-badge, .result-container, .result-card {
+            display: none !important;
+        }
+        
+        /* Show only certificate image container */
+        .certificate-image-container {
+            display: block !important;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            padding: 0 !important;
+            margin: 0 !important;
+            background: white !important;
+            page-break-after: avoid;
+        }
+        
+        .certificate-image-container img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            box-shadow: none !important;
+            border-radius: 0 !important;
+            page-break-inside: avoid;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .result-header h2 {
+            font-size: 22px;
+        }
+        .certificate-image-container {
+            padding: 20px;
+        }
+        .certificate-actions {
+            padding: 15px 20px 30px;
+        }
+        .certificate-info {
+            padding: 0 20px 30px;
+        }
+        .info-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+
+<div class="result-container">
+    {% if certificate.status == 'valid' %}
+    <div class="result-card">
+        <div class="result-header valid">
+            <h2>
+                <svg style="width: 32px; height: 32px;" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                </svg>
+                Certificate Verified
+            </h2>
+            <span class="status-badge valid">✓ AUTHENTIC</span>
+        </div>
+
+        {% if certificate.certificate_image %}
+        <div class="certificate-image-container">
+            <img src="{{ certificate.certificate_image }}" alt="Certificate of {{ certificate.recipient_name }}" />
+        </div>
+        
+        <div class="certificate-actions">
+            <a href="{{ certificate.certificate_image }}" download="certificate-{{ certificate.id }}.jpg" class="action-btn download-btn">
+                <svg style="width: 20px; height: 20px;" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                </svg>
+                Download Certificate
+            </a>
+<button onclick="printCertificate()" class="action-btn share-btn">
+                <svg style="width: 20px; height: 20px;" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M5 4v3H4a2 2 0 00-2 2v3a2 2 0 002 2h1v2a2 2 0 002 2h6a2 2 0 002-2v-2h1a2 2 0 002-2V9a2 2 0 00-2-2h-1V4a2 2 0 00-2-2H7a2 2 0 00-2 2zm8 0H7v3h6V4zm0 8H7v4h6v-4z" clip-rule="evenodd"/>
+                </svg>
+                Print Certificate
+            </button>
+        </div>
+        {% endif %}
+
+        <div class="certificate-info">
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="info-label">📋 Certificate ID</div>
+                    <div class="info-value">{{ certificate.id }}</div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-label">👤 Recipient</div>
+                    <div class="info-value">{{ certificate.recipient_name }}</div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-label">🎓 Program</div>
+                    <div class="info-value">{{ certificate.course_name }}</div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-label">📅 Issue Date</div>
+                    <div class="info-value">{{ certificate.issue_date }}</div>
+                </div>
+                
+                {% if certificate.duration %}
+                <div class="info-item">
+                    <div class="info-label">⏱️ Duration</div>
+                    <div class="info-value">{{ certificate.duration }}</div>
+                </div>
+                {% endif %}
+                
+                <div class="info-item">
+                    <div class="info-label">✅ Status</div>
+                    <div class="info-value" style="color: #059669;">Valid</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% elseif certificate.status == 'invalid' %}
+    <div class="result-card">
+        <div class="result-header invalid">
+            <h2>
+                <svg style="width: 32px; height: 32px;" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+                </svg>
+                Certificate Not Found
+            </h2>
+            <span class="status-badge invalid">✗ INVALID</span>
+        </div>
+
+        <div class="error-content">
+            <svg class="error-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+            </svg>
+            <p class="error-text">
+                The certificate ID you entered could not be found in our system. Please verify the ID is correct and try again.
+            </p>
+            <a href="{{ site.url }}/verify-certificate/" class="try-again-btn">← Try Again</a>
+        </div>
+    </div>
+    {% endif %}
+
+    
+    <script>
+function printCertificate() {
+    var certImage = document.querySelector('.certificate-image-container img');
+    
+    if (!certImage) {
+        alert('Certificate image not found!');
+        return;
+    }
+    
+    // Create a new window for printing
+    var printWindow = window.open('', '_blank', 'width=1200,height=800');
+    
+    // Write the HTML content with forced landscape orientation
+    printWindow.document.write(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Print Certificate</title>
+            <style>
+                * {
+                    margin: 0;
+                    padding: 0;
+                    box-sizing: border-box;
+                }
+                html, body {
+                    width: 100%;
+                    height: 100%;
+                    margin: 0;
+                    padding: 0;
+                }
+                body {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    background: white;
+                }
+                img {
+                    max-width: 100%;
+                    max-height: 100vh;
+                    width: auto;
+                    height: auto;
+                    display: block;
+                    margin: 0 auto;
+                }
+                @page {
+                    size: landscape;
+                    margin: 0;
+                }
+                @media print {
+                    html, body {
+                        width: 100%;
+                        height: 100%;
+                        margin: 0;
+                        padding: 0;
+                    }
+                    body {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                    }
+                    img {
+                        max-width: 100%;
+                        max-height: 100%;
+                        width: auto;
+                        height: auto;
+                        page-break-inside: avoid;
+                    }
+                }
+            </style>
+        </head>
+        <body>
+            <img src="${certImage.src}" alt="Certificate" onload="setTimeout(function(){ window.print(); }, 250);" />
+        </body>
+        </html>
+    `);
+    
+    printWindow.document.close();
+    
+    // Close window after printing (optional)
+    printWindow.onafterprint = function() {
+        printWindow.close();
+    };
+}
+</script>
+
+
+</div>

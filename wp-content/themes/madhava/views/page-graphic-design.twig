@@ -1,0 +1,279 @@
+{% extends "base.twig" %}
+
+{% block content %}
+<section class="service-hero container mx-auto px-6 py-16 text-center">
+  {# Page Title #}
+  <h1 class="text-4xl md:text-5xl font-semibold leading-tight">{{ post.title }}</h1>
+  
+  {# Page Excerpt #}
+  {% if post.excerpt %}
+    <p class="mt-4 max-w-3xl mx-auto text-lg text-gray-600">{{ post.excerpt }}</p>
+  {% endif %}
+
+  {# Hero Image #}
+  <div class="mt-12">
+    <img 
+      src="https://madhavatechnology.com/wp-content/uploads/2025/11/28480869_Tiny-graphic-designer-drawing-with-big-pen-on-computer-screen-scaled.jpg" 
+      alt="{{ post.title }} hero image" 
+      class="w-full max-w-4xl mx-auto rounded-xl object-cover shadow-lg"
+    >
+  </div>
+</section>
+
+<section class="container mx-auto px-6 pb-12">
+  <div class="grid md:grid-cols-3 gap-8">
+    <div class="md:col-span-2 space-y-10">
+      <article class="prose max-w-none">
+        <h2 class="text-2xl font-semibold">Overview</h2>
+        <p>Creative and strategic graphic design solutions that strengthen your brand, captivate your audience, and communicate your message effectively.</p>
+      </article>
+
+      <article class="prose max-w-none">
+        <h3 class="text-xl font-semibold">Brand Identity</h3>
+        <ul class="list-disc pl-6">
+          <li>Logo design, color palettes, and typography that resonate with your brand values.</li>
+          <li>Complete visual identity systems to ensure consistency.</li>
+        </ul>
+      </article>
+
+      <article class="prose max-w-none">
+        <h3 class="text-xl font-semibold">Marketing Collateral</h3>
+        <ul class="list-disc pl-6">
+          <li>Brochures, flyers, posters, and banners designed for impact.</li>
+          <li>Print and digital layouts that attract and inform.</li>
+        </ul>
+      </article>
+
+      <article class="prose max-w-none">
+        <h3 class="text-xl font-semibold">Digital Graphics</h3>
+        <ul class="list-disc pl-6">
+          <li>Social media graphics, web banners, and email templates.</li>
+          <li>Animated and static visuals to enhance online presence.</li>
+        </ul>
+      </article>
+
+      <article class="prose max-w-none">
+        <h3 class="text-xl font-semibold">Design Consultation</h3>
+        <ul class="list-disc pl-6">
+          <li>Expert advice to align design with business objectives.</li>
+          <li>Workshops and feedback sessions to refine concepts.</li>
+        </ul>
+      </article>
+    </div>
+
+    <aside class="md:col-span-1">
+      <div class="sticky top-8 space-y-6">
+        <div class="rounded-xl border p-6">
+          <h4 class="text-lg font-semibold mb-4">What you get</h4>
+          <ul class="space-y-3">
+            <li class="flex items-start gap-3">
+              <span class="mt-1 h-2 w-2 rounded-full bg-green-600"></span>
+              <div>
+                <p class="font-medium">Brand Identity</p>
+                <p class="text-sm text-gray-600">Consistent and memorable visuals.</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="mt-1 h-2 w-2 rounded-full bg-green-600"></span>
+              <div>
+                <p class="font-medium">Print & Digital</p>
+                <p class="text-sm text-gray-600">High-quality marketing materials.</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="mt-1 h-2 w-2 rounded-full bg-green-600"></span>
+              <div>
+                <p class="font-medium">Creative Direction</p>
+                <p class="text-sm text-gray-600">Strategic design consultancy.</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="mt-1 h-2 w-2 rounded-full bg-green-600"></span>
+              <div>
+                <p class="font-medium">Visual Impact</p>
+                <p class="text-sm text-gray-600">Engaging and original graphics.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="rounded-xl border p-6">
+          <h4 class="text-lg font-semibold mb-4">Deliverables</h4>
+          <ul class="text-sm text-gray-700 space-y-2">
+            <li>Logo and brand style guide</li>
+            <li>Print and digital assets</li>
+            <li>Design consultation notes</li>
+            <li>Final source files and formats</li>
+          </ul>
+        </div>
+
+        <div class="rounded-xl border p-6">
+          <h4 class="text-lg font-semibold mb-4">Need this service?</h4>
+          <a href="/contact" class="inline-flex items-center justify-center rounded-lg bg-black text-white px-5 py-2.5 hover:bg-gray-800 transition">Start a project</a>
+        </div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+
+
+{# START OF STYLIZED FAQ SECTION #}
+<section class="container mx-auto max-w-4xl px-6 pb-20" aria-labelledby="faq-heading">
+    <div class="text-center mb-8">
+        <h3 id="faq-heading" class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">Got Questions? We Have Answers.</h3>
+    </div>
+    
+    {# Centered container for the accordion items #}
+    <div class="max-w-3xl mx-auto space-y-6"> 
+        
+        <div class="faq-item bg-white rounded-lg">
+            <div class="faq-question flex justify-between items-center p-4 bg-[#3EABBF] rounded-t-lg">
+                <h4 class="font-semibold text-lg text-white">What is included in brand identity design?</h4>
+                <div class="plus-icon text-white text-2xl font-bold">+</div>
+            </div>
+            <div class="faq-answer bg-white rounded-b-lg text-gray-700">
+                <div class="faq-content">
+                    <p>Logo, color schemes, typography, and visual style guides that create a cohesive brand image.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-item bg-white rounded-lg">
+            <div class="faq-question flex justify-between items-center p-4 bg-[#3EABBF] rounded-t-lg">
+                <h4 class="font-semibold text-lg text-white">Can you design both print and digital materials?</h4>
+                <div class="plus-icon text-white text-2xl font-bold">+</div>
+            </div>
+            <div class="faq-answer bg-white rounded-b-lg text-gray-700">
+                <div class="faq-content">
+                    <p>Absolutely. We create impactful designs for brochures, posters, social media, and websites.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="faq-item bg-white rounded-lg">
+            <div class="faq-question flex justify-between items-center p-4 bg-[#3EABBF] rounded-t-lg">
+                <h4 class="font-semibold text-lg text-white">How do you work with clients on design concepts?</h4>
+                <div class="plus-icon text-white text-2xl font-bold">+</div>
+            </div>
+            <div class="faq-answer bg-white rounded-b-lg text-gray-700">
+                <div class="faq-content">
+                    <p>We offer consultations, workshops, and iterative feedback sessions to perfect the design direction.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{# END OF STYLIZED FAQ SECTION #}
+
+
+{# Styles and Scripts for the FAQ Accordion #}
+<style>
+    /* Custom style for the hand-drawn border effect on FAQ items */
+    .faq-item {
+        border: 2px solid #1a202c;
+        box-shadow: 4px 4px 0px #1a202c;
+    }
+    .faq-question {
+        cursor: pointer;
+    }
+    .faq-answer {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.5s ease-in-out, padding 0.5s ease-in-out;
+        padding: 0;
+    }
+    .faq-answer.open {
+        padding: 0;
+        max-height: 300px; /* Set maximum height for scrolling */
+        overflow-y: auto; /* Enable vertical scrolling */
+    }
+    
+    /* FAQ Content wrapper with padding and scroll */
+    .faq-content {
+        padding: 1.5rem;
+        max-height: inherit;
+    }
+    
+    /* Custom scrollbar styling (Optional, for better visual consistency) */
+    .faq-answer::-webkit-scrollbar {
+        width: 6px;
+    }
+    
+    .faq-answer::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 3px;
+    }
+    
+    .faq-answer::-webkit-scrollbar-thumb {
+        background: #14b8a6; /* Teal color to match theme */
+        border-radius: 3px;
+    }
+    
+    .faq-answer::-webkit-scrollbar-thumb:hover {
+        background: #0d9488; /* Darker teal on hover */
+    }
+    
+    /* For Firefox */
+    .faq-answer {
+        scrollbar-width: thin;
+        scrollbar-color: #14b8a6 #f1f1f1;
+    }
+    
+    .plus-icon {
+        transition: transform 0.3s ease-in-out;
+    }
+    .plus-icon.rotated {
+        transform: rotate(45deg);
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .faq-answer.open {
+            max-height: 200px; /* Smaller max height on mobile */
+        }
+    }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // FAQ Accordion Logic
+    const faqQuestions = document.querySelectorAll('.faq-question');
+
+    faqQuestions.forEach(question => {
+        question.addEventListener('click', () => {
+            const answer = question.nextElementSibling;
+            const icon = question.querySelector('.plus-icon');
+            const isOpen = answer.classList.contains('open');
+
+            // Close all other open answers
+            document.querySelectorAll('.faq-answer.open').forEach(openAnswer => {
+                if (openAnswer !== answer) {
+                    openAnswer.classList.remove('open');
+                    openAnswer.style.maxHeight = 0;
+                    // Safely find and remove 'rotated' class from the plus icon of the previously open item
+                    const siblingQuestion = openAnswer.previousElementSibling;
+                    if (siblingQuestion) {
+                      const siblingIcon = siblingQuestion.querySelector('.plus-icon');
+                      if (siblingIcon) {
+                          siblingIcon.classList.remove('rotated');
+                      }
+                    }
+                }
+            });
+
+            // Toggle the clicked answer
+            answer.classList.toggle('open');
+            icon.classList.toggle('rotated');
+            
+            if (answer.classList.contains('open')) {
+                // Set max height to enable scrolling if content is too long
+                answer.style.maxHeight = "300px"; // Fixed height for scrolling
+            } else {
+                answer.style.maxHeight = 0;
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

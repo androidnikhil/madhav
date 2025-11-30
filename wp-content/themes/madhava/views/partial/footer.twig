@@ -1,0 +1,370 @@
+<footer
+    id="animated-footer" class="relative bg-gradient-to-br from-white via-[#E0F7FA] to-[#3EABBF] text-gray-800 overflow-hidden">
+    <div class="absolute inset-0 opacity-20">
+        <div class="floating-shape absolute top-20 left-10 w-20 h-20 bg-[#3EABBF] rounded-full"></div>
+        <div class="floating-shape absolute top-40 right-20 w-16 h-16 bg-[#F3A20F] rounded-full"></div>
+        <div class="floating-shape absolute bottom-32 left-1/4 w-12 h-12 bg-purple-300 rounded-full"></div>
+        <div class="floating-shape absolute bottom-20 right-1/3 w-24 h-24 bg-pink-200 rounded-full"></div>
+    </div>
+
+    <div
+        class="relative z-10 max-w-7xl mx-auto px-6 py-16">
+
+        <div id="footer-cta" class="text-center mb-16">
+            <h2 class="text-3xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-[#3EABBF] to-[#F3A20F] bg-clip-text text-transparent">
+                Ready to Launch Your Next Project?
+            </h2>
+            <p class="text-lg text-gray-700 mb-8">Let's build something amazing together</p>
+            <a href="/contact" id="footer-cta-button" class="inline-block px-8 py-4 bg-gradient-to-r from-[#3EABBF] to-[#2E8B8B] text-white font-semibold rounded-full hover:shadow-2xl transition-all duration-300 transform hover:scale-110 relative overflow-hidden group">
+                <span class="relative z-10">Start Your Project</span>
+                <div class="absolute inset-0 bg-gradient-to-r from-[#F3A20F] to-[#F97028] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </a>
+        </div>
+
+        <div class="footer-sections-wrapper mb-12">
+            <div id="footer-company" class="space-y-4">
+                <div class="flex items-center space-x-3 justify-center">
+                    {% if site.custom_logo %}
+                        <img src="{{ site.custom_logo.src }}" alt="{{ site.name }}" class="h-20 w-auto">
+                    {% else %}
+                        <div class="w-10 h-10 bg-gradient-to-br from-[#3EABBF] to-[#F3A20F] rounded-lg flex items-center justify-center">
+                            <span class="text-white font-bold text-lg">M</span>
+                        </div>
+                    {% endif %}
+                </div>
+                <p class="text-gray-600 text-sm text-center">{{ site.description }}</p>
+                <div class="flex space-x-4 justify-center">
+                    <a href="https://www.instagram.com/madhavatechnology/" target="_blank" class="social-icon w-10 h-10 bg-white text-[#3EABBF] rounded-full flex items-center justify-center hover:bg-[#3EABBF] hover:text-white transition-colors duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 30 30" class="w-5 h-5" fill="currentColor">
+                            <title>Instagram Logo</title>
+                            <desc>Instagram Logo</desc>
+                            <path d="M 15 2 C 7.832 2 2 7.832 2 15 C 2 22.168 7.832 28 15 28 C 22.168 28 28 22.168 28 15 C 28 7.832 22.168 2 15 2 z M 11.666016 6 L 18.332031 6 C 21.457031 6 24 8.5420156 24 11.666016 L 24 18.332031 C 24 21.457031 21.457984 24 18.333984 24 L 11.667969 24 C 8.5429688 24 6 21.457984 6 18.333984 L 6 11.667969 C 6 8.5429688 8.5420156 6 11.666016 6 z M 11.666016 8 C 9.6450156 8 8 9.6459688 8 11.667969 L 8 18.333984 C 8 20.354984 9.6459688 22 11.667969 22 L 18.333984 22 C 20.354984 22 22 20.354031 22 18.332031 L 22 11.666016 C 22 9.6450156 20.354031 8 18.332031 8 L 11.666016 8 z M 19.667969 9.6660156 C 20.035969 9.6660156 20.333984 9.9640312 20.333984 10.332031 C 20.333984 10.700031 20.035969 11 19.667969 11 C 19.299969 11 19 10.700031 19 10.332031 C 19 9.9640312 19.299969 9.6660156 19.667969 9.6660156 z M 15 10 C 17.757 10 20 12.243 20 15 C 20 17.757 17.757 20 15 20 C 12.243 20 10 17.757 10 15 C 10 12.243 12.243 10 15 10 z M 15 12 A 3 3 0 0 0 15 18 A 3 3 0 0 0 15 12 z"/></svg>
+                    </a>
+                    <a href="https://www.facebook.com/share/1Jz4Yp9k5T/" target="_blank" class="social-icon w-10 h-10 bg-white text-[#3EABBF] rounded-full flex items-center justify-center hover:bg-[#3EABBF] hover:text-white transition-colors duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 30 30" fill="currentColor" class="w-5 h-5">
+                            <title>Facebook Logo</title>
+                            <desc>Facebook Logo</desc>
+                            <path d="M15,3C8.373,3,3,8.373,3,15c0,6.016,4.432,10.984,10.206,11.852V18.18h-2.969v-3.154h2.969v-2.099c0-3.475,1.693-5,4.581-5 c1.383,0,2.115,0.103,2.461,0.149v2.753h-1.97c-1.226,0-1.654,1.163-1.654,2.473v1.724h3.593L19.73,18.18h-3.106v8.697 C22.481,26.083,27,21.075,27,15C27,8.373,21.627,3,15,3z"/></svg>
+                    </a>
+                    <a href="https://www.linkedin.com/company/madhava-technology25/" target="_blank" class="social-icon w-10 h-10 bg-white text-[#3EABBF] rounded-full flex items-center justify-center hover:bg-[#3EABBF] hover:text-white transition-colors duration-300">
+                        <svg class="w-5 h-5" fill="currentColor" viewbox="0 0 24 24">
+                            <title>Linkedin Logo</title>
+                            <desc>Linkedin Logo</desc>
+                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    </a>
+                    <a href="https://x.com/MadhavaTech2025" target="_blank" class="social-icon w-10 h-10 bg-white text-[#3EABBF] rounded-full flex items-center justify-center hover:bg-[#3EABBF] hover:text-white transition-colors duration-300">
+                        <span class="sr-only">X</span>
+                        <svg class="w-5 h-5" viewbox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                            <title>X Logo</title>
+                            <desc>X Logo</desc>
+                            <path d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <div id="footer-links" class="space-y-4">
+                <h4 class="text-lg font-semibold text-[#3EABBF]">Quick Links</h4>
+                <ul class="space-y-2">
+                    <li>
+                        <a href="/about-us" class="footer-link text-gray-600 hover:text-[#3EABBF] transition-colors duration-300 relative">About Us</a>
+                    </li>
+                    <li>
+                        <a href="/services" class="footer-link text-gray-600 hover:text-[#3EABBF] transition-colors duration-300 relative">Services</a>
+                    </li>
+                    <li><a href="/portfolio" class="footer-link text-gray-600 hover:text-[#3EABBF] transition-colors duration-300 relative">Portfolio</a></li>
+                    <li><a href="/blog" class="footer-link text-gray-600 hover:text-[#3EABBF] transition-colors duration-300 relative !outline-[.14em] outline-dotted outline-red-500 outline-offset-[.2em]">Blog</a></li>
+                    <li>
+                        <a href="/contact" class="footer-link text-gray-600 hover:text-[#3EABBF] transition-colors duration-300 relative">Contact</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div id="footer-services" class="space-y-4">
+                <h4 class="text-lg font-semibold text-[#3EABBF]">Services</h4>
+                <ul class="space-y-2">
+                    <li>
+                        <a href="/web-design-development/" class="footer-link text-gray-600 hover:text-[#3EABBF] transition-colors duration-300 relative !outline-[.14em] outline-dotted outline-red-500 outline-offset-[.2em]">Web Development</a>
+                    </li>
+                    <li>
+                        <a href="/mobile-apps/" class="footer-link text-gray-600 hover:text-[#3EABBF] transition-colors duration-300 relative">Mobile Apps</a>
+                    </li>
+                    <li>
+                        <a href="/digital-marketing" class="footer-link text-gray-600 hover:text-[#3EABBF] transition-colors duration-300 relative">Digital Marketing</a>
+                    </li>
+                    <li>
+                        <a href="/seo-content-marketing/" class="footer-link text-gray-600 hover:text-[#3EABBF] transition-colors duration-300 relative">SEO Services</a>
+                    </li>
+                    <li>
+                        <a href="/brand-creative/" class="footer-link text-gray-600 hover:text-[#3EABBF] transition-colors duration-300 relative">Branding</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div id="footer-contact" class="space-y-4">
+                <h4 class="text-lg font-semibold text-[#3EABBF]">Get In Touch</h4>
+                <div class="space-y-3">
+                    <div class="flex items-center space-x-3 text-gray-600">
+                        <svg class="w-5 h-5 text-[#3EABBF]" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+                            <title>Mail Icon</title>
+                            <desc>Mail Icon</desc>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                        </svg>
+                        <a href="mailto:info@madhavatechnology.com" class="hover:text-[#F3A20F] transition-colors duration-300">info@madhavatechnology.com</a>
+                    </div>
+                    <div class="flex items-center space-x-3 text-gray-600">
+                        <svg class="w-5 h-5 text-[#3EABBF]" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+                            <title>Call icon</title>
+                            <desc>Call icon</desc>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                        </svg>
+                        <a href="tel:+917078211946" class="hover:text-[#F3A20F] transition-colors duration-300">+91 7078211946</a>
+                    </div>
+                    <div class="flex items-center space-x-3 text-gray-600">
+                        <svg class="w-5 h-5 text-[#3EABBF]" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+                            <title>Location Icon</title>
+                            <desc>Location Icon</desc>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                        <span>Noida, India</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="footer-bottom" class="pt-8 border-t border-gray-300 flex flex-col md:flex-row justify-between items-center">
+            <p class="text-gray-600 text-sm mb-4 md:mb-0">
+                © 2025
+                {{ site.name }}. All rights reserved.
+            </p>
+            <div class="flex space-x-6 text-sm">
+                <a href="/privacy-policy" class="text-gray-600 hover:text-[#3EABBF] transition-colors duration-300">Privacy Policy</a>
+                <a href="/terms" class="text-gray-600 hover:text-[#3EABBF] transition-colors duration-300">Terms of Service</a>
+                <a href="/sitemap_index.xml" class="text-gray-600 hover:text-[#3EABBF] transition-colors duration-300">Sitemap</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<button id="scroll-to-top" class="fixed bottom-8 right-8 w-12 h-12 bg-[#3EABBF] text-white rounded-full shadow-lg hover:bg-[#2E8B8B] transition-all duration-300 transform hover:scale-110 opacity-0 pointer-events-none z-50">
+    <svg class="w-6 h-6 mx-auto" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+        <title>Scroll To Top Button</title>
+        <desc>Scroll To Top Button</desc>
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+    </svg>
+</button>
+
+<style>
+    /* Initial states for animations */
+    #animated-footer {
+        opacity: 0;
+    }
+
+    #footer-cta,
+    #footer-company,
+    #footer-links,
+    #footer-services,
+    #footer-contact,
+    #footer-bottom {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    /* FORCE SINGLE COLUMN LAYOUT */
+    .footer-sections-wrapper {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 2rem !important;
+    }
+
+    /* Only allow grid on very large screens */
+    @media (min-width: 1280px) {
+        .footer-sections-wrapper {
+            display: grid !important;
+            grid-template-columns: repeat(4, 1fr) !important;
+            gap: 2rem !important;
+        }
+    }
+
+    /* Floating background shapes */
+    .floating-shape {
+        animation: float 6s ease-in-out infinite;
+    }
+
+    .floating-shape:nth-child(2) {
+        animation-delay: -2s;
+    }
+
+    .floating-shape:nth-child(3) {
+        animation-delay: -4s;
+    }
+
+    .floating-shape:nth-child(4) {
+        animation-delay: -1s;
+    }
+
+    @keyframes float {
+        0,
+        100% {
+            transform: translateY(0px);
+        }
+        50% {
+            transform: translateY(-20px);
+        }
+    }
+
+    /* Footer link hover effects */
+    .footer-link::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -2px;
+        left: 0;
+        background-color: #3EABBF;
+        transition: width 0.3s ease;
+    }
+
+    .footer-link:hover::after {
+        width: 100%;
+    }
+
+    /* Social icon hover effects */
+    .social-icon {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .social-icon::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+        transition: left 0.5s;
+    }
+
+    .social-icon:hover::before {
+        left: 100%;
+    }
+
+    /* CTA Button special effect */
+    #footer-cta-button::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+        transition: left 0.6s;
+    }
+
+    #footer-cta-button:hover::before {
+        left: 100%;
+    }
+
+    /* Scroll to top button */
+    #scroll-to-top {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    #scroll-to-top.show {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    /* Responsive adjustments */
+    @media(max-width: 768px) {
+        .floating-shape {
+            display: none;
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () { // GSAP Footer Animations
+if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+gsap.registerPlugin(ScrollTrigger);
+
+// Footer entrance animation
+gsap.timeline({
+scrollTrigger: {
+trigger: "#animated-footer",
+start: "top 90%",
+end: "bottom 20%",
+toggleActions: "play none none reverse"
+}
+}).to("#animated-footer", {
+opacity: 1,
+duration: 0.4,
+ease: "power2.out"
+}).to("#footer-cta", {
+opacity: 1,
+y: 0,
+duration: 0.4,
+ease: "back.out(1.7)"
+}, "-=0.4").to([
+"#footer-company", "#footer-links", "#footer-services", "#footer-contact"
+], {
+opacity: 1,
+y: 0,
+duration: 0.3,
+stagger: 0.2,
+ease: "power3.out"
+}, "-=0.4").to("#footer-bottom", {
+opacity: 1,
+y: 0,
+duration: 0.3,
+ease: "power2.out"
+}, "-=0.2");
+
+// Social icons hover animation
+document.querySelectorAll('.social-icon').forEach(icon => {
+icon.addEventListener('mouseenter', () => {
+gsap.to(icon, {
+scale: 1.2,
+rotation: 360,
+duration: 0.2,
+ease: "back.out(1.7)"
+});
+});
+
+icon.addEventListener('mouseleave', () => {
+gsap.to(icon, {
+scale: 1,
+rotation: 0,
+duration: 0.2,
+ease: "power2.out"
+});
+});
+});
+
+} else { // Fallback without GSAP
+document.getElementById('animated-footer').style.opacity = '1';
+document.querySelectorAll('#footer-cta, #footer-company, #footer-links, #footer-services, #footer-contact, #footer-bottom').forEach(el => {
+el.style.opacity = '1';
+el.style.transform = 'translateY(0)';
+});
+}
+
+// Scroll to top functionality
+const scrollToTopBtn = document.getElementById('scroll-to-top');
+
+window.addEventListener('scroll', () => {
+if (window.pageYOffset > 300) {
+scrollToTopBtn.classList.add('show');
+} else {
+scrollToTopBtn.classList.remove('show');
+}
+});
+
+scrollToTopBtn.addEventListener('click', () => {
+window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+});
+</script>

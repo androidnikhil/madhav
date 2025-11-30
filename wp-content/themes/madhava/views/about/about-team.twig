@@ -1,0 +1,78 @@
+<section class="bg-gray-100 py-16 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-12">
+      <p class="text-sm font-semibold text-gray-500 uppercase tracking-widest">About</p>
+      <h2 class="mt-2 text-3xl sm:text-4xl font-bold tracking-tight text-gray-900">
+        The dream team of digital marketing.
+      </h2>
+      <p class="mt-4 text-base text-gray-600">
+        We Grow Businesses Online.
+      </p>
+    </div>
+    
+    <div class="mt-10 grid grid-cols-1 md:grid-cols-3 gap-8">
+      
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden card-item">
+        <div class="relative">
+          <img class="w-full h-80 object-cover object-top" src="https://madhavatechnology.com/wp-content/uploads/2025/10/nikhil.png" alt="Nikhil Pandey">
+          <span class="absolute bottom-4 left-4 inline-block bg-white text-gray-800 text-xs px-2 py-1 rounded-full shadow">Nikhil Pandey</span>
+        </div>
+        <div class="p-6">
+          <h3 class="mt-2 text-xl font-bold text-gray-900">
+            Founder & Technical Director
+          </h3>
+          <p class="mt-2 text-base text-gray-600">
+            Nikhil spearheads our technical vision and web development initiatives, ensuring innovative and robust solutions for our clients.
+          </p>
+        </div>
+      </div>
+      
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden card-item">
+        <div class="relative">
+          <img class="w-full h-80 object-cover object-top" src="https://madhavatechnology.com/wp-content/uploads/2025/10/Gemini_Generated_Image_cmprqrcmprqrcmpr-3.png" alt="Deepak Saharan">
+          <span class="absolute bottom-4 left-4 inline-block bg-white text-gray-800 text-xs px-2 py-1 rounded-full shadow">Deepak Saharan</span>
+        </div>
+        <div class="p-6">
+          <h3 class="mt-2 text-xl font-bold text-gray-900">
+            Senior Digital Marketer
+          </h3>
+          <p class="mt-2 text-base text-gray-600">
+            Social media marketer, social ad manager, web designer, creative manager
+          </p>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden card-item">
+        <div class="relative">
+          <img class="w-full h-80 object-cover object-top" src="https://madhavatechnology.com/wp-content/uploads/2025/10/WhatsApp-Image-2025-09-19-at-13.19.30_0c740229.jpg" alt="Jay Dixit">
+          <span class="absolute bottom-4 left-4 inline-block bg-white text-gray-800 text-xs px-2 py-1 rounded-full shadow">Jay Dixit</span>
+        </div>
+        <div class="p-6">
+          <h3 class="mt-2 text-xl font-bold text-gray-900">
+            Wordpress Developer
+          </h3>
+          <p class="mt-2 text-base text-gray-600">
+            Specializes in creating and managing Wordpress websites, ensuring optimal performance and user experience.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // Select all elements with the class 'card-item'
+    const cards = document.querySelectorAll('.card-item');
+
+    // Use GSAP to animate the cards
+    // The 'stagger' property creates the sequential effect
+    gsap.from(cards, {
+        opacity: 0,
+        y: 50, // Starts 50px below its final position
+        duration: 0.8,
+        stagger: 0.2, // A 0.2 second delay between each card's animation start
+        ease: "power2.out"
+    });
+});
+</script>

@@ -1,0 +1,253 @@
+<!-- Logo Section -->
+<div class="flex items-center justify-between w-full">
+	<div class="flex items-center">
+		{% if site.custom_logo %}
+			<a
+				href="{{ site.link }}" rel="home" class="site-logo-link">
+				{# Default logo (provided by WP custom logo) #}
+				<img src="{{ site.custom_logo.src }}" alt="{{ site.custom_logo.alt ? site.custom_logo.alt : site.name }}" class="site-logo-default w-40 h-20 mr-2 object-contain">
+
+				<img src="{{ theme_uri }}/static/white_logo.png" alt="{{ site.custom_logo.alt ? site.custom_logo.alt : site.name }} (white)" class="site-logo-dark hidden w-40 h-20 mr-2 object-contain">
+			</a>
+		{% else %}
+			<span class="text-2xl font-semibold text-stone-800">
+				<a href="{{ site.link }}" rel="home" class="text-amber-700">
+					{{ site.name }}
+				</a>
+				<span class="block text-xs font-normal text-stone-500 tracking-wider uppercase">
+					{{ site.description }}
+				</span>
+			</span>
+		{% endif %}
+	</div>
+
+	<!-- Mobile Menu Button -->
+	<button id="mobile-menu-toggle" class="md:hidden p-2 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-200">
+		<svg id="hamburger-icon" class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+			<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+		</svg>
+		<svg id="close-icon" class="w-6 h-6 text-gray-700 hidden" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+			<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+		</svg>
+	</button>
+</div>
+
+<!-- Navigation Links and Contact Button -->
+<nav id="mobile-menu" class="md:flex md:flex-row md:items-center md:space-x-6 hidden flex-col items-start space-y-4 md:space-y-0 w-full md:w-auto mt-4 md:mt-0">
+	{% if menu.primary_menu %}
+		<ul id="{{ menu.primary_menu.id }}" class="flex flex-col md:flex-row items-start md:items-center space-y-4 md:space-y-0 md:space-x-6 w-full md:w-auto">
+			{% for item in menu.primary_menu.items %}
+				<li class="{{ item.classes | join(' ') }} w-full md:w-auto">
+					<a href="{{ item.link }}"
+					class="text-stone-700 hover:text-[#3EABBF] font-normal transition-colors duration-200 block py-2 md:py-0 whitespace-nowrap{% if 'current-menu-item' in item.classes %} active{% endif %}">
+					{{ item.title }}
+					</a>				
+				</li>
+			{% endfor %}
+		</ul>
+	{% endif %}
+	<a href="/contact" class="contact-button relative overflow-hidden px-6 py-2 border rounded-3xl text-black hover:text-white hover:shadow-lg hover:scale-105 transition-all duration-300 ease-in-out shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 w-full md:w-auto mt-4 md:mt-0 whitespace-nowrap flex-shrink-0 transform hover:-translate-y-0.5" style="border-color: #121212;">
+		<span class="relative z-10">Get Started</span>
+	</a>
+</nav>
+
+<style>
+	/* Contact button fill animation */
+	.contact-button::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: -100%;
+		width: 100%;
+		height: 100%;
+		background-color: #3EABBF;
+		transition: left 0.4s ease-in-out;
+		z-index: 1;
+		border-radius: inherit;
+	}
+
+	.contact-button:hover::before {
+		left: 0;
+	}
+
+	.contact-button:hover {
+		border-color: #3EABBF !important;
+		color: white;
+	}
+
+	/* Ensure text stays on top */
+	.contact-button span {
+		position: relative;
+		z-index: 10;
+		transition: color 0.3s ease-in-out;
+	}
+
+	/* Alternative approach with more control */
+	@keyframes fillLeftToRight {
+		0% {
+			width: 0;
+		}
+		100% {
+			width: 100%;
+		}
+	}
+
+	/* Enhanced version with smoother animation */
+	.contact-button {
+		position: relative;
+		background: transparent;
+		border: 2px solid #121212;
+		transition: all 0.3s ease-in-out;
+	}
+
+	.contact-button::after {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 0;
+		height: 100%;
+		background: linear-gradient(90deg, #3EABBF 0%, #2E8B8B 100%);
+		transition: width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+		z-index: 1;
+		border-radius: inherit;
+	}
+
+	.contact-button:hover::after {
+		width: 100%;
+	}
+
+	.contact-button:hover {
+		border-color: #3EABBF;
+		transform: translateY(-2px) scale(1.05);
+	}
+
+	/* Focus states for accessibility */
+	.contact-button:focus {
+		outline: none;
+		box-shadow: 0 0 0 3px rgba(62, 171, 191, 0.3);
+	}
+    
+    /* Logo dark-mode handling */
+	.site-logo-dark {
+		display: none;
+	}
+	.site-logo-default {
+		display: inline-block;
+	}
+
+	@media(prefers-color-scheme: dark) {
+		.site-logo-default {
+			display: none;
+		}
+		.site-logo-dark {
+			display: inline-block;
+		}
+        header {
+		background-color: #000 !important;
+		border-color: rgba(255,255,255,0.06) !important;
+		color: #e5e7eb; /* subtle light text color */
+	}
+	/* ensure hamburger / icons are visible */
+	header svg { color: #ffffff; }
+   
+   header nav .menu-item a {
+		color: #d1d5db; /* light gray */
+	}
+	header nav .menu-item a:hover {
+		color: #3EABBF; /* accent on hover */
+	}
+
+	/* Get Started / contact button in dark mode */
+	header .contact-button {
+		border-color: #e5e7eb !important;
+		color: #e5e7eb;
+		background: transparent;
+	}
+	header .contact-button span {
+		color: inherit;
+	}
+	header .contact-button:hover {
+		color: #ffffff; /* ensure text turns white on hover */
+	}
+	}
+    
+
+	/* If the theme or a script toggles a .dark class on the <body>, support that too */
+	body.dark .site-logo-default {
+		display: none;
+	}
+	body.dark .site-logo-dark {
+		display: inline-block;
+	}
+
+	/* Active state */
+	.contact-button:active {
+		transform: translateY(-1px) scale(1.02);
+	}
+
+	a.active {
+  color: #2196F3 !important;
+}
+</style>
+
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+const mobileMenu = document.getElementById('mobile-menu');
+const hamburgerIcon = document.getElementById('hamburger-icon');
+const closeIcon = document.getElementById('close-icon');
+
+// Show menu on desktop by default
+function checkScreenSize() {
+if (window.innerWidth >= 768) { // Desktop - always show menu
+mobileMenu.classList.remove('hidden');
+mobileMenu.classList.add('flex');
+hamburgerIcon.classList.remove('hidden');
+closeIcon.classList.add('hidden');
+} else { // Mobile - hide menu by default
+mobileMenu.classList.add('hidden');
+mobileMenu.classList.remove('flex');
+hamburgerIcon.classList.remove('hidden');
+closeIcon.classList.add('hidden');
+}
+}
+
+// Initial check
+checkScreenSize();
+
+mobileMenuToggle.addEventListener('click', function () { // Only toggle on mobile
+if (window.innerWidth < 768) {
+const isHidden = mobileMenu.classList.contains('hidden');
+
+if (isHidden) { // Show menu
+mobileMenu.classList.remove('hidden');
+mobileMenu.classList.add('flex');
+hamburgerIcon.classList.add('hidden');
+closeIcon.classList.remove('hidden');
+} else { // Hide menu
+mobileMenu.classList.add('hidden');
+mobileMenu.classList.remove('flex');
+hamburgerIcon.classList.remove('hidden');
+closeIcon.classList.add('hidden');
+}
+}
+});
+
+// Close menu when clicking on a menu item (mobile only)
+const menuItems = mobileMenu.querySelectorAll('a');
+menuItems.forEach(item => {
+item.addEventListener('click', function () {
+if (window.innerWidth < 768) {
+mobileMenu.classList.add('hidden');
+mobileMenu.classList.remove('flex');
+hamburgerIcon.classList.remove('hidden');
+closeIcon.classList.add('hidden');
+}
+});
+});
+
+// Handle window resize
+window.addEventListener('resize', checkScreenSize);
+});
+</script>

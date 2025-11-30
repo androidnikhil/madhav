@@ -1,0 +1,146 @@
+{% block html_head_container %}
+
+{% include 'html-header.twig' %}
+	{% block head %}
+	{% endblock %}
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6792527588908893"
+     crossorigin="anonymous"></script>
+	</head>
+{% endblock %}
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+body {
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+/* FULLSCREEN OVERLAY */
+#mt-preloader {
+  position: fixed;
+  inset: 0; /* top:0; right:0; bottom:0; left:0 */
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(to bottom right, #ffffff, #E0F7FA, #3EABBF);
+  transition: opacity 0.5s ease;
+}
+
+/* Inner content */
+.mt-preloader-inner {
+  text-align: center;
+    transform: translateY(-30px);  /* move up slightly; tweak value if needed */
+}
+
+.mt-preloader-logo {
+  width: 110px;
+  height: 110px;
+  display: block;
+  margin: 0 auto;
+
+  /* spin around the sun, not the image edge */
+  transform-origin: 48% 42%;  /* tweak these % if needed */
+  animation: mt-rotate 6s linear infinite;
+}
+
+
+/* Text under logo */
+.mt-preloader-text {
+  margin-top: 12px;
+  font-size: 0.8rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: #374151; /* gray-700-ish */
+}
+
+/* Rotation animation */
+@keyframes mt-rotate {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+</style>
+
+
+	<body class="{{body_class}}" data-template="base.twig">
+		<!-- Preloader -->
+    <div id="mt-preloader">
+        <div class="mt-preloader-inner">
+            <img
+                src="https://madhavatechnology.com/wp-content/uploads/2025/09/favicon-1.png"
+                alt="Madhava Technology"
+                class="mt-preloader-logo"
+            />
+            <p class="mt-preloader-text">
+                CRAFTING DIGITAL EXPERIENCES...
+            </p>
+        </div>
+    </div>
+    <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WJ9H2T3R"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+		{{ function('wp_body_open') }}
+		<a class="skip-link screen-reader-text" href="#content">{{ _e( 'Skip to content') }}</a>
+		<header class="bg-white shadow-sm px-6 md:px-12 lg:px-24 flex flex-col md:flex-row items-center justify-between border-b border-stone-300 sticky top-0 z-50 backdrop-blur-sm bg-white/95 py-2">
+			{% block header %}
+				{# <div class="wrapper">
+					<h1 class="hdr-logo" role="banner">
+						<a class="hdr-logo-link" href="{{site.url}}" rel="home">{{site.name}}</a>
+					</h1>
+					<nav id="nav-main" class="nav-main" role="navigation">
+						{% include "menu.twig" with {'items': menu.get_items} %}
+					</nav><!-- #nav -->
+				</div> #}
+				{% include 'partial/header.twig' %}
+			{% endblock %}
+		</header>
+
+		<section id="content" role="main" class="content-wrapper">
+			{# {% if title %}<h1>{{title}}</h1>{% endif %} #}
+			<div class="wrapper">
+				{% block content %}
+					Sorry, no content
+				{% endblock %}
+			</div>
+			{% if sidebar %}
+				<aside class="layout-sidebar">
+					{{sidebar}}
+				</aside>
+			{% endif %}
+		</section>
+<script>
+  (function () {
+    function hidePreloader() {
+      var preloader = document.getElementById('mt-preloader');
+      if (!preloader || preloader.dataset.done === '1') return;
+
+      preloader.dataset.done = '1';
+      preloader.style.opacity = '0';
+
+      setTimeout(function () {
+        if (preloader && preloader.parentNode) {
+          preloader.parentNode.removeChild(preloader);
+        }
+      }, 500);
+    }
+
+    // Normal: when page fully loaded
+    window.addEventListener('load', hidePreloader);
+
+    // Fallback: remove after 6s even if load event is delayed
+    setTimeout(hidePreloader, 6000);
+  })();
+</script>
+
+		{% block footer %}
+			<footer id="footer">
+				{% include 'partial/footer.twig' %}
+			</footer>
+			{{ function('wp_footer') }}
+		{% endblock %}
+	</body>
+</html>
+
+

@@ -1,0 +1,46 @@
+<style>
+.single-post {
+  max-width: 700px;
+  margin: 4rem auto;
+  padding: 2.5rem 2rem;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 2px 18px rgba(0,0,0,0.11);
+  font-family: 'Segoe UI', sans-serif;
+}
+.single-post header {
+  text-align: center;
+}
+.single-post-image {
+  width: 80%;
+  max-width: 500px;
+  margin: 2rem auto 1.5rem auto;
+  display: block;
+  border-radius: 8px;
+}
+.single-post-content {
+  font-size: 1.14rem;
+  line-height: 1.8;
+  margin-top: 2rem;
+  color: #222;
+  letter-spacing: 0.02em;
+}
+.post-meta {
+  color: #888;
+  margin: 1rem 0;
+  font-size: 1rem;
+}
+</style>
+
+<article class="single-post">
+  <header>
+    <h1>{{ post.title }}</h1>
+    <p class="post-meta">ByJay {{ post.author.name }} | {{ post.date('F j, Y') }}</p>
+    {% if post.thumbnail %}
+      <img class="single-post-image" src="{{ post.thumbnail | resize(800,400) }}" alt="{{ post.title }}" />
+    {% endif %}
+  </header>
+  <div class="single-post-content">
+    {{ post.content }}
+  </div>
+</article>

@@ -1,0 +1,368 @@
+{% extends "base.twig" %}
+
+{% block content %}
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;900&display=swap');
+
+  body { margin: 0 !important; padding: 0 !important; overflow-x: hidden !important; }
+  .content, .site-content, .container, main { padding: 0 !important; margin: 0 !important; max-width: none !important; }
+
+  .space-404-full {
+      position: relative;
+      width: 100vw;
+      min-height: 100vh;
+      margin-left: calc(-50vw + 50%);
+      margin-right: calc(-50vw + 50%);
+      background: radial-gradient(ellipse at center, #1a1f3a 0%, #0a0e1f 60%, #050510 100%);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Space Grotesk', sans-serif;
+      padding: 80px 20px;
+  }
+
+  .starfield {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: 1;
+  }
+  .star {
+      position: absolute;
+      background: #fff;
+      border-radius: 50%;
+  }
+  .star.tiny { width: 1px; height: 1px; opacity: 0.4; }
+  .star.small { width: 1.5px; height: 1.5px; opacity: 0.6; }
+  .star.medium { width: 2px; height: 2px; opacity: 0.8; }
+  .star.bright { 
+      width: 2.5px; 
+      height: 2.5px; 
+      opacity: 1;
+      box-shadow: 0 0 3px #fff;
+      animation: sparkle 2s infinite ease-in-out;
+  }
+  @keyframes sparkle {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 1; }
+  }
+
+  .bg-404 {
+      position: absolute;
+      font-size: clamp(180px, 28vw, 450px);
+      font-weight: 900;
+      color: #252947;
+      z-index: 2;
+      letter-spacing: -0.06em;
+      user-select: none;
+      top: 42%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0.6;
+  }
+
+  .content-wrap {
+      position: relative;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 900px;
+      width: 100%;
+  }
+
+  .planet {
+      position: absolute;
+      border-radius: 50%;
+      z-index: 2;
+  }
+  .planet-left {
+      width: 120px;
+      height: 120px;
+      background: radial-gradient(circle at 35% 30%, #a15e5e, #7a3f3f, #4d2626, #2a1414);
+      left: 8%;
+      top: 20%;
+      box-shadow: inset -15px -15px 30px rgba(0,0,0,0.6);
+      animation: floatLeft 10s infinite ease-in-out;
+  }
+  .planet-right-top {
+      width: 65px;
+      height: 65px;
+      background: radial-gradient(circle at 38% 28%, #9a5555, #6d3a3a, #4a2525, #2d1717);
+      right: 10%;
+      top: 15%;
+      box-shadow: inset -10px -10px 20px rgba(0,0,0,0.6);
+      animation: floatRightTop 8s infinite ease-in-out;
+  }
+  .planet-right-bottom {
+      width: 100px;
+      height: 100px;
+      background: radial-gradient(circle at 35% 32%, #8d4f4f, #633636, #422323, #271515);
+      right: 12%;
+      bottom: 20%;
+      box-shadow: inset -12px -12px 25px rgba(0,0,0,0.6);
+      animation: floatRightBottom 9s infinite ease-in-out;
+  }
+  
+  @keyframes floatLeft { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(12px, -20px); } }
+  @keyframes floatRightTop { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(-8px, 18px); } }
+  @keyframes floatRightBottom { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(-15px, -12px); } }
+
+  .scene {
+      position: relative;
+      width: 100%;
+      max-width: 650px;
+      height: 380px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 50px;
+  }
+
+  .planet-main {
+      position: absolute;
+      width: 280px;
+      height: 280px;
+      background: radial-gradient(circle at 42% 38%, #e77a7a, #d95555, #c33838, #9d2828, #6b1c1c);
+      border-radius: 50%;
+      bottom: 25px;
+      left: 50%;
+      transform: translateX(-50%);
+      box-shadow: inset -25px -25px 50px rgba(0,0,0,0.5), inset 15px 15px 30px rgba(231, 122, 122, 0.3), 0 25px 70px rgba(157, 40, 40, 0.4);
+      z-index: 3;
+  }
+
+  .astro {
+      position: absolute;
+      width: 150px;
+      height: 190px;
+      bottom: 130px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 4;
+      filter: drop-shadow(0 8px 15px rgba(0,0,0,0.3));
+      animation: astroFloat 5s infinite ease-in-out;
+  }
+  @keyframes astroFloat { 0%, 100% { transform: translateX(-50%) translateY(0) rotate(-1deg); } 50% { transform: translateX(-50%) translateY(-10px) rotate(1deg); } }
+
+  .rock {
+      position: absolute;
+      right: 16%;
+      top: 6%;
+      width: 65px;
+      height: 95px;
+      z-index: 4;
+      filter: drop-shadow(0 5px 12px rgba(0,0,0,0.2));
+      animation: rockFloat 7s infinite ease-in-out;
+  }
+  @keyframes rockFloat { 0%, 100% { transform: translate(0, 0) rotate(20deg); } 50% { transform: translate(-20px, 22px) rotate(15deg); } }
+
+  .teth {
+      position: absolute;
+      right: 21%;
+      top: 16%;
+      width: 120px;
+      height: 120px;
+      z-index: 1;
+      animation: tethSway 4s infinite ease-in-out;
+  }
+  @keyframes tethSway { 0%, 100% { transform: rotate(2deg); } 50% { transform: rotate(-2deg); } }
+
+  .txt {
+      position: relative;
+      z-index: 4;
+      text-align: center;
+      width: 100%;
+      padding: 20px;
+  }
+  .oops {
+      font-size: clamp(45px, 8vw, 82px);
+      font-weight: 700;
+      color: #fff;
+      margin: 0 0 12px 0;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  }
+  .sub {
+      font-size: clamp(18px, 3vw, 28px);
+      font-weight: 500;
+      color: #a8b2c7;
+      margin: 0 0 45px 0;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+  }
+
+  .btns {
+      display: flex;
+      gap: 22px;
+      justify-content: center;
+      flex-wrap: wrap;
+  }
+  .btn {
+      padding: 18px 44px;
+      background: transparent;
+      border: 2.5px solid #fff;
+      color: #fff;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      transition: all 0.3s;
+      display: inline-block;
+  }
+  .btn:hover {
+      background: #fff;
+      color: #070816;
+      transform: translateY(-4px);
+      box-shadow: 0 12px 28px rgba(255, 255, 255, 0.3);
+  }
+
+  @media (max-width: 768px) {
+      .scene { height: 320px; margin-bottom: 40px; }
+      .planet-main { width: 220px; height: 220px; }
+      .astro { width: 115px; height: 145px; bottom: 100px; }
+      .rock { width: 50px; height: 75px; }
+      .planet-left { width: 85px; height: 85px; }
+      .planet-right-top { width: 48px; height: 48px; }
+      .planet-right-bottom { width: 75px; height: 75px; }
+      .btns { flex-direction: column; max-width: 260px; }
+      .btn { width: 100%; }
+  }
+</style>
+
+<div class="space-404-full">
+    <div class="starfield" id="stars"></div>
+    <div class="bg-404">404</div>
+    
+    <div class="planet planet-left"></div>
+    <div class="planet planet-right-top"></div>
+    <div class="planet planet-right-bottom"></div>
+    
+    <div class="content-wrap">
+        <div class="scene">
+            <div class="teth">
+                <svg viewBox="0 0 120 120"><path d="M 90 6 Q 70 30, 60 65 T 40 110" stroke="#555" stroke-width="2.5" fill="none" stroke-dasharray="8,6" stroke-linecap="round" opacity="0.7"/></svg>
+            </div>
+            
+            <div class="rock">
+                <svg viewBox="0 0 65 95">
+                    <defs>
+                        <linearGradient id="r" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#f0f0f0"/><stop offset="100%" stop-color="#d0d0d0"/></linearGradient>
+                        <radialGradient id="w" cx="40%" cy="35%"><stop offset="0%" stop-color="#6db5ff"/><stop offset="100%" stop-color="#2d7ac7"/></radialGradient>
+                    </defs>
+                    <ellipse cx="32.5" cy="20" rx="18" ry="24" fill="url(#r)"/>
+                    <rect x="14.5" y="20" width="36" height="40" fill="url(#r)" rx="2"/>
+                    <circle cx="32.5" cy="37" r="9.5" fill="url(#w)"/>
+                    <circle cx="32.5" cy="37" r="6" fill="#5da3e8" opacity="0.6"/>
+                    <polygon points="14.5,60 5,78 14.5,74" fill="#c73e3e"/>
+                    <polygon points="50.5,60 59.5,78 50.5,74" fill="#c73e3e"/>
+                    <ellipse cx="32.5" cy="73" rx="9.5" ry="14" fill="#ff6b35" opacity="0.95"><animate attributeName="ry" values="14;18;14" dur="0.35s" repeatCount="indefinite"/></ellipse>
+                    <ellipse cx="32.5" cy="78" rx="7" ry="10" fill="#ffa629" opacity="0.85"><animate attributeName="ry" values="10;14;10" dur="0.3s" repeatCount="indefinite"/></ellipse>
+                    <ellipse cx="32.5" cy="82" rx="4.5" ry="7" fill="#ffeb3b" opacity="0.75"><animate attributeName="ry" values="7;9.5;7" dur="0.25s" repeatCount="indefinite"/></ellipse>
+                </svg>
+            </div>
+            
+            <div class="astro">
+                <svg viewBox="0 0 150 200" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <radialGradient id="helmet" cx="50%" cy="45%">
+                            <stop offset="0%" stop-color="#c8d5e3" stop-opacity="0.85"/>
+                            <stop offset="100%" stop-color="#8a9fb5" stop-opacity="0.75"/>
+                        </radialGradient>
+                        <radialGradient id="visor" cx="50%" cy="50%">
+                            <stop offset="0%" stop-color="#2e3f6e"/>
+                            <stop offset="100%" stop-color="#1a2540"/>
+                        </radialGradient>
+                        <radialGradient id="skin" cx="35%" cy="30%">
+                            <stop offset="0%" stop-color="#edb892"/>
+                            <stop offset="100%" stop-color="#d9956f"/>
+                        </radialGradient>
+                        <linearGradient id="suit" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#e5a570"/>
+                            <stop offset="50%" stop-color="#d9915f"/>
+                            <stop offset="100%" stop-color="#c77d4d"/>
+                        </linearGradient>
+                    </defs>
+                    
+                    <!-- Helmet glass/dome -->
+                    <ellipse cx="72" cy="42" rx="32" ry="34" fill="url(#helmet)" stroke="#a8b5c5" stroke-width="2"/>
+                    
+                    <!-- Dark visor -->
+                    <ellipse cx="72" cy="44" rx="24" ry="26" fill="url(#visor)"/>
+                    
+                    <!-- Visor reflection -->
+                    <ellipse cx="64" cy="36" rx="10" ry="14" fill="#4a6385" opacity="0.4"/>
+                    
+                    <!-- Helmet collar/rim -->
+                    <ellipse cx="72" cy="68" rx="36" ry="8" fill="#b8c5d5"/>
+                    
+                    <!-- Torso/body (orange suit) -->
+                    <ellipse cx="72" cy="115" rx="34" ry="42" fill="url(#suit)"/>
+                    
+                    <!-- Red chest panel -->
+                    <rect x="56" y="95" width="32" height="38" rx="4" fill="#c73e3e"/>
+                    
+                    <!-- Chest panel details -->
+                    <circle cx="72" cy="112" r="5" fill="#8b2f2f"/>
+                    <rect x="62" y="122" width="8" height="5" rx="1" fill="#8b2f2f"/>
+                    <rect x="78" y="122" width="8" height="5" rx="1" fill="#8b2f2f"/>
+                    
+                    <!-- Left arm (waving up) -->
+                    <ellipse cx="38" cy="95" rx="12" ry="28" fill="url(#suit)" transform="rotate(-35 38 95)"/>
+                    
+                    <!-- Right arm (down) -->
+                    <ellipse cx="108" cy="115" rx="12" ry="30" fill="url(#suit)" transform="rotate(15 108 115)"/>
+                    
+                    <!-- Left glove (waving) -->
+                    <ellipse cx="28" cy="82" rx="10" ry="11" fill="#e8e8e8"/>
+                    <ellipse cx="28" cy="82" rx="7" ry="8" fill="#f5f5f5"/>
+                    
+                    <!-- Right glove -->
+                    <ellipse cx="115" cy="138" rx="10" ry="11" fill="#e8e8e8"/>
+                    <ellipse cx="115" cy="138" rx="7" ry="8" fill="#f5f5f5"/>
+                    
+                    <!-- Left leg -->
+                    <ellipse cx="60" cy="170" rx="11" ry="28" fill="url(#suit)"/>
+                    
+                    <!-- Right leg -->
+                    <ellipse cx="84" cy="170" rx="11" ry="28" fill="url(#suit)"/>
+                    
+                    <!-- Left boot -->
+                    <ellipse cx="60" cy="192" rx="13" ry="8" fill="#e8e8e8"/>
+                    <ellipse cx="60" cy="190" rx="9" ry="4" fill="#f5f5f5" opacity="0.7"/>
+                    
+                    <!-- Right boot -->
+                    <ellipse cx="84" cy="192" rx="13" ry="8" fill="#e8e8e8"/>
+                    <ellipse cx="84" cy="190" rx="9" ry="4" fill="#f5f5f5" opacity="0.7"/>
+                </svg>
+            </div>
+            
+            <div class="planet-main"></div>
+        </div>
+        
+        <div class="txt">
+            <h1 class="oops">OOPS!</h1>
+            <p class="sub">Page Not Found</p>
+            
+            <div class="btns">
+                <a href="/" class="btn">Go Home</a>
+                <a href="javascript:history.back()" class="btn">Go Back</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+const sf=document.getElementById('stars');
+[{c:'tiny',n:100},{c:'small',n:50},{c:'medium',n:25},{c:'bright',n:10}].forEach(t=>{for(let i=0;i<t.n;i++){const s=document.createElement('div');s.className='star '+t.c;s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';if(t.c==='bright')s.style.animationDelay=Math.random()*2+'s';sf.appendChild(s);}});
+</script>
+{% endblock %}

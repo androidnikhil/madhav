@@ -1,0 +1,261 @@
+<section class="py-16 px-6 md:px-12 lg:px-32">
+    <div id="contact-container" class="rounded-3xl shadow-2xl overflow-hidden max-w-4xl mx-auto bg-white border border-gray-200">
+      <div class="grid md:grid-cols-2">
+        <!-- Form Side -->
+        <div id="form-side" class="p-8 md:p-12 bg-gray-200">
+          <h2 id="form-title" class="text-2xl font-bold mb-6">Get in Touch</h2>
+          <div id="form-content" class="space-y-5">
+            {{ function('do_shortcode', '[contact-form-7 id="addd9ea" title="Contact form"]') }}
+          </div>
+        </div>
+
+        <!-- Decorative / Info Side -->
+        <div id="info-side" class="bg-[#3EABBF] text-white p-8 md:p-12 flex flex-col justify-between">
+          <div>
+            <h3 id="info-title" class="text-xl font-semibold mb-4">Why Choose Us?</h3>
+            <ul id="benefits-list" class="space-y-3 text-sm">
+              <li class="benefit-item">✔️ 24/7 Support</li>
+              <li class="benefit-item">✔️ Experienced Marketing Team</li>
+              <li class="benefit-item">✔️ ROI-Driven Campaigns</li>
+              <li class="benefit-item">✔️ Free Initial Consultation</li>
+            </ul>
+          </div>
+          <div id="contact-info" class="mt-8 text-sm">
+            <p class="contact-detail"><strong>Email:</strong> <a href="mailto:info@madhavatechnology.com" class="underline hover:text-gray-200 transition-colors duration-200">info@madhavatechnology.com</a></p>
+            <p class="contact-detail"><strong>Phone:</strong> <a href="tel:+917078211946" class="underline hover:text-gray-200 transition-colors duration-200">+91 7078211946</a></p>
+            <p class="contact-detail"><strong>Address:</strong> Noida, India</p>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+
+<style>
+/* Initial states for GSAP animations */
+#contact-container {
+    opacity: 0;
+    transform: scale(0.9);
+}
+
+#form-side {
+    opacity: 0;
+    transform: translateX(-50px);
+}
+
+#info-side {
+    opacity: 0;
+    transform: translateX(50px);
+}
+
+#form-title,
+#info-title {
+    opacity: 0;
+    transform: translateY(-20px);
+}
+
+#form-content {
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.benefit-item {
+    opacity: 0;
+    transform: translateX(-20px);
+}
+
+.contact-detail {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+/* Hover animations for interactive elements */
+.benefit-item {
+    transition: all 0.3s ease;
+}
+
+.benefit-item:hover {
+    transform: translateX(5px);
+    color: #f0f9ff;
+}
+
+.contact-detail a {
+    position: relative;
+    display: inline-block;
+}
+
+.contact-detail a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -2px;
+    left: 0;
+    background-color: currentColor;
+    transition: width 0.3s ease;
+}
+
+.contact-detail a:hover::after {
+    width: 100%;
+}
+
+/* Form enhancement animations */
+#form-content input,
+#form-content textarea,
+#form-content button {
+    transition: all 0.3s ease;
+}
+
+#form-content input:focus,
+#form-content textarea:focus {
+    transform: scale(1.02);
+    box-shadow: 0 0 15px rgba(62, 171, 191, 0.3);
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+    #contact-container {
+        margin: 1rem;
+    }
+    
+    #form-side,
+    #info-side {
+        transform: translateY(30px);
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Check if GSAP is available
+    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+        // Register ScrollTrigger plugin
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Create timeline for scroll-triggered animations
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: "#contact-container",
+                start: "top 80%",
+                end: "bottom 20%",
+                toggleActions: "play none none reverse",
+                // markers: true // Uncomment for debugging
+            }
+        });
+
+        // Main container entrance
+        tl.to("#contact-container", {
+            opacity: 1,
+            scale: 1,
+            duration: 0.8,
+            ease: "power2.out"
+        })
+
+        // Form side animation
+        .to("#form-side", {
+            opacity: 1,
+            x: 0,
+            duration: 0.6,
+            ease: "power3.out"
+        }, "-=0.4")
+
+        // Info side animation
+        .to("#info-side", {
+            opacity: 1,
+            x: 0,
+            duration: 0.6,
+            ease: "power3.out"
+        }, "-=0.5")
+
+        // Form title animation
+        .to("#form-title", {
+            opacity: 1,
+            y: 0,
+            duration: 0.5,
+            ease: "back.out(1.7)"
+        }, "-=0.3")
+
+        // Info title animation
+        .to("#info-title", {
+            opacity: 1,
+            y: 0,
+            duration: 0.5,
+            ease: "back.out(1.7)"
+        }, "-=0.4")
+
+        // Form content animation
+        .to("#form-content", {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+            ease: "power2.out"
+        }, "-=0.2")
+
+        // Benefits list animation with stagger
+        .to(".benefit-item", {
+            opacity: 1,
+            x: 0,
+            duration: 0.4,
+            stagger: 0.1,
+            ease: "power2.out"
+        }, "-=0.3")
+
+        // Contact details animation with stagger
+        .to(".contact-detail", {
+            opacity: 1,
+            y: 0,
+            duration: 0.4,
+            stagger: 0.1,
+            ease: "power2.out"
+        }, "-=0.2");
+
+        // Additional hover animations for form elements
+        document.querySelectorAll('#form-content input, #form-content textarea').forEach(element => {
+            element.addEventListener('focus', () => {
+                gsap.to(element, {
+                    scale: 1.02,
+                    duration: 0.3,
+                    ease: "power2.out"
+                });
+            });
+
+            element.addEventListener('blur', () => {
+                gsap.to(element, {
+                    scale: 1,
+                    duration: 0.3,
+                    ease: "power2.out"
+                });
+            });
+        });
+
+        // Floating animation for the entire container
+        gsap.to("#contact-container", {
+            y: -5,
+            duration: 3,
+            repeat: -1,
+            yoyo: true,
+            ease: "power2.inOut"
+        });
+
+        // Subtle animation for benefit checkmarks
+        gsap.to(".benefit-item", {
+            rotateY: 5,
+            duration: 2,
+            repeat: -1,
+            yoyo: true,
+            stagger: 0.2,
+            ease: "power1.inOut"
+        });
+
+    } else {
+        // Fallback: show content immediately if GSAP is not available
+        document.getElementById('contact-container').style.opacity = '1';
+        document.getElementById('contact-container').style.transform = 'none';
+        document.getElementById('form-side').style.opacity = '1';
+        document.getElementById('form-side').style.transform = 'none';
+        document.getElementById('info-side').style.opacity = '1';
+        document.getElementById('info-side').style.transform = 'none';
+        
+        console.warn('GSAP not loaded - showing content without animations');
+    }
+});
+</script>

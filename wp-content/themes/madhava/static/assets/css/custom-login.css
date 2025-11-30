@@ -1,0 +1,28 @@
+body.login {
+    background-image: url(http://example.com/background.jpg);
+    background-size: cover;
+}
+/* Form background and borders */
+#loginform {
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* Input fields */
+#loginform input[type="text"],
+#loginform input[type="password"] {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+/* Submit button */
+#loginform input[type="submit"] {
+    background: #0073aa;
+    border-color: #0073aa;
+    border-radius: 4px;
+}
+
+#loginform input[type="submit"]:hover {
+    background: #005a87;
+}

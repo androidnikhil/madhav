@@ -1,0 +1,305 @@
+{% extends "base.twig" %}
+
+{% block content %}
+<section class="service-hero container mx-auto px-6 py-16 text-center">
+  {# Page Title #}
+  <h1 class="text-4xl md:text-5xl font-semibold leading-tight">{{ post.title }}</h1>
+  
+  {# Page Excerpt #}
+  {% if post.excerpt %}
+    <p class="mt-4 max-w-3xl mx-auto text-lg text-gray-600">{{ post.excerpt }}</p>
+  {% endif %}
+
+  {# Hero Image #}
+  <div class="mt-12">
+    <img 
+      src="https://madhavatechnology.com/wp-content/uploads/2025/10/web-design-concept-with-drawings-scaled.jpg" 
+      alt="{{ post.title }} hero image" 
+      class="w-full max-w-4xl mx-auto rounded-xl object-cover shadow-lg"
+    >
+  </div>
+</section>
+
+<section class="container mx-auto px-6 py-12">
+  <div class="grid md:grid-cols-3 gap-8">
+    {# Main Content Area #}
+    <div class="md:col-span-2 space-y-10">
+      <article class="prose max-w-none">
+        <h2 class="text-2xl font-semibold">Overview</h2>
+        <p>Design and build fast, accessible websites and apps with a UX-first process, production-grade React/Next.js, and flexible CMS options including Headless and WordPress.</p>
+      </article>
+
+      <article class="prose max-w-none">
+        <h3 class="text-xl font-semibold">UX/UI design</h3>
+        <ul class="list-disc pl-6 space-y-2">
+          <li>Research, user flows, and wireframes mapped to business goals.</li>
+          <li>High-fidelity UI systems, tokens, and component libraries.</li>
+        </ul>
+      </article>
+
+      <article class="prose max-w-none">
+        <h3 class="text-xl font-semibold">Next.js/React builds</h3>
+        <ul class="list-disc pl-6 space-y-2">
+          <li>SSR/SSG with Next.js for performance and SEO.</li>
+          <li>TypeScript, API routes, and CI/CD for reliable delivery.</li>
+        </ul>
+      </article>
+
+      <article class="prose max-w-none">
+        <h3 class="text-xl font-semibold">CMS (Headless/WordPress)</h3>
+        <ul class="list-disc pl-6 space-y-2">
+          <li>Headless WordPress, Sanity, or Strapi with GraphQL/REST.</li>
+          <li>Editor-friendly schemas, blocks, and custom fields.</li>
+        </ul>
+      </article>
+
+      <article class="prose max-w-none">
+        <h3 class="text-xl font-semibold">eCommerce</h3>
+        <ul class="list-disc pl-6 space-y-2">
+          <li>WooCommerce or Headless (e.g., Shopify Storefront API).</li>
+          <li>Checkout UX, product data models, and payments integration.</li>
+        </ul>
+      </article>
+
+      <article class="prose max-w-none">
+        <h3 class="text-xl font-semibold">Accessibility (A11y)</h3>
+        <p>Built to WCAG 2.1/2.2 Level AA: color contrast, keyboard support, clear structure, consistent navigation, and announced status messages.</p>
+        <ul class="list-disc pl-6 space-y-2">
+          <li>Contrast targets: 4.5:1 for text (AA).</li>
+          <li>Semantic landmarks, ordered headings, focus-visible, and skip links.</li>
+          <li>Consistent patterns, clear labels, and error suggestions.</li>
+        </ul>
+      </article>
+      
+      {# The original FAQ content here has been removed and moved below the main grid #}
+    </div>
+
+    {# Sidebar Area #}
+    <aside class="md:col-span-1">
+      <div class="sticky top-8 space-y-6">
+        <div class="rounded-xl border p-6">
+          <h4 class="text-lg font-semibold mb-4">What you get</h4>
+          <ul class="space-y-3">
+            <li class="flex items-start gap-3">
+              <span class="mt-1 h-2 w-2 flex-shrink-0 rounded-full bg-green-600"></span>
+              <div>
+                <p class="font-medium">Responsive design</p>
+                <p class="text-sm text-gray-600">Fluid layouts, mobile-first breakpoints, and touch targets.</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="mt-1 h-2 w-2 flex-shrink-0 rounded-full bg-green-600"></span>
+              <div>
+                <p class="font-medium">Headless CMS</p>
+                <p class="text-sm text-gray-600">Decoupled architecture with fast front-ends and editor UX.</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="mt-1 h-2 w-2 flex-shrink-0 rounded-full bg-green-600"></span>
+              <div>
+                <p class="font-medium">eCommerce</p>
+                <p class="text-sm text-gray-600">Scalable product data, checkout UX, and secure payments.</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="mt-1 h-2 w-2 flex-shrink-0 rounded-full bg-green-600"></span>
+              <div>
+                <p class="font-medium">A11y AA compliance</p>
+                <p class="text-sm text-gray-600">WCAG 2.1/2.2 AA patterns for inclusive experiences.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="rounded-xl border p-6">
+          <h4 class="text-lg font-semibold mb-4">Tech stack</h4>
+          <ul class="text-sm text-gray-700 space-y-2">
+            <li>Next.js, React, TypeScript</li>
+            <li>WordPress + Timber/Twig</li>
+            <li>Headless CMS (Sanity/Strapi)</li>
+            <li>WooCommerce / Shopify API</li>
+          </ul>
+        </div>
+
+        <div class="rounded-xl border p-6">
+          <h4 class="text-lg font-semibold mb-4">Need this service?</h4>
+          <a href="/contact" class="inline-flex items-center justify-center rounded-lg bg-black text-white px-5 py-2.5 font-medium hover:bg-gray-800 transition">Start a project</a>
+        </div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+
+{# START OF STYLIZED FAQ SECTION #}
+<section class="container mx-auto max-w-4xl px-6 pb-20" aria-labelledby="faq-heading-dev">
+    <div class="text-center mb-8">
+        <h3 id="faq-heading-dev" class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">Got Questions? We Have Answers.</h3>
+    </div>
+    
+    {# Centered container for the accordion items #}
+    <div class="max-w-3xl mx-auto space-y-6"> 
+        
+        <div class="faq-item bg-white rounded-lg">
+            <div class="faq-question flex justify-between items-center p-4 bg-[#3EABBF] rounded-t-lg">
+                <h4 class="font-semibold text-lg text-white">Do you build with Next.js/React or classic WordPress?</h4>
+                <div class="plus-icon text-white text-2xl font-bold">+</div>
+            </div>
+            <div class="faq-answer bg-white rounded-b-lg text-gray-700">
+                <div class="faq-content">
+                    <p>We work with <b>both</b>. For maximum performance and flexibility, <b>Next.js/React</b> with a Headless CMS is ideal. For simpler sites, <b>classic WordPress</b> with Timber/Twig works great.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-item bg-white rounded-lg">
+            <div class="faq-question flex justify-between items-center p-4 bg-[#3EABBF] rounded-t-lg">
+                <h4 class="font-semibold text-lg text-white">Will my site meet AA accessibility?</h4>
+                <div class="plus-icon text-white text-2xl font-bold">+</div>
+            </div>
+            <div class="faq-answer bg-white rounded-b-lg text-gray-700">
+                <div class="faq-content">
+                    <p><b>Yes</b>. We integrate patterns like proper contrast, keyboard navigation, semantic landmarks, and focus-visible from the ground up to ensure we target <b>WCAG 2.1/2.2 Level AA</b> compliance.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="faq-item bg-white rounded-lg">
+            <div class="faq-question flex justify-between items-center p-4 bg-[#3EABBF] rounded-t-lg">
+                <h4 class="font-semibold text-lg text-white">Can you integrate eCommerce?</h4>
+                <div class="plus-icon text-white text-2xl font-bold">+</div>
+            </div>
+            <div class="faq-answer bg-white rounded-b-lg text-gray-700">
+                <div class="faq-content">
+                    <p><b>Yes</b>. We implement eCommerce solutions using either <b>WooCommerce</b> for a tight WordPress setup or a <b>headless approach</b> using dedicated APIs (like Shopify Storefront API) for performance.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="faq-item bg-white rounded-lg">
+            <div class="faq-question flex justify-between items-center p-4 bg-[#3EABBF] rounded-t-lg">
+                <h4 class="font-semibold text-lg text-white">Is the design fully responsive?</h4>
+                <div class="plus-icon text-white text-2xl font-bold">+</div>
+            </div>
+            <div class="faq-answer bg-white rounded-b-lg text-gray-700">
+                <div class="faq-content">
+                    <p><b>Yes</b>. Our process is always <b>mobile-first</b>, ensuring fluid grids, appropriate typography scaling, and comfortable touch targets across all major breakpoints (mobile, tablet, and desktop).</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{# END OF STYLIZED FAQ SECTION #}
+
+
+
+{# Styles and Scripts for the FAQ Accordion #}
+<style>
+    /* Custom style for the hand-drawn border effect on FAQ items */
+    .faq-item {
+        border: 2px solid #1a202c;
+        box-shadow: 4px 4px 0px #1a202c;
+    }
+    .faq-question {
+        cursor: pointer;
+    }
+    .faq-answer {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.5s ease-in-out, padding 0.5s ease-in-out;
+        padding: 0;
+    }
+    .faq-answer.open {
+        padding: 0;
+        max-height: 300px; /* Set maximum height for scrolling */
+        overflow-y: auto; /* Enable vertical scrolling */
+    }
+    
+    /* FAQ Content wrapper with padding and scroll */
+    .faq-content {
+        padding: 1.5rem;
+        max-height: inherit;
+    }
+    
+    /* Custom scrollbar styling (Optional, for better visual consistency) */
+    .faq-answer::-webkit-scrollbar {
+        width: 6px;
+    }
+    
+    .faq-answer::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 3px;
+    }
+    
+    .faq-answer::-webkit-scrollbar-thumb {
+        background: #14b8a6; /* Teal color to match theme */
+        border-radius: 3px;
+    }
+    
+    .faq-answer::-webkit-scrollbar-thumb:hover {
+        background: #0d9488; /* Darker teal on hover */
+    }
+    
+    /* For Firefox */
+    .faq-answer {
+        scrollbar-width: thin;
+        scrollbar-color: #14b8a6 #f1f1f1;
+    }
+    
+    .plus-icon {
+        transition: transform 0.3s ease-in-out;
+    }
+    .plus-icon.rotated {
+        transform: rotate(45deg);
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .faq-answer.open {
+            max-height: 200px; /* Smaller max height on mobile */
+        }
+    }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // FAQ Accordion Logic
+    const faqQuestions = document.querySelectorAll('.faq-question');
+
+    faqQuestions.forEach(question => {
+        question.addEventListener('click', () => {
+            const answer = question.nextElementSibling;
+            const icon = question.querySelector('.plus-icon');
+            const isOpen = answer.classList.contains('open');
+
+            // Close all other open answers
+            document.querySelectorAll('.faq-answer.open').forEach(openAnswer => {
+                if (openAnswer !== answer) {
+                    openAnswer.classList.remove('open');
+                    openAnswer.style.maxHeight = 0;
+                    // Safely find and remove 'rotated' class from the plus icon of the previously open item
+                    const siblingQuestion = openAnswer.previousElementSibling;
+                    if (siblingQuestion) {
+                      const siblingIcon = siblingQuestion.querySelector('.plus-icon');
+                      if (siblingIcon) {
+                          siblingIcon.classList.remove('rotated');
+                      }
+                    }
+                }
+            });
+
+            // Toggle the clicked answer
+            answer.classList.toggle('open');
+            icon.classList.toggle('rotated');
+            
+            if (answer.classList.contains('open')) {
+                // Set max height to enable scrolling if content is too long
+                answer.style.maxHeight = "300px"; // Fixed height for scrolling
+            } else {
+                answer.style.maxHeight = 0;
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

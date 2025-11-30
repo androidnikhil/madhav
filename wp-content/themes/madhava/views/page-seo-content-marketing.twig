@@ -1,0 +1,289 @@
+{% extends "base.twig" %}
+
+{% block content %}
+<section class="service-hero container mx-auto px-6 py-16 text-center">
+  {# Page Title #}
+  <h1 class="text-4xl md:text-5xl font-semibold leading-tight">{{ post.title }}</h1>
+  
+  {# Page Excerpt #}
+  {% if post.excerpt %}
+    <p class="mt-4 max-w-3xl mx-auto text-lg text-gray-600">{{ post.excerpt }}</p>
+  {% endif %}
+
+  {# Hero Image #}
+  <div class="mt-12">
+    <img 
+      src="https://madhavatechnology.com/wp-content/uploads/2025/10/05.jpg" 
+      alt="{{ post.title }} hero image" 
+      class="w-full max-w-4xl mx-auto rounded-xl object-cover shadow-lg"
+    >
+  </div>
+</section>
+
+<section class="container mx-auto px-6 pb-12">
+  <div class="grid md:grid-cols-3 gap-8">
+    <div class="md:col-span-2 space-y-10">
+      <article class="prose max-w-none">
+        <h2 class="text-2xl font-semibold">Overview</h2>
+        <p>Drive qualified organic growth with technical SEO audits, on-page optimization, strategic content planning, topic clusters, and white-hat link building.</p>
+      </article>
+
+      <article class="prose max-w-none">
+        <h3 class="text-xl font-semibold">Keyword & competitor research</h3>
+        <ul class="list-disc pl-6">
+          <li>Map search intent and SERP features to prioritize keywords by impact.</li>
+          <li>Gap analysis against competitors to uncover content and link opportunities.</li>
+        </ul>
+      </article>
+
+      <article class="prose max-w-none">
+        <h3 class="text-xl font-semibold">Technical audits</h3>
+        <ul class="list-disc pl-6">
+          <li>Crawlability, indexation, and internal linking health; fix broken links and ensure CSS/JS are crawlable.</li>
+          <li>Core Web Vitals, mobile responsiveness, HTTPS, structured data, and canonicalization checks.</li>
+        </ul>
+      </article>
+
+      <article class="prose max-w-none">
+        <h3 class="text-xl font-semibold">Content production</h3>
+        <ul class="list-disc pl-6">
+          <li>Pillar and cluster content plans aligned to topics and long‑tail queries.</li>
+          <li>On‑page optimization: titles, headings, media alt text, schema, and internal links.</li>
+        </ul>
+      </article>
+
+      <article class="prose max-w-none">
+        <h3 class="text-xl font-semibold">Link building</h3>
+        <ul class="list-disc pl-6">
+          <li>Outreach for relevant, authoritative links that reinforce topical depth.</li>
+          <li>Digital PR, resource pages, and content-led link acquisition.</li>
+        </ul>
+      </article>
+
+      <article class="prose max-w-none">
+        <h3 class="text-xl font-semibold">Topic clusters</h3>
+        <p>Organize content into a pillar page and interlinked cluster pages so search engines understand topical authority and users can navigate related subtopics easily.</p>
+        <ul class="list-disc pl-6">
+          <li>Pillar covers the broad topic; clusters go deep on specific long‑tail subtopics.</li>
+          <li>Strong internal linking: clusters link to pillar and to each other where relevant.</li>
+        </ul>
+      </article>
+    </div>
+
+    <aside class="md:col-span-1">
+      <div class="sticky top-8 space-y-6">
+        <div class="rounded-xl border p-6">
+          <h4 class="text-lg font-semibold mb-4">What you get</h4>
+          <ul class="space-y-3">
+            <li class="flex items-start gap-3">
+              <span class="mt-1 h-2 w-2 rounded-full bg-green-600"></span>
+              <div>
+                <p class="font-medium">Keyword & competitor research</p>
+                <p class="text-sm text-gray-600">Intent mapping and gap analysis to prioritize opportunities.</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="mt-1 h-2 w-2 rounded-full bg-green-600"></span>
+              <div>
+                <p class="font-medium">Technical audits</p>
+                <p class="text-sm text-gray-600">Crawlability, CWV, mobile, HTTPS, and schema checks.</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="mt-1 h-2 w-2 rounded-full bg-green-600"></span>
+              <div>
+                <p class="font-medium">Content production</p>
+                <p class="text-sm text-gray-600">Pillar/cluster plans and on‑page optimization.</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="mt-1 h-2 w-2 rounded-full bg-green-600"></span>
+              <div>
+                <p class="font-medium">Link building</p>
+                <p class="text-sm text-gray-600">Authoritative, relevant links via outreach and PR.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="rounded-xl border p-6">
+          <h4 class="text-lg font-semibold mb-4">Deliverables</h4>
+          <ul class="text-sm text-gray-700 space-y-2">
+            <li>Audit report + prioritized fixes</li>
+            <li>Pillar & cluster content map</li>
+            <li>On‑page optimization sheet</li>
+            <li>Monthly link acquisition log</li>
+          </ul>
+        </div>
+
+        <div class="rounded-xl border p-6">
+          <h4 class="text-lg font-semibold mb-4">Need this service?</h4>
+          <a href="/contact" class="inline-flex items-center justify-center rounded-lg bg-black text-white px-5 py-2.5 hover:bg-gray-800 transition">Start a project</a>
+        </div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+
+
+{# START OF STYLIZED FAQ SECTION #}
+<section class="container mx-auto max-w-4xl px-6 pb-20" aria-labelledby="faq-heading">
+    <div class="text-center mb-8">
+        <h3 id="faq-heading" class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">Got Questions? We Have Answers.</h3>
+    </div>
+    
+    {# Centered container for the accordion items #}
+    <div class="max-w-3xl mx-auto space-y-6"> 
+        
+        <div class="faq-item bg-white rounded-lg">
+            <div class="faq-question flex justify-between items-center p-4 bg-[#3EABBF] rounded-t-lg">
+                <h4 class="font-semibold text-lg text-white">How do topic clusters help?</h4>
+                <div class="plus-icon text-white text-2xl font-bold">+</div>
+            </div>
+            <div class="faq-answer bg-white rounded-b-lg text-gray-700">
+                <div class="faq-content">
+                    <p>They connect a broad pillar page to multiple in‑depth cluster pages with strong internal links, building <b>topical authority</b> and improving user navigation, which search engines favor.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-item bg-white rounded-lg">
+            <div class="faq-question flex justify-between items-center p-4 bg-[#3EABBF] rounded-t-lg">
+                <h4 class="font-semibold text-lg text-white">What’s included in a technical SEO audit?</h4>
+                <div class="plus-icon text-white text-2xl font-bold">+</div>
+            </div>
+            <div class="faq-answer bg-white rounded-b-lg text-gray-700">
+                <div class="faq-content">
+                    <p>Crawlability, indexation health, internal linking, <b>Core Web Vitals</b> performance, mobile responsiveness, HTTPS, structured data, and canonicalization checks, all with prioritized fixes.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="faq-item bg-white rounded-lg">
+            <div class="faq-question flex justify-between items-center p-4 bg-[#3EABBF] rounded-t-lg">
+                <h4 class="font-semibold text-lg text-white">Will you handle link outreach?</h4>
+                <div class="plus-icon text-white text-2xl font-bold">+</div>
+            </div>
+            <div class="faq-answer bg-white rounded-b-lg text-gray-700">
+                <div class="faq-content">
+                    <p>Yes—we manage <b>content-led outreach</b> and digital PR strategies to acquire relevant, high-quality, and authoritative links that reinforce your overall cluster strategy.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{# END OF STYLIZED FAQ SECTION #}
+
+
+
+{# Styles and Scripts for the FAQ Accordion #}
+<style>
+    /* Custom style for the hand-drawn border effect on FAQ items */
+    .faq-item {
+        border: 2px solid #1a202c;
+        box-shadow: 4px 4px 0px #1a202c;
+    }
+    .faq-question {
+        cursor: pointer;
+    }
+    .faq-answer {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.5s ease-in-out, padding 0.5s ease-in-out;
+        padding: 0;
+    }
+    .faq-answer.open {
+        padding: 0;
+        max-height: 300px; /* Set maximum height for scrolling */
+        overflow-y: auto; /* Enable vertical scrolling */
+    }
+    
+    /* FAQ Content wrapper with padding and scroll */
+    .faq-content {
+        padding: 1.5rem;
+        max-height: inherit;
+    }
+    
+    /* Custom scrollbar styling (Optional, for better visual consistency) */
+    .faq-answer::-webkit-scrollbar {
+        width: 6px;
+    }
+    
+    .faq-answer::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 3px;
+    }
+    
+    .faq-answer::-webkit-scrollbar-thumb {
+        background: #14b8a6; /* Teal color to match theme */
+        border-radius: 3px;
+    }
+    
+    .faq-answer::-webkit-scrollbar-thumb:hover {
+        background: #0d9488; /* Darker teal on hover */
+    }
+    
+    /* For Firefox */
+    .faq-answer {
+        scrollbar-width: thin;
+        scrollbar-color: #14b8a6 #f1f1f1;
+    }
+    
+    .plus-icon {
+        transition: transform 0.3s ease-in-out;
+    }
+    .plus-icon.rotated {
+        transform: rotate(45deg);
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .faq-answer.open {
+            max-height: 200px; /* Smaller max height on mobile */
+        }
+    }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // FAQ Accordion Logic
+    const faqQuestions = document.querySelectorAll('.faq-question');
+
+    faqQuestions.forEach(question => {
+        question.addEventListener('click', () => {
+            const answer = question.nextElementSibling;
+            const icon = question.querySelector('.plus-icon');
+            const isOpen = answer.classList.contains('open');
+
+            // Close all other open answers
+            document.querySelectorAll('.faq-answer.open').forEach(openAnswer => {
+                if (openAnswer !== answer) {
+                    openAnswer.classList.remove('open');
+                    openAnswer.style.maxHeight = 0;
+                    // Safely find and remove 'rotated' class from the plus icon of the previously open item
+                    const siblingQuestion = openAnswer.previousElementSibling;
+                    if (siblingQuestion) {
+                      const siblingIcon = siblingQuestion.querySelector('.plus-icon');
+                      if (siblingIcon) {
+                          siblingIcon.classList.remove('rotated');
+                      }
+                    }
+                }
+            });
+
+            // Toggle the clicked answer
+            answer.classList.toggle('open');
+            icon.classList.toggle('rotated');
+            
+            if (answer.classList.contains('open')) {
+                // Set max height to enable scrolling if content is too long
+                answer.style.maxHeight = "300px"; // Fixed height for scrolling
+            } else {
+                answer.style.maxHeight = 0;
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

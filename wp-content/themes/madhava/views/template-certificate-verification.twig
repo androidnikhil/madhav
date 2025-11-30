@@ -1,0 +1,11 @@
+{% extends "base.twig" %}
+
+{% block content %}
+<div class="certificate-verification-page">
+    {{ include('partial/certificate-form.twig') }}
+    
+    {% if certificate %}
+        {{ include('partial/certificate-display.twig') }}
+    {% endif %}
+</div>
+{% endblock %}

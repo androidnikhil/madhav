@@ -1,0 +1,57 @@
+<?php defined( 'ABSPATH' ) || die( 'No direct access allowed' ); ?>
+<h1><?php echo esc_html(get_admin_page_title()); ?></h1>
+
+<div id="imt-content-panel" class="imapie_settings_container">
+	<!-- Native WordPress Tab Navigation -->
+	<nav class="nav-tab-wrapper" id="iwc-tab-nav" role="tablist">
+		<a href="#iwc-tab-posts" class="nav-tab nav-tab-active" data-tab="posts" role="tab" aria-selected="true" aria-controls="iwc-tab-posts">Posts</a>
+		<a href="#iwc-tab-comments" class="nav-tab" data-tab="comments" role="tab" aria-selected="false" aria-controls="iwc-tab-comments">Comments</a>
+		<a href="#iwc-tab-users" class="nav-tab" data-tab="users" role="tab" aria-selected="false" aria-controls="iwc-tab-users">Users</a>
+		<a href="#iwc-tab-terms" class="nav-tab" data-tab="terms" role="tab" aria-selected="false" aria-controls="iwc-tab-terms">Terms</a>
+	</nav>
+
+	<!-- Posts Tab -->
+	<div id="iwc-tab-posts" class="iwc-tab-content iwc-tab-active" role="tabpanel" aria-hidden="false" aria-labelledby="iwc-tab-posts">
+		<form action="options.php" method="post" id="impaie_form_post">
+			<?php
+			settings_fields('integromat_api_post');
+			do_settings_sections('integromat_api_post');
+			submit_button('Save Settings');
+			?>
+		</form>
+	</div>
+
+	<!-- Comments Tab -->
+	<div id="iwc-tab-comments" class="iwc-tab-content" role="tabpanel" aria-hidden="true" aria-labelledby="iwc-tab-comments">
+		<form action="options.php" method="post" id="impaie_form_comment">
+			<?php
+			settings_fields('integromat_api_comment');
+			do_settings_sections('integromat_api_comment');
+			submit_button('Save Settings');
+			?>
+		</form>
+	</div>
+
+	<!-- Users Tab -->
+	<div id="iwc-tab-users" class="iwc-tab-content" role="tabpanel" aria-hidden="true" aria-labelledby="iwc-tab-users">
+		<form action="options.php" method="post" id="impaie_form_user">
+			<?php
+			settings_fields('integromat_api_user');
+			do_settings_sections('integromat_api_user');
+			submit_button('Save Settings');
+			?>
+		</form>
+	</div>
+
+	<!-- Terms Tab -->
+	<div id="iwc-tab-terms" class="iwc-tab-content" role="tabpanel" aria-hidden="true" aria-labelledby="iwc-tab-terms">
+		<form action="options.php" method="post" id="impaie_form_term">
+			<input type="hidden" name="object_type" value="term">
+			<?php
+			settings_fields('integromat_api_term');
+			do_settings_sections('integromat_api_term');
+			submit_button('Save Settings');
+			?>
+		</form>
+	</div>
+</div>

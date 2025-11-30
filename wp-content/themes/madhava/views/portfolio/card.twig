@@ -1,0 +1,143 @@
+<div class="container mx-auto px-4 py-10 max-w-7xl">
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+    {# Static cards example #}
+    <div class="bg-white border border-gray-300 rounded-xl shadow hover:shadow-lg transition duration-300 overflow-hidden group cursor-pointer">
+      <img src="https://madhavatechnology.com/wp-content/uploads/2025/10/Potion-logo-08-1-scaled.png" alt="Project Alpha" class="w-full h-64 object-cover object-center transition-transform duration-500 group-hover:scale-105">
+      <div class="p-6">
+        <h3 class="text-xl font-bold text-gray-900 mb-2">Potion Skincare</h3>
+        <p class="text-gray-600 mb-3">A modern web design for a tech startup, featuring responsive layouts and engaging visuals.</p>
+        <div class="flex flex-wrap gap-2 mb-2">
+          <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-semibold">E-commerce</span>
+          <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-semibold">Startup</span>
+        </div>
+        {# <a href="#" class="inline-block mt-2 text-blue-600 hover:underline font-medium text-sm">View Project →</a> #}
+      </div>
+    </div>
+    <div class="bg-white border border-gray-300 rounded-xl shadow hover:shadow-lg transition duration-300 overflow-hidden group cursor-pointer">
+      <img src="https://madhavatechnology.com/wp-content/uploads/2025/10/kumbh_resources.jpg" alt="Project Beta" class="w-full h-64 object-cover object-center transition-transform duration-500 group-hover:scale-105">
+      <div class="p-6">
+        <h3 class="text-xl font-bold text-gray-900 mb-2">Kumbh Resources</h3>
+        <p class="text-gray-600 mb-3">Branding and identity for a creative agency, including logo, palette, and typography.</p>
+        <div class="flex flex-wrap gap-2 mb-2">
+          <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-semibold">Branding</span>
+          <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-semibold">Agency</span>
+        </div>
+        {# <a href="#" class="inline-block mt-2 text-blue-600 hover:underline font-medium text-sm">View Project →</a> #}
+      </div>
+    </div>
+    <div class="bg-white border border-gray-300 rounded-xl shadow hover:shadow-lg transition duration-300 overflow-hidden group cursor-pointer">
+      <img src="https://madhavatechnology.com/wp-content/uploads/2025/10/br_convent-1.png" alt="Project Gamma" class="w-full h-64 object-cover object-center transition-transform duration-500 group-hover:scale-105">
+      <div class="p-6">
+        <h3 class="text-xl font-bold text-gray-900 mb-2">BR Convent</h3>
+        <p class="text-gray-600 mb-3">E-commerce platform for a fashion retailer, optimized for conversions and mobile users.</p>
+        <div class="flex flex-wrap gap-2 mb-2">
+          <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-semibold">Web Design</span>
+          <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-semibold">Education</span>
+        </div>
+        {# <a href="#" class="inline-block mt-2 text-blue-600 hover:underline font-medium text-sm">View Project →</a> #}
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+
+    // 3. Main script to inject data and apply GSAP (CORRECTED with Timeline sequencing)
+    document.addEventListener('DOMContentLoaded', () => {
+        const grid = document.getElementById('grid');
+
+        // Generate and inject all project tiles
+        if (grid) {
+            grid.innerHTML = projectData.map(createProjectTile).join('');
+        }
+
+        // --- GSAP Animations ---
+
+        // Define a master delay for content start
+        const masterDelay = 0.5; 
+
+        // Animate the main page title "Projects" and the lead text 
+        const pageTitle = document.querySelector('.page-title');
+        const leadText = document.querySelector('.lead');
+
+        if (pageTitle) {
+            gsap.from(pageTitle, {
+                opacity: 0,
+                y: 20,
+                duration: 1,
+                ease: 'power3.out',
+                delay: masterDelay
+            });
+        }
+
+        if (leadText) {
+            gsap.from(leadText, {
+                opacity: 0,
+                y: 20,
+                duration: 1,
+                ease: 'power3.out',
+                delay: masterDelay + 0.2
+            });
+        }
+
+        // 2. Animate the Project Tiles with Staggered Flip-Up and Text Sequencing
+        const tiles = document.querySelectorAll('#grid .tile');
+        
+        if (tiles.length > 0) {
+            // Use .forEach and a GSAP Timeline for per-tile sequencing
+            tiles.forEach((tile, index) => {
+                const title = tile.querySelector('.tile-title');
+                const subtitle = tile.querySelector('.tile-subtitle');
+
+                // Create a timeline for each tile
+                const tl = gsap.timeline({
+                    // Delay the start of each tile's timeline to create the stagger
+                    delay: masterDelay + 0.5 + (index * 0.1), 
+                    paused: true 
+                });
+
+                // STAGE 1: Animate the CARD CONTAINER (Staggered Flip-Up)
+                tl.fromTo(tile, 
+                    {
+                        opacity: 0,
+                        y: 80, 
+                        rotationX: -45, // Flip perspective for a unique card entrance
+                        transformOrigin: 'top center',
+                        scale: 0.95 
+                    }, 
+                    {
+                        opacity: 1,
+                        y: 0,
+                        rotationX: 0, 
+                        scale: 1,
+                        duration: 0.8,
+                        ease: "power2.out"
+                        // FIX APPLIED: Removed clearProps: "all" to prevent disappearance
+                    }
+                );
+                
+                // STAGE 2: Animate the TITLE (Slide-up Fade-in)
+                // Position "-=0.3" starts this animation 0.3s before the card animation ends, overlapping for speed.
+                tl.to(title, {
+                    y: 0,
+                    opacity: 1,
+                    duration: 0.5,
+                    ease: "power2.out"
+                }, "-=0.3"); 
+
+                // STAGE 3: Animate the SUBTITLE (Slide-up Fade-in)
+                // Position "<0.1" starts this animation 0.1s after the start of the title animation, ensuring sequence.
+                tl.to(subtitle, {
+                    y: 0,
+                    opacity: 1,
+                    duration: 0.5,
+                    ease: "power2.out"
+                }, "<0.1"); 
+
+                // Run the timeline for the tile
+                tl.play(); 
+            });
+        }
+    });
+    // NOTE: For a real portfolio, the filter functionality (data-filter buttons) 
+    // and Barba.js transitions would require more complex JavaScript logic.
+  </script>

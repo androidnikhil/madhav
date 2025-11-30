@@ -1,0 +1,1577 @@
+{# templates/service-forms-popup.twig #}
+
+<style>
+/* Multi-Step Form Styles */
+@keyframes fadein {
+    from { opacity: 0; transform: scale(.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.service-popup-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 9999;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.service-popup-overlay.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.service-popup-box {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    animation: fadein 0.3s ease-out;
+}
+
+.popup-close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: #f3f4f6;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    color: #666;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    z-index: 10;
+}
+
+.popup-close-btn:hover {
+    background: #e5e7eb;
+    color: #000;
+    transform: rotate(90deg);
+}
+
+.popup-header {
+    background: linear-gradient(135deg, #3eabbf 0%, #2c8c9a 100%);
+    padding: 30px;
+    border-radius: 20px 20px 0 0;
+    color: white;
+}
+
+.popup-header h2 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.popup-header p {
+    margin: 8px 0 0 0;
+    opacity: 0.9;
+    font-size: 14px;
+}
+
+.popup-body {
+    padding: 30px;
+}
+
+.form-step {
+    display: none;
+}
+
+.form-step.active {
+    display: block;
+    animation: fadein 0.25s ease-out;
+}
+
+.step-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 30px;
+    gap: 10px;
+}
+
+.step-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #d1d5db;
+    transition: all 0.3s;
+}
+
+.step-dot.active {
+    width: 30px;
+    border-radius: 5px;
+    background: #3eabbf;
+}
+
+.step-dot.completed {
+    background: #10b981;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #374151;
+    font-size: 14px;
+}
+
+.form-group label .required {
+    color: #ef4444;
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #e5e7eb;
+    border-radius: 10px;
+    font-size: 14px;
+    transition: all 0.2s;
+    font-family: 'Space Grotesk', sans-serif;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #3eabbf;
+    box-shadow: 0 0 0 3px rgba(62, 171, 191, 0.1);
+}
+
+.form-control.error {
+    border-color: #ef4444;
+}
+
+.checkbox-group, .radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.checkbox-item, .radio-item {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    border: 2px solid #e5e7eb;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.checkbox-item:hover, .radio-item:hover {
+    border-color: #3eabbf;
+    background: #f0f9fa;
+}
+
+.checkbox-item input, .radio-item input {
+    margin-right: 10px;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+.form-buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.btn {
+    padding: 14px 30px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+    font-family: 'Space Grotesk', sans-serif;
+}
+
+.btn-primary {
+    background: #3eabbf;
+    color: white;
+    flex: 1;
+}
+
+.btn-primary:hover {
+    background: #2c8c9a;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(62, 171, 191, 0.3);
+}
+
+.btn-secondary {
+    background: #f3f4f6;
+    color: #374151;
+    flex: 1;
+}
+
+.btn-secondary:hover {
+    background: #e5e7eb;
+}
+
+.btn-success {
+    background: #10b981;
+    color: white;
+    flex: 1;
+}
+
+.btn-success:hover {
+    background: #059669;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
+}
+
+.success-message {
+    display: none;
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.success-message.active {
+    display: block;
+}
+
+.success-icon {
+    width: 80px;
+    height: 80px;
+    background: #10b981;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 40px;
+}
+
+.success-message h3 {
+    color: #10b981;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.success-message p {
+    color: #6b7280;
+    font-size: 14px;
+}
+
+@media (max-width: 640px) {
+    .service-popup-box {
+        max-width: 100%;
+        margin: 10px;
+    }
+    
+    .popup-header, .popup-body {
+        padding: 20px;
+    }
+    
+    .form-buttons {
+        flex-direction: column;
+    }
+}
+</style>
+
+<!-- Multi-Step Form Popup Container -->
+<div id="serviceFormPopup" class="service-popup-overlay">
+    <div class="service-popup-box">
+        <button class="popup-close-btn" onclick="closeServiceForm()">&times;</button>
+        
+        <div class="popup-header">
+            <h2 id="formServiceTitle">Service Inquiry</h2>
+            <p id="formServiceSubtitle">Please fill out the form to get started</p>
+        </div>
+        
+        <div class="popup-body">
+            <!-- Step Indicator -->
+            <div class="step-indicator" id="stepIndicator"></div>
+            
+            <!-- Form Container -->
+            <form id="multiStepServiceForm">
+                <input type="hidden" name="action" value="submit_service_form">
+                <input type="hidden" name="service_type" id="serviceType">
+                
+                <!-- Form steps will be injected here -->
+                <div id="formStepsContainer"></div>
+                
+                <!-- Navigation Buttons -->
+                <div class="form-buttons">
+                    <button type="button" class="btn btn-secondary" id="prevBtn" onclick="prevStep()" style="display: none;">Previous</button>
+                    <button type="button" class="btn btn-primary" id="nextBtn" onclick="nextStep()">Next</button>
+                    <button type="submit" class="btn btn-success" id="submitBtn" style="display: none;">Submit Form</button>
+                </div>
+            </form>
+            
+            <!-- Success Message -->
+            <div class="success-message" id="successMessage">
+                <div class="success-icon">✓</div>
+                <h3>Thank You!</h3>
+                <p>Your inquiry has been submitted successfully. We'll get back to you within 24 hours.</p>
+                <button class="btn btn-primary" onclick="closeServiceForm()" style="margin-top: 20px; width: auto;">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Form Data Structures for Each Service
+const serviceFormsData = {
+    'web-development': {
+        title: 'Website Development Inquiry',
+        subtitle: 'Let\'s build your perfect website',
+        steps: [
+            {
+                title: 'Basic Information',
+                fields: [
+                    { name: 'full_name', label: 'Full Name', type: 'text', required: true },
+                    { name: 'company_name', label: 'Company / Organization Name', type: 'text', required: true },
+                    { name: 'email', label: 'Email Address', type: 'email', required: true },
+                    { name: 'phone', label: 'Contact Number', type: 'tel', required: true },
+                    { name: 'website', label: 'Website (if any)', type: 'url', required: false }
+                ]
+            },
+            {
+                title: 'Project Overview',
+                fields: [
+                    { 
+                        name: 'website_type', 
+                        label: 'What type of website do you need?', 
+                        type: 'checkbox', 
+                        required: true,
+                        options: [
+                            'Business Website',
+                            'E-commerce Store',
+                            'Portfolio / Personal Site',
+                            'Educational / School Website',
+                            'Real Estate / Property Website',
+                            'Other'
+                        ]
+                    },
+                    { name: 'business_description', label: 'Briefly describe your business or services', type: 'textarea', required: true },
+                    { 
+                        name: 'main_goals', 
+                        label: 'What are the main goals of your new website?', 
+                        type: 'checkbox', 
+                        required: true,
+                        options: [
+                            'Brand Awareness',
+                            'Lead Generation',
+                            'Online Sales',
+                            'Informational / Educational',
+                            'Other'
+                        ]
+                    }
+                ]
+            },
+            {
+                title: 'Design Preferences',
+                fields: [
+                    { name: 'design_style', label: 'Specific design style or theme in mind?', type: 'text', required: false, placeholder: 'e.g., minimalistic, corporate, creative' },
+                    { name: 'inspiration_websites', label: 'Any websites you like (for inspiration)?', type: 'textarea', required: false, placeholder: 'Enter URLs, one per line' },
+                    { 
+                        name: 'existing_assets', 
+                        label: 'Do you already have:', 
+                        type: 'checkbox', 
+                        required: false,
+                        options: [
+                            'Logo',
+                            'Brand colors',
+                            'Content (text, images, videos)'
+                        ]
+                    }
+                ]
+            },
+            {
+                title: 'Features & Technical',
+                fields: [
+                    { 
+                        name: 'features', 
+                        label: 'What features would you like on your website?', 
+                        type: 'checkbox', 
+                        required: true,
+                        options: [
+                            'Contact Form',
+                            'Blog / News Section',
+                            'Gallery / Portfolio',
+                            'Online Booking Form',
+                            'E-commerce (Product Listing + Payment)',
+                            'Chat Support',
+                            'SEO Optimization',
+                            'Social Media Integration',
+                            'Other'
+                        ]
+                    },
+                    { 
+                        name: 'technical_needs', 
+                        label: 'Do you need:', 
+                        type: 'checkbox', 
+                        required: false,
+                        options: [
+                            'Domain Registration',
+                            'Website Hosting',
+                            'Website Maintenance',
+                            'Email Setup'
+                        ]
+                    },
+                    { 
+                        name: 'preferred_tech', 
+                        label: 'Preferred Technology', 
+                        type: 'radio', 
+                        required: false,
+                        options: [
+                            'WordPress',
+                            'Shopify',
+                            'Custom PHP / Laravel',
+                            'React / Next.js',
+                            'Not Sure (Need Guidance)'
+                        ]
+                    }
+                ]
+            },
+            {
+                title: 'Timeline & Budget',
+                fields: [
+                    { 
+                        name: 'timeline', 
+                        label: 'When do you want the website to go live?', 
+                        type: 'radio', 
+                        required: true,
+                        options: [
+                            'Within 2 weeks',
+                            '1 month',
+                            '2–3 months',
+                            'Flexible'
+                        ]
+                    },
+                    { 
+                        name: 'budget', 
+                        label: 'Estimated budget range', 
+                        type: 'radio', 
+                        required: true,
+                        options: [
+                            '₹10,000–₹25,000',
+                            '₹25,000–₹50,000',
+                            '₹50,000–₹1,00,000',
+                            'Above ₹1,00,000',
+                            'Not decided yet'
+                        ]
+                    },
+                    { 
+                        name: 'marketing_services', 
+                        label: 'Would you like digital marketing or SEO services?', 
+                        type: 'checkbox', 
+                        required: false,
+                        options: [
+                            'Yes, SEO',
+                            'Yes, Social Media Marketing',
+                            'Yes, Google Ads / PPC',
+                            'Not at the moment'
+                        ]
+                    },
+                    { name: 'additional_info', label: 'Any special requirements or comments?', type: 'textarea', required: false }
+                ]
+            }
+        ]
+    },
+    
+    'seo-marketing': {
+        title: 'SEO Services Inquiry',
+        subtitle: 'Let\'s boost your search rankings',
+        steps: [
+            {
+                title: 'Basic Information',
+                fields: [
+                    { name: 'full_name', label: 'Full Name', type: 'text', required: true },
+                    { name: 'company_name', label: 'Company / Organization Name', type: 'text', required: true },
+                    { name: 'designation', label: 'Designation / Role', type: 'text', required: false },
+                    { name: 'email', label: 'Email Address', type: 'email', required: true },
+                    { name: 'phone', label: 'Contact Number', type: 'tel', required: true },
+                    { name: 'website', label: 'Website URL', type: 'url', required: true },
+                    { name: 'business_address', label: 'Business Address / Location', type: 'text', required: false }
+                ]
+            },
+            {
+                title: 'Business Overview',
+                fields: [
+                    { name: 'business_description', label: 'Briefly describe your business or services', type: 'textarea', required: true },
+                    { 
+                        name: 'target_audience', 
+                        label: 'Who is your target audience?', 
+                        type: 'checkbox', 
+                        required: true,
+                        options: [
+                            'Local Customers',
+                            'National Audience',
+                            'International Clients',
+                            'B2B',
+                            'B2C'
+                        ]
+                    },
+                    { 
+                        name: 'seo_goals', 
+                        label: 'What are your main goals for SEO?', 
+                        type: 'checkbox', 
+                        required: true,
+                        options: [
+                            'Increase website traffic',
+                            'Rank higher on Google',
+                            'Generate more leads or inquiries',
+                            'Increase online sales',
+                            'Improve brand visibility',
+                            'Other'
+                        ]
+                    }
+                ]
+            },
+            {
+                title: 'Current SEO Status',
+                fields: [
+                    { 
+                        name: 'website_age', 
+                        label: 'How long has your website been live?', 
+                        type: 'radio', 
+                        required: true,
+                        options: [
+                            'Less than 6 months',
+                            '6 months – 1 year',
+                            '1–3 years',
+                            'Over 3 years'
+                        ]
+                    },
+                    { 
+                        name: 'previous_seo', 
+                        label: 'Have you done any SEO work before?', 
+                        type: 'radio', 
+                        required: true,
+                        options: [
+                            'Yes, ongoing',
+                            'Yes, but stopped',
+                            'No, never'
+                        ]
+                    },
+                    { name: 'keywords', label: 'List 3–5 main keywords you want to rank for', type: 'textarea', required: true, placeholder: 'One per line' },
+                    { name: 'target_locations', label: 'Locations or regions you want to target for SEO', type: 'text', required: true, placeholder: 'e.g., Delhi NCR, All India' }
+                ]
+            },
+            {
+                title: 'SEO Services & Competitors',
+                fields: [
+                    { 
+                        name: 'seo_services', 
+                        label: 'Which SEO services are you interested in?', 
+                        type: 'checkbox', 
+                        required: true,
+                        options: [
+                            'Complete SEO Audit',
+                            'On-Page Optimization',
+                            'Off-Page Optimization',
+                            'Local SEO',
+                            'E-commerce SEO',
+                            'Content Optimization / Blog Writing',
+                            'Keyword Research & Strategy',
+                            'Technical SEO',
+                            'Monthly Reporting & Maintenance'
+                        ]
+                    },
+                    { name: 'competitors', label: 'List top 2–3 competitors\' websites', type: 'textarea', required: false, placeholder: 'Enter URLs, one per line' },
+                    { 
+                        name: 'challenges', 
+                        label: 'What are your biggest SEO challenges?', 
+                        type: 'checkbox', 
+                        required: true,
+                        options: [
+                            'Low website traffic',
+                            'Poor keyword ranking',
+                            'Low conversion rate',
+                            'Technical website issues',
+                            'Lack of quality backlinks',
+                            'Don\'t know where to start'
+                        ]
+                    }
+                ]
+            },
+            {
+                title: 'Budget & Timeline',
+                fields: [
+                    { 
+                        name: 'monthly_budget', 
+                        label: 'Monthly SEO Budget', 
+                        type: 'radio', 
+                        required: true,
+                        options: [
+                            '₹10,000–₹20,000',
+                            '₹20,000–₹40,000',
+                            '₹40,000–₹75,000',
+                            '₹75,000+',
+                            'Not decided yet'
+                        ]
+                    },
+                    { 
+                        name: 'start_timeline', 
+                        label: 'How soon would you like to start SEO?', 
+                        type: 'radio', 
+                        required: true,
+                        options: [
+                            'Immediately',
+                            'Within 2 weeks',
+                            'Within a month',
+                            'Later'
+                        ]
+                    },
+                    { name: 'additional_info', label: 'Any special requirements or notes?', type: 'textarea', required: false }
+                ]
+            }
+        ]
+    },
+    
+    'branding': {
+        title: 'Branding Requirements Inquiry',
+        subtitle: 'Let\'s create your brand identity',
+        steps: [
+            {
+                title: 'Basic Information',
+                fields: [
+                    { name: 'full_name', label: 'Full Name', type: 'text', required: true },
+                    { name: 'company_name', label: 'Company / Organization Name', type: 'text', required: true },
+                    { name: 'designation', label: 'Designation / Role', type: 'text', required: false },
+                    { name: 'email', label: 'Email Address', type: 'email', required: true },
+                    { name: 'phone', label: 'Contact Number', type: 'tel', required: true },
+                    { name: 'website', label: 'Website', type: 'url', required: false },
+                    { name: 'business_address', label: 'Business Address / Location', type: 'text', required: false }
+                ]
+            },
+            {
+                title: 'Business Overview',
+                fields: [
+                    { name: 'business_description', label: 'Briefly describe your business or services', type: 'textarea', required: true },
+                    { 
+                        name: 'industry', 
+                        label: 'Industry or Sector', 
+                        type: 'radio', 
+                        required: true,
+                        options: [
+                            'Retail',
+                            'Real Estate',
+                            'Education',
+                            'Healthcare',
+                            'IT / Tech',
+                            'Fashion / Lifestyle',
+                            'Restaurant / Hospitality',
+                            'Other'
+                        ]
+                    },
+                    { 
+                        name: 'target_audience', 
+                        label: 'Target Audience', 
+                        type: 'radio', 
+                        required: true,
+                        options: [
+                            'B2B (Business-to-Business)',
+                            'B2C (Business-to-Consumer)',
+                            'Both'
+                        ]
+                    },
+                    { 
+                        name: 'business_goals', 
+                        label: 'Main Business Goals', 
+                        type: 'checkbox', 
+                        required: true,
+                        options: [
+                            'Brand awareness',
+                            'Lead generation',
+                            'Customer loyalty',
+                            'Product promotion',
+                            'Market expansion'
+                        ]
+                    }
+                ]
+            },
+            {
+                title: 'Current Branding Status',
+                fields: [
+                    { 
+                        name: 'current_branding', 
+                        label: 'Do you currently have a brand identity?', 
+                        type: 'radio', 
+                        required: true,
+                        options: [
+                            'Yes',
+                            'No',
+                            'Partial / Need rebranding'
+                        ]
+                    },
+                    { name: 'branding_reason', label: 'Why are you looking for branding or rebranding now?', type: 'textarea', required: true }
+                ]
+            },
+            {
+                title: 'Branding Services & Vision',
+                fields: [
+                    { 
+                        name: 'services_required', 
+                        label: 'Which services are you interested in?', 
+                        type: 'checkbox', 
+                        required: true,
+                        options: [
+                            'Logo Design / Redesign',
+                            'Brand Name & Tagline Creation',
+                            'Brand Identity Design',
+                            'Business Card / Stationery Design',
+                            'Brochure / Flyer / Catalogue Design',
+                            'Product Packaging Design',
+                            'Company Profile / Presentation Design',
+                            'Brand Guidelines Document',
+                            'Social Media Branding',
+                            'Complete Brand Strategy'
+                        ]
+                    },
+                    { 
+                        name: 'brand_personality', 
+                        label: 'Brand Personality', 
+                        type: 'checkbox', 
+                        required: true,
+                        options: [
+                            'Professional',
+                            'Elegant',
+                            'Playful',
+                            'Innovative',
+                            'Minimalistic',
+                            'Luxurious',
+                            'Bold / Dynamic',
+                            'Friendly / Approachable'
+                        ]
+                    },
+                    { name: 'brand_keywords', label: '3 keywords that best define your brand', type: 'text', required: true, placeholder: 'e.g., Trust, Innovation, Quality' },
+                    { name: 'competitors', label: 'Top 2–3 competitors', type: 'textarea', required: false, placeholder: 'Enter company names or URLs' },
+                    { name: 'admired_brands', label: 'Any brands you admire?', type: 'textarea', required: false, placeholder: 'Any industry' }
+                ]
+            },
+            {
+                title: 'Timeline & Budget',
+                fields: [
+                    { 
+                        name: 'timeline', 
+                        label: 'Project Completion Timeline', 
+                        type: 'radio', 
+                        required: true,
+                        options: [
+                            '1–2 weeks',
+                            '3–4 weeks',
+                            '1–2 months',
+                            'Flexible'
+                        ]
+                    },
+                    { 
+                        name: 'budget', 
+                        label: 'Budget Range for Branding', 
+                        type: 'radio', 
+                        required: true,
+                        options: [
+                            '₹10,000–₹25,000',
+                            '₹25,000–₹50,000',
+                            '₹50,000–₹1,00,000',
+                            'Above ₹1,00,000',
+                            'Not decided yet'
+                        ]
+                    },
+                    { name: 'additional_info', label: 'Any specific ideas or expectations?', type: 'textarea', required: false }
+                ]
+            }
+        ]
+    },
+    
+    'email-automation': {
+        title: 'Email Marketing & Automation Inquiry',
+        subtitle: 'Let\'s automate your email campaigns',
+        steps: [
+            {
+                title: 'Company Information',
+                fields: [
+                    { name: 'company_name', label: 'Company Name', type: 'text', required: true },
+                    { name: 'contact_person', label: 'Contact Person Name & Designation', type: 'text', required: true },
+                    { name: 'email', label: 'Email Address', type: 'email', required: true },
+                    { name: 'phone', label: 'Phone Number', type: 'tel', required: true },
+                    { name: 'website', label: 'Website URL', type: 'url', required: true },
+                    { name: 'industry', label: 'Industry / Niche', type: 'text', required: true }
+                ]
+            },
+            {
+                title: 'Current Email Marketing Status',
+                fields: [
+                    { 
+                        name: 'current_email_marketing', 
+                        label: 'Are you currently doing any email marketing?', 
+                        type: 'radio', 
+                        required: true,
+                        options: ['Yes', 'No']
+                    },
+                    { 
+                        name: 'email_platform', 
+                        label: 'If yes, which platform do you use?', 
+                        type: 'checkbox', 
+                        required: false,
+                        options: [
+                            'Mailchimp',
+                            'HubSpot',
+                            'Klaviyo',
+                            'Zoho Campaigns',
+                            'ActiveCampaign',
+                            'SendinBlue',
+                            'Others'
+                        ]
+                    },
+                    { name: 'subscribers_count', label: 'How many subscribers do you have?', type: 'text', required: false },
+                    { 
+                        name: 'list_segmented', 
+                        label: 'Do you have an existing email list segmented?', 
+                        type: 'radio', 
+                        required: false,
+                        options: ['Yes', 'No']
+                    },
+                    { 
+                        name: 'existing_templates', 
+                        label: 'Do you have existing email templates?', 
+                        type: 'radio', 
+                        required: false,
+                        options: ['Yes', 'No']
+                    }
+                ]
+            },
+            {
+                title: 'Email Marketing Goals',
+                fields: [
+                    { 
+                        name: 'primary_goals', 
+                        label: 'What are your primary goals?', 
+                        type: 'checkbox', 
+                        required: true,
+                        options: [
+                            'Lead generation',
+                            'Sales / conversions',
+                            'Engagement & nurturing',
+                            'Brand awareness',
+                            'Customer retention',
+                            'Event promotions',
+                            'Product launch',
+                            'Re-engagement of inactive users'
+                        ]
+                    },
+                    { 
+                        name: 'kpis', 
+                        label: 'Which KPIs do you want to improve?', 
+                        type: 'checkbox', 
+                        required: false,
+                        options: [
+                            'Open rate',
+                            'Click-through rate',
+                            'Conversion rate',
+                            'List growth',
+                            'Unsubscribe rate'
+                        ]
+                    }
+                ]
+            },
+            {
+                title: 'Email Content & Automation',
+                fields: [
+                    { 
+                        name: 'email_types', 
+                        label: 'What types of emails do you need?', 
+                        type: 'checkbox', 
+                        required: true,
+                        options: [
+                            'Newsletters',
+                            'Promotional emails',
+                            'Drip campaigns',
+                            'Product recommendation emails',
+                            'Abandoned cart emails',
+                            'Onboarding/welcome emails',
+                            'Re-engagement emails',
+                            'Event or webinar emails'
+                        ]
+                    },
+                    { 
+                        name: 'send_frequency', 
+                        label: 'How often do you want to send emails?', 
+                        type: 'radio', 
+                        required: true,
+                        options: [
+                            'Daily',
+                            'Weekly',
+                            'Biweekly',
+                            'Monthly',
+                            'Occasionally'
+                        ]
+                    },
+                    { 
+                        name: 'automation_needed', 
+                        label: 'Which automations do you need?', 
+                        type: 'checkbox', 
+                        required: false,
+                        options: [
+                            'Welcome series',
+                            'Lead nurturing sequences',
+                            'Abandoned cart recovery',
+                            'Purchase follow-up',
+                            'Upsell/cross-sell automations',
+                            'Re-engagement sequences',
+                            'Birthday/anniversary automations',
+                            'Feedback or review email sequence'
+                        ]
+                    },
+                    { 
+                        name: 'integrations', 
+                        label: 'Do you need integration with:', 
+                        type: 'checkbox', 
+                        required: false,
+                        options: [
+                            'CRM',
+                            'Website forms',
+                            'E-commerce platform',
+                            'Payment gateway',
+                            'Landing pages'
+                        ]
+                    }
+                ]
+            },
+            {
+                title: 'Budget & Timeline',
+                fields: [
+                    { 
+                        name: 'budget', 
+                        label: 'Monthly/One-time Budget', 
+                        type: 'text', 
+                        required: true,
+                        placeholder: 'e.g., ₹20,000/month'
+                    },
+                    { 
+                        name: 'start_date', 
+                        label: 'When do you want to start?', 
+                        type: 'radio', 
+                        required: true,
+                        options: [
+                            'Immediately',
+                            'Within 2 weeks',
+                            'Within a month',
+                            'Later'
+                        ]
+                    },
+                    { name: 'additional_notes', label: 'Any special instructions or expectations?', type: 'textarea', required: false }
+                ]
+            }
+        ]
+    },
+    
+    'analytics-cro': {
+        title: 'Analytics & CRO Inquiry',
+        subtitle: 'Let\'s optimize your conversions',
+        steps: [
+            {
+                title: 'Business & Contact Information',
+                fields: [
+                    { name: 'company_name', label: 'Company Name', type: 'text', required: true },
+                    { name: 'contact_person', label: 'Contact Person (Name & Designation)', type: 'text', required: true },
+                    { name: 'email', label: 'Email Address', type: 'email', required: true },
+                    { name: 'phone', label: 'Phone Number', type: 'tel', required: true },
+                    { name: 'website', label: 'Website URL', type: 'url', required: true },
+                    { name: 'industry', label: 'Industry / Business Category', type: 'text', required: true }
+                ]
+            },
+            {
+                title: 'Current Analytics Setup',
+                fields: [
+                    { 
+                        name: 'analytics_tools', 
+                        label: 'Which analytics tools are you currently using?', 
+                        type: 'checkbox', 
+                        required: false,
+                        options: [
+                            'Google Analytics (GA4)',
+                            'Google Tag Manager',
+                            'Google Search Console',
+                            'Hotjar / Microsoft Clarity',
+                            'Mixpanel',
+                            'HubSpot Analytics',
+                            'Adobe Analytics',
+                            'None'
+                        ]
+                    },
+                    { 
+                        name: 'track_conversions', 
+                        label: 'Do you currently track conversions?', 
+                        type: 'radio', 
+                        required: true,
+                        options: ['Yes', 'No']
+                    },
+                    { 
+                        name: 'conversion_types', 
+                        label: 'If yes, what types of conversions?', 
+                        type: 'checkbox', 
+                        required: false,
+                        options: [
+                            'Form submissions',
+                            'Calls',
+                            'Add to cart',
+                            'Purchases',
+                            'Lead registrations',
+                            'Button clicks',
+                            'Page views'
+                        ]
+                    },
+                    { 
+                        name: 'utm_parameters', 
+                        label: 'Are UTM parameters being used for campaigns?', 
+                        type: 'radio', 
+                        required: false,
+                        options: ['Yes', 'No']
+                    }
+                ]
+            },
+            {
+                title: 'CRO Status & Goals',
+                fields: [
+                    { 
+                        name: 'previous_cro', 
+                        label: 'Have you previously run CRO experiments?', 
+                        type: 'radio', 
+                        required: true,
+                        options: ['Yes', 'No']
+                    },
+                    { name: 'current_conversion_rate', label: 'Current average conversion rate (if known)', type: 'text', required: false, placeholder: 'e.g., 2.5%' },
+                    { 
+                        name: 'cro_goals', 
+                        label: 'What are your main CRO goals?', 
+                        type: 'checkbox', 
+                        required: true,
+                        options: [
+                            'Increase conversions',
+                            'Improve user experience',
+                            'Reduce bounce rate',
+                            'Improve form completion rate',
+                            'Increase sales / leads'
+                        ]
+                    }
+                ]
+            },
+            {
+                title: 'Services Required',
+                fields: [
+                    { 
+                        name: 'analytics_services', 
+                        label: 'Which analytics services do you need?', 
+                        type: 'checkbox', 
+                        required: true,
+                        options: [
+                            'Google Analytics setup (GA4)',
+                            'Google Tag Manager setup',
+                            'Conversion tracking setup',
+                            'Custom dashboard creation',
+                            'Funnel tracking',
+                            'E-commerce tracking',
+                            'Event tracking',
+                            'Cross-domain tracking'
+                        ]
+                    },
+                    { 
+                        name: 'cro_activities', 
+                        label: 'Which CRO activities do you require?', 
+                        type: 'checkbox', 
+                        required: false,
+                        options: [
+                            'A/B testing',
+                            'Heatmaps & session recording analysis',
+                            'Improving CTAs',
+                            'Funnel optimization',
+                            'UX/UI improvements',
+                            'Speed optimization',
+                            'Copy optimization',
+                            'Form optimization',
+                            'Checkout optimization'
+                        ]
+                    },
+                    { 
+                        name: 'website_platform', 
+                        label: 'Website Platform', 
+                        type: 'radio', 
+                        required: true,
+                        options: [
+                            'WordPress',
+                            'Shopify',
+                            'Wix',
+                            'Custom PHP',
+                            'Laravel',
+                            'React / Next.js',
+                            'Others'
+                        ]
+                    }
+                ]
+            },
+            {
+                title: 'Budget & Timeline',
+                fields: [
+                    { 
+                        name: 'budget', 
+                        label: 'Budget Range for Analytics & CRO', 
+                        type: 'text', 
+                        required: true,
+                        placeholder: 'e.g., ₹30,000–₹50,000'
+                    },
+                    { 
+                        name: 'start_date', 
+                        label: 'When do you want to start?', 
+                        type: 'radio', 
+                        required: true,
+                        options: [
+                            'Immediately',
+                            'Within 2 weeks',
+                            'Within a month',
+                            'Later'
+                        ]
+                    },
+                    { name: 'competitors', label: 'Top competitor (for analysis reference)', type: 'text', required: false },
+                    { name: 'additional_notes', label: 'Any specific expectations or custom requirements?', type: 'textarea', required: false }
+                ]
+            }
+        ]
+    },
+    
+    'paid-ads': {
+        title: 'Paid Ads Inquiry',
+        subtitle: 'Let\'s create high-converting ad campaigns',
+        steps: [
+            {
+                title: 'Company Information',
+                fields: [
+                    { name: 'company_name', label: 'Company Name', type: 'text', required: true },
+                    { name: 'contact_person', label: 'Contact Person Name & Designation', type: 'text', required: true },
+                    { name: 'email', label: 'Email Address', type: 'email', required: true },
+                    { name: 'phone', label: 'Phone Number', type: 'tel', required: true },
+                    { name: 'website', label: 'Website URL', type: 'url', required: true },
+                    { name: 'industry', label: 'Industry / Niche', type: 'text', required: true },
+                    { name: 'target_location', label: 'Location(s) you target', type: 'text', required: true }
+                ]
+            },
+            {
+                title: 'Current Advertising Status',
+                fields: [
+                    { 
+                        name: 'currently_running_ads', 
+                        label: 'Are you currently running paid ads?', 
+                        type: 'radio', 
+                        required: true,
+                        options: ['Yes', 'No']
+                    },
+                    { 
+                        name: 'ad_platforms', 
+                        label: 'If yes, which platforms?', 
+                        type: 'checkbox', 
+                        required: false,
+                        options: [
+                            'Google Ads (Search / Display / Shopping)',
+                            'Facebook / Instagram Ads',
+                            'LinkedIn Ads',
+                            'YouTube Ads',
+                            'Twitter Ads',
+                            'Pinterest Ads',
+                            'Other platforms'
+                        ]
+                    },
+                    { name: 'current_ad_spend', label: 'Current monthly ad spend', type: 'text', required: false, placeholder: 'e.g., ₹50,000' },
+                    { 
+                        name: 'tracking_setup', 
+                        label: 'Are your ad accounts correctly set up with tracking?', 
+                        type: 'radio', 
+                        required: false,
+                        options: ['Yes', 'No', 'Not sure']
+                    }
+                ]
+            },
+            {
+                title: 'Goals & Target Audience',
+                fields: [
+                    { 
+                        name: 'ad_goals', 
+                        label: 'What are your main goals for paid ads?', 
+                        type: 'checkbox', 
+                        required: true,
+                        options: [
+                            'Lead generation',
+                            'Sales / conversions',
+                            'App installs',
+                            'Website traffic',
+                            'Brand awareness',
+                            'Product promotion',
+                            'Event promotion'
+                        ]
+                    },
+                    { 
+                        name: 'kpis', 
+                        label: 'Which KPIs matter most to you?', 
+                        type: 'checkbox', 
+                        required: true,
+                        options: [
+                            'Cost per lead',
+                            'Cost per sale',
+                            'ROAS (Return on Ad Spend)',
+                            'Conversion rate',
+                            'CTR (Click Through Rate)',
+                            'Impressions / Reach'
+                        ]
+                    },
+                    { name: 'target_audience', label: 'Describe your target audience', type: 'textarea', required: true, placeholder: 'Age group, gender, location, interests, etc.' },
+                    { name: 'products_services', label: 'Which products/services will be advertised?', type: 'textarea', required: true }
+                ]
+            },
+            {
+                title: 'Campaign & Creative Requirements',
+                fields: [
+                    { 
+                        name: 'campaign_types', 
+                        label: 'What type of campaigns do you need?', 
+                        type: 'checkbox', 
+                        required: true,
+                        options: [
+                            'Lead generation campaigns',
+                            'Conversion campaigns',
+                            'Call-only campaigns',
+                            'Website traffic campaigns',
+                            'E-commerce shopping ads',
+                            'Video ads (YouTube/Facebook)',
+                            'App install campaigns',
+                            'Remarketing / Retargeting'
+                        ]
+                    },
+                    { 
+                        name: 'creative_materials', 
+                        label: 'Do you have existing creative materials?', 
+                        type: 'checkbox', 
+                        required: false,
+                        options: [
+                            'Images',
+                            'Videos',
+                            'Ad copies',
+                            'Graphics',
+                            'None - need help creating'
+                        ]
+                    },
+                    { 
+                        name: 'need_landing_pages', 
+                        label: 'Do you need landing pages created?', 
+                        type: 'radio', 
+                        required: false,
+                        options: ['Yes', 'No']
+                    }
+                ]
+            },
+            {
+                title: 'Budget & Timeline',
+                fields: [
+                    { 
+                        name: 'monthly_ad_budget', 
+                        label: 'Monthly Ad Budget', 
+                        type: 'text', 
+                        required: true,
+                        placeholder: 'e.g., ₹50,000–₹1,00,000'
+                    },
+                    { 
+                        name: 'start_date', 
+                        label: 'When do you want to start campaigns?', 
+                        type: 'radio', 
+                        required: true,
+                        options: [
+                            'Immediately',
+                            'Within 1 week',
+                            'Within 2 weeks',
+                            'Within a month'
+                        ]
+                    },
+                    { name: 'competitors', label: 'Any competitors you want to outperform?', type: 'text', required: false },
+                    { name: 'additional_notes', label: 'Any special instructions or expectations?', type: 'textarea', required: false }
+                ]
+            }
+        ]
+    }
+};
+
+// Current state
+let currentService = '';
+let currentStep = 0;
+let totalSteps = 0;
+
+// Open form for specific service
+function openServiceForm(serviceKey) {
+    currentService = serviceKey;
+    currentStep = 0;
+    
+    const formData = serviceFormsData[serviceKey];
+    if (!formData) return;
+    
+    // Set title and subtitle
+    document.getElementById('formServiceTitle').textContent = formData.title;
+    document.getElementById('formServiceSubtitle').textContent = formData.subtitle;
+    document.getElementById('serviceType').value = serviceKey;
+    
+    // Build form steps
+    totalSteps = formData.steps.length;
+    buildFormSteps(formData.steps);
+    
+    // Build step indicator
+    buildStepIndicator();
+    
+    // Show first step
+    showStep(0);
+    
+    // Show popup
+    document.getElementById('serviceFormPopup').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+// Close form
+function closeServiceForm() {
+    document.getElementById('serviceFormPopup').classList.remove('active');
+    document.body.style.overflow = '';
+    document.getElementById('multiStepServiceForm').reset();
+    document.getElementById('successMessage').classList.remove('active');
+    document.getElementById('multiStepServiceForm').style.display = 'block';
+}
+
+// Build form steps HTML
+function buildFormSteps(steps) {
+    const container = document.getElementById('formStepsContainer');
+    container.innerHTML = '';
+    
+    steps.forEach((step, index) => {
+        const stepDiv = document.createElement('div');
+        stepDiv.className = 'form-step';
+        stepDiv.setAttribute('data-step', index);
+        
+        let stepHTML = `<h3 style="font-size: 20px; margin-bottom: 20px; color: #111827;">${step.title}</h3>`;
+        
+        step.fields.forEach(field => {
+            stepHTML += buildFieldHTML(field);
+        });
+        
+        stepDiv.innerHTML = stepHTML;
+        container.appendChild(stepDiv);
+    });
+}
+
+// Build individual field HTML
+function buildFieldHTML(field) {
+    const requiredLabel = field.required ? '<span class="required">*</span>' : '';
+    let fieldHTML = `<div class="form-group">
+        <label>${field.label} ${requiredLabel}</label>`;
+    
+    switch(field.type) {
+        case 'text':
+        case 'email':
+        case 'tel':
+        case 'url':
+            fieldHTML += `<input type="${field.type}" name="${field.name}" class="form-control" 
+                ${field.required ? 'required' : ''} 
+                ${field.placeholder ? 'placeholder="' + field.placeholder + '"' : ''}>`;
+            break;
+            
+        case 'textarea':
+            fieldHTML += `<textarea name="${field.name}" class="form-control" rows="4" 
+                ${field.required ? 'required' : ''}
+                ${field.placeholder ? 'placeholder="' + field.placeholder + '"' : ''}></textarea>`;
+            break;
+            
+        case 'checkbox':
+            fieldHTML += '<div class="checkbox-group">';
+            field.options.forEach((option, idx) => {
+                fieldHTML += `<label class="checkbox-item">
+                    <input type="checkbox" name="${field.name}[]" value="${option}">
+                    <span>${option}</span>
+                </label>`;
+            });
+            fieldHTML += '</div>';
+            break;
+            
+        case 'radio':
+            fieldHTML += '<div class="radio-group">';
+            field.options.forEach((option, idx) => {
+                fieldHTML += `<label class="radio-item">
+                    <input type="radio" name="${field.name}" value="${option}" ${field.required ? 'required' : ''}>
+                    <span>${option}</span>
+                </label>`;
+            });
+            fieldHTML += '</div>';
+            break;
+    }
+    
+    fieldHTML += '</div>';
+    return fieldHTML;
+}
+
+// Build step indicator
+function buildStepIndicator() {
+    const indicator = document.getElementById('stepIndicator');
+    indicator.innerHTML = '';
+    
+    for (let i = 0; i < totalSteps; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'step-dot';
+        dot.setAttribute('data-step', i);
+        indicator.appendChild(dot);
+    }
+}
+
+// Show specific step
+function showStep(stepIndex) {
+    const steps = document.querySelectorAll('.form-step');
+    steps.forEach(step => step.classList.remove('active'));
+    
+    if (steps[stepIndex]) {
+        steps[stepIndex].classList.add('active');
+    }
+    
+    // Update step indicator
+    const dots = document.querySelectorAll('.step-dot');
+    dots.forEach((dot, idx) => {
+        dot.classList.remove('active', 'completed');
+        if (idx < stepIndex) {
+            dot.classList.add('completed');
+        } else if (idx === stepIndex) {
+            dot.classList.add('active');
+        }
+    });
+    
+    // Update buttons
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const submitBtn = document.getElementById('submitBtn');
+    
+    if (stepIndex === 0) {
+        prevBtn.style.display = 'none';
+        nextBtn.style.display = 'block';
+        submitBtn.style.display = 'none';
+    } else if (stepIndex === totalSteps - 1) {
+        prevBtn.style.display = 'block';
+        nextBtn.style.display = 'none';
+        submitBtn.style.display = 'block';
+    } else {
+        prevBtn.style.display = 'block';
+        nextBtn.style.display = 'block';
+        submitBtn.style.display = 'none';
+    }
+    
+    currentStep = stepIndex;
+}
+
+// Validate current step
+function validateStep(stepIndex) {
+    const step = document.querySelector(`.form-step[data-step="${stepIndex}"]`);
+    const requiredFields = step.querySelectorAll('[required]');
+    let isValid = true;
+    
+    requiredFields.forEach(field => {
+        if (field.type === 'checkbox' || field.type === 'radio') {
+            const groupName = field.name;
+            const checked = step.querySelector(`input[name="${groupName}"]:checked`);
+            if (!checked) {
+                isValid = false;
+                field.classList.add('error');
+            } else {
+                const allInGroup = step.querySelectorAll(`input[name="${groupName}"]`);
+                allInGroup.forEach(f => f.classList.remove('error'));
+            }
+        } else {
+            if (!field.value.trim()) {
+                isValid = false;
+                field.classList.add('error');
+            } else {
+                field.classList.remove('error');
+            }
+        }
+    });
+    
+    if (!isValid) {
+        alert('Please fill in all required fields');
+    }
+    
+    return isValid;
+}
+
+// Next step
+function nextStep() {
+    if (validateStep(currentStep)) {
+        showStep(currentStep + 1);
+    }
+}
+
+// Previous step
+function prevStep() {
+    showStep(currentStep - 1);
+}
+
+// Form submission
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('multiStepServiceForm');
+    
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (!validateStep(currentStep)) {
+                return;
+            }
+            
+            // Collect form data
+            const formData = new FormData(form);
+            
+            // Show loading state
+            const submitBtn = document.getElementById('submitBtn');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Submitting...';
+            submitBtn.disabled = true;
+            
+            // Send via AJAX
+            fetch('<?php echo admin_url('admin-ajax.php'); ?>', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Hide form, show success
+                    form.style.display = 'none';
+                    document.getElementById('successMessage').classList.add('active');
+                } else {
+                    alert('There was an error submitting your form. Please try again.');
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                }
+            })
+            .catch(error => {
+                alert('There was an error submitting your form. Please try again.');
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            });
+        });
+    }
+});
+
+// Close popup when clicking outside
+document.addEventListener('DOMContentLoaded', function() {
+    const popup = document.getElementById('serviceFormPopup');
+    if (popup) {
+        popup.addEventListener('click', function(e) {
+            if (e.target === popup) {
+                closeServiceForm();
+            }
+        });
+    }
+});
+</script>

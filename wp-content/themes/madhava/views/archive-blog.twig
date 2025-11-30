@@ -1,0 +1,115 @@
+{% extends "base.twig" %}
+
+{% block content %}
+
+{# === BREADCRUMB NAVIGATION === #}
+{# <nav class="container max-w-7xl mx-auto px-4 text-gray-500 py-2 mb-6 md:mb-8" aria-label="Breadcrumb">
+  <ol class="flex items-center space-x-2 text-[10px]">
+    <li class="flex items-center">
+      <a href="{{ site.url }}" class="hover:underline text-blue-600">Home</a>
+    </li>
+    <li class="flex items-center">
+      <span class="mx-2 text-gray-400 text-lg">&bull;</span>
+      <a href="{{ site.url }}/blog/" class="hover:underline text-blue-600">Blog</a>
+      {% if term or is_search %}
+        <span class="mx-2">/</span>
+      {% endif %}
+    </li>
+    {% if term %}
+      <li class="flex items-center">
+        <span class="text-gray-700">{{ term.name }}</span>
+      </li>
+    {% elseif is_search %}
+      <li class="flex items-center">
+        <span class="text-gray-700">Search: "{{ search_query }}"</span>
+      </li>
+    {% endif %}
+  </ol>
+</nav> #}
+
+{# === MAIN CONTENT GRID (Posts + Sidebar) === #}
+<section class="container max-w-7xl mx-auto px-4 py-8">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+    
+    {# 1. BLOG MAIN CONTENT (2/3 width) - Left Column on desktop #}
+    <div class="col-span-1 md:col-span-2 order-2 md:order-1">
+      {% if posts %}
+        <div class="space-y-8">
+          {% for post in posts %}
+            {% include 'tease-post.twig' with { post: post } %}
+          {% endfor %}
+        </div>
+      {% else %}
+        <p class="text-xl text-red-500 p-8 border border-red-200 bg-red-50 rounded-xl">No posts found.</p>
+      {% endif %}
+    </div>
+
+    {# 2. BLOG SIDEBAR (1/3 width) - Right Column on desktop #}
+    <aside class="col-span-1 order-1 md:order-2">
+      {% if has_sidebar %}
+        {{ function('dynamic_sidebar','blog-sidebar') }}
+      {% else %}
+        {# FALLBACK WIDGETS - (Ensure WP Widgets are set up!) #}
+        <div class="widget p-6 bg-white rounded-lg shadow-md mb-6 border border-gray-300">
+          <h3 class="text-xl font-bold text-gray-800 mb-4 border-b pb-2">Search Blog</h3>
+          <form role="search" method="get" class="flex" action="{{ site.url }}">
+            <input type="search" name="s" placeholder="Search articles..." class="w-full p-2 border border-gray-300 rounded-l-lg focus:ring-blue-500 focus:border-blue-500">
+            <button type="submit" class="bg-[#3EABBF] text-white p-2 rounded-r-lg hover:bg-blue-700">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+            </button>
+          </form>
+        </div>
+
+        {# Popular Posts Widget #}
+        <div class="widget p-6 bg-white rounded-lg shadow-md mb-6 border border-gray-300">
+          <h3 class="text-xl font-bold text-gray-800 mb-4 border-b pb-2">Popular Posts</h3>
+          <ul class="divide-y divide-gray-200">
+            {% for pop in popular_posts|default([]) %}
+              <li class="py-2">
+                <a href="/blog/{{ pop.slug }}" class="text-blue-600 hover:underline font-medium">{{ pop.title }}</a>
+              </li>
+            {% else %}
+              <li class="text-gray-400 py-2">No popular posts.</li>
+            {% endfor %}
+          </ul>
+        </div>
+
+        {# Categories Widget #}
+        <div class="widget p-6 bg-white rounded-lg shadow-md border border-gray-300">
+          <h3 class="text-xl font-bold text-gray-800 mb-4 border-b pb-2">Categories</h3>
+          <ul class="flex flex-wrap gap-2">
+            {% for c in categories %}
+              <li>
+                <a href="{{ c.link }}" class="px-3 py-1 rounded-full bg-gray-100 text-gray-700 hover:bg-blue-600 hover:text-white transition text-sm font-medium">{{ c.name }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+    </aside>
+
+  </div>
+
+  {# === PAGINATION (Full width, below the grid) === #}
+  {% if posts.pagination.pages|length > 1 %}
+    <nav class="pagination flex justify-center space-x-2 mt-10 p-4 bg-gray-50 rounded-lg shadow-inner" role="navigation" aria-label="Pagination">
+      {% if posts.pagination.prev %}
+        <a class="p-3 border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-100 transition duration-150" href="{{ posts.pagination.prev.link }}">← Previous</a>
+      {% endif %}
+      {% for page in posts.pagination.pages %}
+        {% if page.link %}
+          <a class="p-3 border rounded-lg font-medium transition duration-150 {% if page.current %}bg-blue-600 text-white border-blue-600 shadow-md{% else %}border-gray-300 text-gray-700 hover:bg-gray-100{% endif %}" href="{{ page.link }}">{{ page.title }}</a>
+        {% else %}
+          <span class="p-3 border rounded-lg font-medium bg-blue-600 text-white border-blue-600 shadow-md">{{ page.title }}</span>
+        {% endif %}
+      {% endfor %}
+      {% if posts.pagination.next %}
+        <a class="p-3 border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-100 transition duration-150" href="{{ posts.pagination.next.link }}">Next →</a>
+      {% endif %}
+    </nav>
+  {% endif %}
+
+</section>
+{% endblock %}

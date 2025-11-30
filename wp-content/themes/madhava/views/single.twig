@@ -1,0 +1,324 @@
+{% extends "base.twig" %}
+
+{% block content %}
+    {# FIX 1: Removed lg:px-0 to maintain padding and removed redundant max-w-full #}
+    <div class="container mx-auto px-4 md:px-8 py-10 max-w-7xl">
+
+        {# ... (Breadcrumbs remain the same) ... #}
+        <nav class="py-2 mb-6" aria-label="Breadcrumb">
+            <ol class="flex items-center space-x-2 text-sm text-gray-500">
+                <li class="flex items-center">
+                    <a href="{{ site.url }}" class="hover:underline focus:no-underline active:no-underline text-blue-600">Home</a>
+                </li>
+                <li class="flex items-center">
+                    <svg class="w-4 h-4 text-gray-400 mx-2" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                    <a href="{{ site.url }}/blog/" class="hover:underline focus:no-underline active:no-underline text-blue-600">Blog</a>
+                </li>
+                <li class="flex items-center">
+                    <svg class="w-4 h-4 text-gray-400 mx-2" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                    <span class="text-gray-700 font-medium">{{ post.title }}</span>
+                </li>
+            </ol>
+        </nav>
+
+        <div class="flex flex-col lg:flex-row gap-12 w-full">
+            <div class="w-full lg:w-2/3 flex flex-col">
+
+                <h1 class="text-3xl md:text-5xl font-extrabold text-gray-900 mb-4 text-left leading-tight">
+                    {{ post.title }}
+                </h1>
+
+                <div class="flex flex-col md:flex-row items-center justify-center gap-2 text-gray-500 text-sm mb-4">
+                    <span>
+                        By
+                        <a href="{{ post.author.path }}" class="text-blue-600 hover:underline">{{ post.author.name }}</a>
+                        {# Show category after author #}
+                        {% if post.terms('category') %}
+                            &nbsp;in&nbsp;
+                            {% for cat in post.terms('category') %}
+                                <a href="{{ cat.link }}" class="text-green-600 hover:underline">{{ cat.name }}</a>
+                                {% if not loop.last %}, {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    </span>
+                    <span class="hidden md:inline">&bull;</span>
+                    <time datetime="{{ post.date|date('Y-m-d H:i:s') }}">
+                        {{ post.date }}
+                    </time>
+                    {# Show views count after date #}
+                    {% if post.meta.views %}
+                        <span class="flex items-center gap-1">
+                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1.458 12C2.732 7.943 7.523 5 12 5c4.477 0 9.268 2.943 10.542 7-.274.857-.682 1.664-1.208 2.392C19.268 16.057 14.477 19 12 19c-2.477 0-7.268-2.943-9.334-5.608A8.978 8.978 0 0 1 1.458 12z"/>
+                                <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                            {{ post.meta.views }} views
+                        </span>
+                    {% endif %}
+                </div>
+
+                {% set post_url = post.link|default(site.url ~ post.path) %}
+
+                <div class="flex items-center justify-center gap-4 text-gray-500 mb-8">
+
+                    <div class="relative" id="share-wrapper">
+                        <button id="share-toggle" class="inline-flex items-center p-2 rounded hover:bg-gray-100 focus:outline-none -ml-2" aria-haspopup="true" aria-expanded="false" title="Share this post">
+                            <svg class="w-5 h-5 text-gray-600" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+                            <span class="sr-only">Share</span>
+                        </button>
+
+                        <div id="share-menu" class="hidden absolute right-0 mt-2 w-64 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 py-1 z-50" role="menu" aria-labelledby="share-toggle" style="display:none;">
+                            <a data-share-href="https://www.facebook.com/sharer/sharer.php?u={{ post_url|url_encode }}" class="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" href="#">
+                                <span>Facebook</span>
+                            </a>
+                            <a data-share-href="https://x.com/intent/tweet?url={{ post_url|url_encode }}" class="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" href="#">
+                                <span>X</span>
+                            </a>
+                            <a data-share-href="https://www.linkedin.com/sharing/share-offsite/?url={{ post_url|url_encode }}" class="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" href="#">
+                                <span>LinkedIn</span>
+                            </a>
+                            <a data-share-href="https://api.whatsapp.com/send?text={{ (post.title ~ ' - ' ~ post_url)|url_encode }}" class="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" href="#">
+                                <span>WhatsApp</span>
+                            </a>
+                            <a href="sms:?body={{ (post.title ~ ' - ' ~ post_url)|url_encode }}" class="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
+                                <span>Message</span>
+                            </a>
+                            <button id="share-copy" class="w-full text-left flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
+                                <span>Copy link</span>
+                                <span id="copy-tooltip" class="ml-auto text-xs text-green-600 hidden">Copied!</span>
+                            </button>
+                            <a class="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" href="mailto:?subject={{ post.title|url_encode }}&body={{ post_url|url_encode }}">
+                                <span>Email</span>
+                            </a>
+                            <button id="share-native" class="w-full text-left flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
+                                <span>Share (device)</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    {# Social icons: Facebook, LinkedIn, Instagram #}
+                    <a href="{% if site.social.facebook is defined and site.social.facebook %}{{ site.social.facebook }}{% else %}https://www.facebook.com/profile.php?id=61580317491982{% endif %}" class="hover:text-blue-600" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+                        <span class="sr-only">Facebook</span>
+                        <svg class="w-5 h-5" viewbox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M22 12.07C22 6.48 17.52 2 11.93 2S2 6.48 2 12.07c0 4.99 3.66 9.12 8.44 9.93v-7.03H8.08v-2.9h2.36V9.41c0-2.33 1.38-3.62 3.5-3.62.99 0 2.03.18 2.03.18v2.23h-1.14c-1.12 0-1.47.7-1.47 1.42v1.7h2.5l-.4 2.9h-2.1V22c4.78-.81 8.44-4.94 8.44-9.93z"/>
+                        </svg>
+                    </a>
+
+                    {# LinkedIn: prefer profile URL, otherwise use share dialog for this post #}
+                    <a href="{% if site.social.linkedin is defined and site.social.linkedin %}{{ site.social.linkedin }}{% else %}https://www.linkedin.com/company/madhava-technology25{% endif %}" class="hover:text-blue-700" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+                        <span class="sr-only">LinkedIn</span>
+                        <svg class="w-5 h-5" viewbox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M4.98 3.5C4.98 4.88 3.9 6 2.5 6S0 4.88 0 3.5 1.08 1 2.5 1 4.98 2.12 4.98 3.5zM0 8h5v16H0V8zm7.5 0H12v2.16c.66-1.25 2.28-2.16 4.22-2.16C20.9 8 24 10.6 24 15.06V24h-5v-7.02c0-1.67-.03-3.83-2.33-3.83-2.33 0-2.69 1.82-2.69 3.7V24H7.5V8z"/>
+                        </svg>
+                    </a>
+
+                    {# Instagram: prefer profile URL; note: Instagram doesn't have a generic web share dialog, so fall back to post URL if profile missing #}
+                    <a href="{% if site.social.instagram is defined and site.social.instagram %}{{ site.social.instagram }}{% else %}https://www.instagram.com/madhavatechnology?igsh=M29namV0eW12amU2{% endif %}" class="hover:text-pink-600" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+                        <span class="sr-only">Instagram</span>
+                        <svg class="w-5 h-5" viewbox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M7 2C4.24 2 2 4.24 2 7v10c0 2.76 2.24 5 5 5h10c2.76 0 5-2.24 5-5V7c0-2.76-2.24-5-5-5H7zm10 2c1.66 0 3 1.34 3 3v10c0 1.66-1.34 3-3 3H7c-1.66 0-3-1.34-3-3V7c0-1.66 1.34-3 3-3h10zM12 7a5 5 0 100 10 5 5 0 000-10zm0 2a3 3 0 110 6 3 3 0 010-6zm4.5-3a1.5 1.5 0 11.001 3.001A1.5 1.5 0 0116.5 6z"/>
+                        </svg>
+                    </a>
+
+                    {# X (formerly Twitter) icon: prefer site.social.x, otherwise use provided profile #}
+                    <a href="{% if site.social.x is defined and site.social.x %}{{ site.social.x }}{% else %}https://x.com/MadhavaTech2025{% endif %}" class="hover:text-gray-900" aria-label="X (Twitter)" target="_blank" rel="noopener noreferrer">
+                        <span class="sr-only">X</span>
+                        <svg class="w-5 h-5" viewbox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                            <path d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865z"/>
+                        </svg>
+                    </a>
+                </div>
+
+                <script>
+                    (function () {
+                        var toggle = document.getElementById('share-toggle');
+                        var menu = document.getElementById('share-menu');
+                        var wrapper = document.getElementById('share-wrapper');
+                        var SHARE_URL = "{{ post_url|e('js') }}";
+                        var SHARE_TITLE = "{{ post.title|e('js') }}";
+                        if (!toggle || !menu) return;
+
+                        function showMenu(show) {
+                            if (show) {
+                                menu.classList.remove('hidden');
+                                menu.style.display = 'block';
+                                toggle.setAttribute('aria-expanded', 'true');
+                            } else {
+                                menu.classList.add('hidden');
+                                menu.style.display = 'none';
+                                toggle.setAttribute('aria-expanded', 'false');
+                            }
+                        }
+                        toggle.addEventListener('click', function (e) {
+                            e.preventDefault();
+                            showMenu(menu.classList.contains('hidden'));
+                        });
+                        document.addEventListener('click', function (e) {
+                            if (!wrapper) return;
+                            if (!wrapper.contains(e.target)) showMenu(false);
+                        });
+                        
+                        // popups
+                        var items = menu.querySelectorAll('[data-share-href]');
+                        items.forEach(function (item) {
+                            item.addEventListener('click', function (e) {
+                                e.preventDefault();
+                                var href = item.getAttribute('data-share-href');
+                                if (!href) return;
+                                var w = 650, h = 480,
+                                    left = (screen.width / 2) - (w / 2),
+                                    top = (screen.height / 2) - (h / 2);
+                                window.open(href, 'sharewindow', 'toolbar=0,status=0,width=' + w + ',height=' + h + ',top=' + top + ',left=' + left);
+                                showMenu(false);
+                            });
+                        });
+                        
+                        // copy
+                        var copyBtn = document.getElementById('share-copy');
+                        var copyTip = document.getElementById('copy-tooltip');
+                        function showCopied() {
+                            if (copyTip) {
+                                copyTip.classList.remove('hidden');
+                                setTimeout(function () {
+                                    copyTip.classList.add('hidden');
+                                }, 1500);
+                            }
+                        }
+                        if (copyBtn) {
+                            copyBtn.addEventListener('click', function (e) {
+                                e.preventDefault();
+                                if (navigator.clipboard && navigator.clipboard.writeText) {
+                                    navigator.clipboard.writeText(SHARE_URL).then(function () {
+                                        showCopied();
+                                    });
+                                } else {
+                                    var ta = document.createElement('textarea');
+                                    ta.value = SHARE_URL;
+                                    document.body.appendChild(ta);
+                                    ta.select();
+                                    try {
+                                        document.execCommand('copy');
+                                        showCopied();
+                                    } catch (err) {}
+                                    ta.remove();
+                                }
+                                showMenu(false);
+                            });
+                        }
+                        
+                        // native share
+                        var nativeBtn = document.getElementById('share-native');
+                        if (nativeBtn) {
+                            nativeBtn.addEventListener('click', function (e) {
+                                e.preventDefault();
+                                if (navigator.share) {
+                                    navigator.share({
+                                        title: document.title || SHARE_TITLE,
+                                        url: SHARE_URL
+                                    }).then(function () {
+                                        showMenu(false);
+                                    }).catch(function () {
+                                        showMenu(false);
+                                    });
+                                } else {
+                                    if (navigator.clipboard && navigator.clipboard.writeText) {
+                                        navigator.clipboard.writeText(SHARE_URL).then(showCopied);
+                                    } else {
+                                        var ta = document.createElement('textarea');
+                                        ta.value = SHARE_URL;
+                                        document.body.appendChild(ta);
+                                        ta.select();
+                                        try {
+                                            document.execCommand('copy');
+                                            showCopied();
+                                        } catch (err) {}
+                                        ta.remove();
+                                    }
+                                }
+                            });
+                        }
+                    })();
+                </script>
+
+                {% if post.thumbnail.src %}
+                    <div class="w-full rounded-xl overflow-hidden mb-8 shadow aspect-[800/384]">
+						<img src="{{ post.thumbnail.src|resize(800, 384) }}" alt="{{ post.title }}" class="w-full h-full object-cover block" loading="lazy">
+					</div>
+                {% endif %}
+
+                {# FIX 2: Removed max-w-none to allow prose to control its own readable width #}
+                <div class="prose prose-lg text-gray-800 leading-relaxed mx-auto">
+                    {{ post.content }}
+                </div>
+
+                {# Related Posts Section - NEW #}
+                {% if related_posts|length > 0 %}
+                    <div class="mt-12 pt-8 border-t border-gray-200">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-6">Related Posts</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            {% for related in related_posts %}
+                                <article class="bg-white rounded-lg shadow hover:shadow-lg transition-shadow duration-300">
+                                    <a href="{{ related.link }}" class="block">
+                                        {% if related.thumbnail.src %}
+                                            <div class="w-full h-48 overflow-hidden rounded-t-lg">
+                                                <img 
+                                                    src="{{ related.thumbnail.src|resize(400, 300) }}" 
+                                                    alt="{{ related.title }}" 
+                                                    class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                                                    loading="lazy"
+                                                >
+                                            </div>
+                                        {% else %}
+                                            <div class="w-full h-48 bg-gray-200 rounded-t-lg flex items-center justify-center">
+                                                <svg class="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                                </svg>
+                                            </div>
+                                        {% endif %}
+                                        <div class="p-4">
+                                            <h3 class="text-lg font-semibold text-gray-900 hover:text-blue-600 line-clamp-2">
+                                                {{ related.title }}
+                                            </h3>
+                                            <time class="text-sm text-gray-500 mt-2 block" datetime="{{ related.date|date('Y-m-d') }}">
+                                                {{ related.date }}
+                                            </time>
+                                        </div>
+                                    </a>
+                                </article>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+
+            </div>
+
+            <aside class="w-full lg:w-1/3 space-y-8">
+                <div class="bg-white rounded-xl shadow p-6">
+                    <h2 class="text-lg font-bold mb-4 text-gray-900 border-b pb-2">Recent Posts</h2>
+                    <ul class="divide-y divide-gray-200">
+                        {% for recent in recent_posts|default([]) %}
+                            <li class="flex items-center py-2 first:pt-0 last:pb-0">
+                                {% if recent.thumbnail.src %}
+                                    <img src="{{ recent.thumbnail.src|resize(40,40) }}" alt="{{ recent.title }}" class="w-8 h-8 rounded object-cover mr-3 flex-shrink-0">
+                                {% else %}
+                                    <svg class="w-8 h-8 text-gray-300 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+                                        <rect width="24" height="24" rx="4" fill="currentColor"/>
+                                        <path d="M8 16l2-2 2 2 4-4" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                {% endif %}
+                                <a href="{{ recent.link }}" class="text-blue-600 hover:underline font-medium">{{ recent.title }}</a>
+                            </li>
+                        {% else %}
+                            <li class="text-gray-400 py-2">No recent posts.</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {# Add more widgets here if needed #}
+            </aside>
+        </div>
+    </div>
+{% endblock %}

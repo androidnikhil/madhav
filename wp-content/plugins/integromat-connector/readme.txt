@@ -1,0 +1,98 @@
+===  Make Connector ===
+Contributors: integromat
+Tags: make, integromat, rest, api, rest api
+Requires at least: 5.0
+Tested up to: 6.8
+Requires PHP: 7.2
+Stable tag: 1.6.5
+License: GPLv2 or later
+
+
+
+Make Connector.
+Make lets you design, build, and automate by connecting with WordPress in just a few clicks.
+
+== Description ==
+[Make](https://www.make.com/en?utm_source=wordpress&utm_medium=partner&utm_campaign=wordpress-partner-make) is a visual platform that lets you design, build, and automate anything - from simple tasks to complex workflows - in minutes. With Make, you can send information between WordPress and thousands of apps to drive traffic and improve sales potential. It's fast and easy to use, visually intuitive and requires zero coding expertise.
+
+**Here are some of the ways to use WordPress with Make:**
+
+* Add new WordPress users to your CMR and marketing tools, like Salesforce, ActiveCampaign, or Mailchimp
+* Create new WordPress posts from incoming webhook data, Google Forms responses, or FreeScout conversations
+* Share your WordPress posts on Facebook, Pinterest, or other social media platforms
+* Send a message about new WordPress posts to messaging apps, like Slack, Telegram, or Microsoft Teams
+* Create database items from your WordPress posts in Notion, MySQL, or any other database app
+* Or choose a [template](https://www.make.com/en/templates?utm_source=wordpress&utm_medium=partner&utm_campaign=wordpress-partner-program) to help you get started. 
+
+**How to get started:**
+
+- [Sign up for Make](https://www.make.com/en/register?utm_source=wordpress&utm_medium=partner&utm_campaign=wordpress-partner-program), and enjoy a free account forever. Or, choose a monthly or yearly plan with advanced features.
+- Check [Make's documentation on how to connect WordPress](https://www.make.com/en/help/apps/website-building/wordpress#connecting-wordpress-to-make-968742?utm_source=wordpress&utm_medium=partner&utm_campaign=wordpress-partner-program). 
+- Install the plugin, and [start building WordPress integrations on Make](https://www.make.com/en/integrations/wordpress?utm_source=wordpress&utm_medium=partner&utm_campaign=wordpress-partner-program).
+
+Get help from [Make's Support](https://www.make.com/en/ticket?utm_source=wordpress&utm_medium=partner&utm_campaign=wordpress-partner-program) team.
+Make's [Terms of use](https://www.make.com/en/terms-and-conditions?utm_source=wordpress&utm_medium=partner&utm_campaign=wordpress-partner-make) and [Privacy policy](https://www.make.com/en/privacy-notice?utm_source=wordpress&utm_medium=partner&utm_campaign=wordpress-partner-make).
+
+== Installation ==
+
+1. Upload the "integromat-connector" folder to the "/wp-content/plugins/" directory.
+2. Activate the plugin through the "Plugins" menu in WordPress.
+3. A new item called "Make" appears in the admin menu. Here you can see your API key, through which you can connect your WordPress site to Make.com. You can also select which custom fields you want to be visible in the REST API response.
+
+This plugin allows you to safely connect your WordPress site to Make. It also gives you the possibility to work with custom meta fields (creating/updating them through the REST API and including them in the API response).
+
+This plugin does not send any data to the make.com service itself. It only simplifies the connection process and allows custom fields to be included in the REST API responses.
+
+== Changelog ==
+= 1.6.5 =
+* Fixed a bug related to getting 401 when creating a connection on Make
+
+= 1.6.4 =
+* Fixed a bug related to custom REST API endpoint
+
+= 1.6.3 =
+* New feature: Content sanitization control option
+
+= 1.6.2 =
+* Fixed reported issues on content missing when creating post
+
+= 1.6.1 =
+* Fixed some bugs introduced in 1.6.0
+
+= 1.6.0 =
+* Security improvement: Granular API permissions
+* Security improvement: Configurable rate limiting
+* New feature: Enhanced file upload validation
+* New feature: Request payload size limits
+* New feature: API key rotation
+* New feature: Purge log
+* Fix multiple vulnerabilities
+
+= 1.5.10 =
+* Fix a bug introduced in previous fix regarding PHP 7 compatibility
+
+= 1.5.9 =
+* Improve compatibility with other plugins
+
+= 1.5 =
+* Add custom taxonomies
+* Fix plugin slow down
+
+= 1.4 =
+* Enhanced API calls logging
+* Fixed blocking of some internal API calls
+
+= 1.3 =
+* Added possibility of API calls logging
+* Fixed blocking of some internal API calls
+* Skip authentication check when authenticating with another method
+
+= 1.2 =
+* Sending proper http status codes
+
+= 1.1 =
+* Fixed error message when uploading binary media item
+
+= 1.0 =
+* Init version
+

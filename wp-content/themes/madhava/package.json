@@ -1,0 +1,12 @@
+{
+  "scripts": {
+    "dev": "npx @tailwindcss/cli -i src/tailwind.css -o dist/output.css --watch",
+    "build": "npx @tailwindcss/cli -i src/tailwind.css -o dist/output.css --minify"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.22",
+    "concurrently": "^9.2.1",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.17"
+  }
+}

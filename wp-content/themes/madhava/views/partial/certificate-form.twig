@@ -1,0 +1,201 @@
+<style>
+    body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+    .certificate-page {
+        min-height: calc(100vh - 200px);
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 60px 20px;
+    }
+    .certificate-container {
+        max-width: 500px;
+        margin: 0 auto;
+    }
+    .certificate-card {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 24px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        padding: 40px;
+        transform: translateY(0);
+        transition: all 0.3s ease;
+    }
+    .certificate-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 25px 70px rgba(0, 0, 0, 0.35);
+    }
+    .certificate-title {
+        font-size: 32px;
+        font-weight: 800;
+        color: #1a202c;
+        text-align: center;
+        margin-bottom: 12px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    .certificate-subtitle {
+        color: #718096;
+        text-align: center;
+        font-size: 15px;
+        margin-bottom: 32px;
+    }
+    .form-group {
+        margin-bottom: 24px;
+    }
+    .form-label {
+        display: block;
+        color: #2d3748;
+        font-weight: 600;
+        font-size: 14px;
+        margin-bottom: 10px;
+        letter-spacing: 0.3px;
+    }
+    .form-input {
+        width: 100%;
+        padding: 14px 18px;
+        border: 2px solid #e2e8f0;
+        border-radius: 12px;
+        font-size: 15px;
+        color: #2d3748;
+        transition: all 0.3s ease;
+        background: #f7fafc;
+        font-weight: 500;
+    }
+    .form-input:focus {
+        outline: none;
+        border-color: #667eea;
+        background: #ffffff;
+        box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+    }
+    .form-input::placeholder {
+        color: #a0aec0;
+        font-weight: 400;
+    }
+    .verify-button {
+        width: 100%;
+        padding: 16px 24px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        font-weight: 700;
+        font-size: 16px;
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        letter-spacing: 0.5px;
+    }
+    .verify-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 25px rgba(102, 126, 234, 0.5);
+    }
+    .verify-button:active {
+        transform: translateY(0);
+    }
+    .info-box {
+        margin-top: 24px;
+        padding: 16px;
+        background: linear-gradient(135deg, #e0e7ff 0%, #ede9fe 100%);
+        border-radius: 12px;
+        border-left: 4px solid #667eea;
+    }
+    .info-text {
+        color: #4c51bf;
+        font-size: 13px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        line-height: 1.6;
+    }
+    .info-icon {
+        flex-shrink: 0;
+        width: 20px;
+        height: 20px;
+    }
+    .error-message {
+        color: #e53e3e;
+        font-size: 13px;
+        margin-top: 6px;
+        display: none;
+    }
+    .error-message.show {
+        display: block;
+    }
+    .form-input.error {
+        border-color: #fc8181;
+        background: #fff5f5;
+    }
+</style>
+
+<div class="certificate-page">
+    <div class="certificate-container">
+        <div class="certificate-card">
+            <h1 class="certificate-title">Certificate Verification</h1>
+            <p class="certificate-subtitle">Enter your certificate ID to verify authenticity</p>
+
+            <form id="certificateForm" method="POST" action="" novalidate>
+                <div class="form-group">
+                    <label for="certificate_id" class="form-label">
+                        <svg style="display: inline-block; width: 16px; height: 16px; margin-right: 6px; vertical-align: middle;" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
+                            <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"/>
+                        </svg>
+                        Certificate ID
+                    </label>
+                    <input 
+                        type="text" 
+                        id="certificate_id" 
+                        name="certificate_id" 
+                        value="{{ cert_id_param }}"
+                        class="form-input"
+                        placeholder="e.g., CERT2025001"
+                        required
+                    />
+                    <p class="error-message" id="error-message">
+                        ⚠️ Please enter a valid certificate ID
+                    </p>
+                </div>
+
+                <button type="submit" class="verify-button">
+                    🔍 Verify Certificate
+                </button>
+            </form>
+
+            <div class="info-box">
+                <p class="info-text">
+                    <svg class="info-icon" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+                    </svg>
+                    <span>Scan the QR code on your certificate or enter the ID manually to verify</span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const form = document.getElementById('certificateForm');
+    const input = document.getElementById('certificate_id');
+    const errorMessage = document.getElementById('error-message');
+    
+    form.addEventListener('submit', function(e) {
+        if (!input.value.trim()) {
+            e.preventDefault();
+            input.classList.add('error');
+            errorMessage.classList.add('show');
+            input.focus();
+            return false;
+        }
+        errorMessage.classList.remove('show');
+        input.classList.remove('error');
+    });
+    
+    input.addEventListener('input', function() {
+        if (this.value.trim()) {
+            this.classList.remove('error');
+            errorMessage.classList.remove('show');
+        }
+    });
+</script>

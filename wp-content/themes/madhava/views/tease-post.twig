@@ -1,0 +1,58 @@
+<article class="bg-[#f0f8ff] p-6 rounded-xl shadow-lg mb-8 flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-6 border border-gray-100 transition-shadow duration-300 hover:shadow-xl">
+    
+    {# Image Container (1/4 width on desktop) #}
+    {% if post.thumbnail %}
+        <div class="md:w-1/4 flex-shrink-0">
+            <a href="{{ post.link }}">
+                <img src="{{ post.thumbnail.src('medium') }}" alt="{{ post.title }}" class="w-full h-40 md:h-full object-cover rounded-lg border border-gray-200">
+            </a>
+        </div>
+    {% endif %}
+
+    {# Content Area (3/4 width on desktop) #}
+    <div class="content-area flex flex-col justify-between flex-grow">
+        <div>
+            {# Title #}
+            <h2 class="text-xl font-extrabold text-gray-900 mb-2 hover:text-blue-700 transition duration-150">
+                <a href="{{ post.link }}">{{ post.title }}</a>
+            </h2>
+
+            {# Meta (Author and Date) #}
+            <div class="text-sm text-gray-500 mb-3 flex items-center space-x-3">
+                <span>By <b>{{ post.author.name }}</b></span> 
+                <span>|</span>
+               <span>{{ post.date('F j, Y') }}</span>
+            </div>
+            
+            {# Excerpt (Truncated) #}
+            <p class="text-gray-700 mb-4 leading-relaxed">
+                 {{ post.excerpt|striptags|length > 180 ? post.excerpt|striptags|slice(0, 180) ~ '...' : post.excerpt|striptags }}
+            </p>
+        </div>
+
+        {# Read More Button #}
+        <div class="self-end mt-4">
+            <a href="{{ post.link }}" class="
+                inline-block 
+                px-4 
+                py-2 
+                text-sm 
+                font-semibold 
+                text-white 
+                bg-[#3EABBF]
+                rounded-lg                          {# Default Shape (slightly rounded) #}
+                hover:bg-[#FFFFFF]
+                hover:text-[#000000]
+                transition 
+                duration-300                         {# Changed from 150 to 300ms for smoother shape change #}
+                shadow-md 
+                uppercase 
+                tracking-wider
+                
+                hover:rounded-full                  {# <<< ADD THIS CLASS >>> #}
+                hover:shadow-lg                     {# (Optional) Enhance the shadow on hover #}
+            ">
+                Read More
+            </a>
+        </div>
+</article>

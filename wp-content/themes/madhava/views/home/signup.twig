@@ -1,0 +1,237 @@
+<div class="w-full">
+    <div class="bg-[#3EABBF] p-8 md:p-12">
+        <div class="container mx-auto max-w-6xl">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-8">
+
+                <!-- Text Content -->
+                <div class="md:w-1/2 text-center md:text-left text-white animated-text">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-3">See You at Madhava!</h2>
+                    <p class="text-lg">Don't miss the updates, invites, and community events from the heart of innovation.</p>
+                </div>
+
+                <!-- Form -->
+                <div class="md:w-1/2 w-full animated-form">
+                    <form id="subscribe-form" action="#" method="POST" class="space-y-4">
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <input type="text" id="firstName" name="FNAME" placeholder="First Name" class="form-element-custom w-full p-3 rounded-lg bg-white text-gray-800 placeholder-gray-500 focus:outline-none" required>
+                            <input type="email" id="emailSubscribe" name="EMAIL" placeholder="Email" class="form-element-custom w-full p-3 rounded-lg bg-white text-gray-800 placeholder-gray-500 focus:outline-none" required>
+                        </div>
+
+                        <!-- Honeypot field for spam protection -->
+                        <div class="honeypot">
+                            <label for="website-url">Website</label>
+                            <input type="text" id="website-url" name="website-url" tabindex="-1" autocomplete="off">
+                        </div>
+
+                        <button id="subscribe-madhava" type="submit" class="form-element-custom w-full p-3 rounded-lg bg-white text-gray-800 font-semibold text-center hover:bg-gray-100 transition-colors duration-200">
+                            <span id="button-text">Subscribe</span>
+                            <span id="loading-text" class="hidden">Subscribing...</span>
+                        </button>
+                    </form>
+                    <div id="form-message" class="text-white text-center mt-4 hidden"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Custom style for the hand-drawn input/button effect */
+    .form-element-custom {
+        border: 2px solid #1a202c;
+        box-shadow: 3px 3px 0 #1a202c;
+        transition: all 0.2s ease-in-out;
+    }
+    .form-element-custom:focus,
+    .form-element-custom:hover {
+        box-shadow: 1px 1px 0 #1a202c;
+        transform: translate(2px, 2px);
+    }
+    
+    /* Honeypot field for spam protection - hidden from users */
+    .honeypot {
+        position: absolute;
+        left: -5000px;
+        visibility: hidden;
+        opacity: 0;
+        height: 0;
+        overflow: hidden;
+    }
+    
+    /* Success and error message styling */
+    .success {
+        background-color: rgba(34, 197, 94, 0.2);
+        border: 1px solid rgba(34, 197, 94, 0.5);
+        color: #ffffff;
+        padding: 12px;
+        border-radius: 8px;
+        margin-top: 16px;
+    }
+    
+    .error {
+        background-color: rgba(239, 68, 68, 0.2);
+        border: 1px solid rgba(239, 68, 68, 0.5);
+        color: #ffffff;
+        padding: 12px;
+        border-radius: 8px;
+        margin-top: 16px;
+    }
+    
+    /* Loading state for button */
+    .loading {
+        opacity: 0.7;
+        cursor: not-allowed;
+        pointer-events: none;
+    }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // GSAP Animations
+    if (typeof gsap !== 'undefined') {
+        // Animate the text content
+        gsap.from('.animated-text h2', {
+            duration: 1,
+            x: -50,
+            opacity: 0,
+            ease: 'power3.out'
+        });
+        gsap.from('.animated-text p', {
+            duration: 1,
+            x: -50,
+            opacity: 0,
+            ease: 'power3.out',
+            delay: 0.3
+        });
+
+        // Animate the form elements
+        gsap.from('.animated-form input', {
+            duration: 1,
+            y: 50,
+            opacity: 0,
+            stagger: 0.2,
+            ease: 'power3.out',
+            delay: 0.6
+        });
+        gsap.from('.animated-form button', {
+            duration: 1,
+            y: 50,
+            opacity: 0,
+            ease: 'power3.out',
+            delay: 1
+        });
+    }
+
+    // Form submission with spam protection
+    const form = document.getElementById('subscribe-form');
+    const formMessage = document.getElementById('form-message');
+    const submitButton = document.getElementById('subscribe-madhava');
+    const buttonText = document.getElementById('button-text');
+    const loadingText = document.getElementById('loading-text');
+
+    form.addEventListener('submit', function (event) {
+        event.preventDefault(); // Prevent default submission
+
+        // Get form elements by their IDs
+        const honeypot = document.getElementById('website-url').value;
+        const firstName = document.getElementById('firstName').value;
+        const email = document.getElementById('emailSubscribe').value;
+        
+        // Reset previous messages
+        formMessage.className = '';
+        formMessage.style.display = 'none';
+        formMessage.classList.add('hidden');
+
+        // Check if honeypot field is filled (spam detection)
+        if (honeypot) {
+            console.log('Spam detected!');
+            showMessage('Something went wrong. Please try again.', 'error');
+            return;
+        }
+
+        // Validate email format
+        const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+
+        if (!email) {
+            showMessage('Please enter your email address.', 'error');
+            return;
+        }
+
+        if (!emailPattern.test(email)) {
+            showMessage('Please enter a valid email address.', 'error');
+            return;
+        }
+
+        if (!firstName) {
+            showMessage('Please enter your first name.', 'error');
+            return;
+        }
+
+        // Show loading state
+        setLoadingState(true);
+
+        // Prepare form data for Mailchimp
+        const formData = new FormData();
+        formData.append('EMAIL', email);
+        formData.append('FNAME', firstName);
+        formData.append('tags', "9180510");
+
+        // Your Mailchimp endpoint URL (update with your actual endpoint)
+        const mailchimpURL = 'https://madhavatechnology.us12.list-manage.com/subscribe/post?u=bb15b623917badf446d8949b6&amp;id=84ce6b6cfb&amp;f_id=00b7efe0f0';
+
+        // Submit to Mailchimp
+        fetch(mailchimpURL, {
+            method: 'POST',
+            body: formData,
+            mode: 'no-cors' // Required for Mailchimp cross-origin requests
+        }).then(() => {
+            // Since we're using 'no-cors', we can't read the actual response
+            // We'll assume success and show a success message
+            setLoadingState(false);
+            showMessage('🎉 Thank you for subscribing! Welcome to Madhava!', 'success');
+            form.reset();
+            
+            // Hide success message after 5 seconds
+            setTimeout(() => {
+                hideMessage();
+            }, 5000);
+            
+        }).catch(error => {
+            console.error('Subscription error:', error);
+            setLoadingState(false);
+            showMessage('Something went wrong. Please try again later.', 'error');
+        });
+    });
+
+    // Helper function to show messages
+    function showMessage(message, type) {
+        formMessage.textContent = message;
+        formMessage.className = type;
+        formMessage.style.display = 'block';
+        formMessage.classList.remove('hidden');
+    }
+
+    // Helper function to hide messages
+    function hideMessage() {
+        formMessage.style.display = 'none';
+        formMessage.classList.add('hidden');
+        formMessage.className = '';
+    }
+
+    // Helper function to manage loading state
+    function setLoadingState(isLoading) {
+        if (isLoading) {
+            submitButton.classList.add('loading');
+            submitButton.disabled = true;
+            buttonText.classList.add('hidden');
+            loadingText.classList.remove('hidden');
+        } else {
+            submitButton.classList.remove('loading');
+            submitButton.disabled = false;
+            buttonText.classList.remove('hidden');
+            loadingText.classList.add('hidden');
+        }
+    }
+});
+</script>
