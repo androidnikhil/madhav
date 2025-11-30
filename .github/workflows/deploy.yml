@@ -1,0 +1,58 @@
+name: Deploy to Hostinger
+
+on:
+  push:
+    branches:
+      - main  # Change if your branch is 'master'
+
+jobs:
+  deploy:
+    name: Build & Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. Get the latest code
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    # 2. Setup Node.js (for Tailwind/Blocks)
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '22' # Use '20' if your project is very new
+
+    # 3. Install Dependencies & Build Assets
+    - name: Install & Build Assets
+      run: |
+        npm ci
+        npm run build  # Ensures tailwind/blocks are compiled for production
+
+    # 4. Setup PHP/Composer (for Timber)
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.2' # Match your Hostinger PHP version
+
+    - name: Install Composer Dependencies
+      run: composer install --no-dev --optimize-autoloader
+
+    # 5. Deploy via FTP
+    - name: Sync files to Hostinger
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      with:
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        # Deploy ONLY the build folder or theme root?
+        # If your repo IS the theme, leave 'local-dir' as './'
+        local-dir: ./
+        # Be careful with this! It deletes files on server that aren't in git
+        # set to false first to test.
+        delete-remote: false 
+        exclude: |
+          **/.git*
+          **/.github*
+          **/node_modules/**
+          **/src/**       # Don't upload raw source files if you only need build/
+          .env
+          README.md
