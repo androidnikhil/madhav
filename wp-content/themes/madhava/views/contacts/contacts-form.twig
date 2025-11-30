@@ -1,624 +1,221 @@
 {# templates/contact-form.twig #}
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
-  
-  .contact-form-section * {
-    font-family: 'Space Grotesk', sans-serif;
-  }
-  
-  .contact-main {
-    max-width: 1200px;
-    margin: 60px auto;
-    padding: 0 20px;
-    display: flex;
-    gap: 40px;
-    flex-wrap: wrap;
-  }
-  
-  .services-box {
-    flex: 1;
-    min-width: 300px;
-    background: #3eabbf;
-    border-radius: 50px;
-    padding: 50px 40px;
-    position: relative;
-  }
-  
-  .services-box h3 {
-    color: white;
-    font-size: 36px;
-    font-weight: 500;
-    margin-bottom: 30px;
-  }
-  
-  .service-btn {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    background: linear-gradient(135deg, #FFF4D4 0%, #FFEAA7 100%);
-    border: 3px solid #000;
-    border-radius: 50px;
-    padding: 18px 30px;
-    margin-bottom: 20px;
-    font-size: 18px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
-    text-decoration: none;
-    color: #000;
-    width: 100%;
-    justify-content: flex-start;
-    position: relative;
-  }
-  
-  .service-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-  }
-  
-  .service-btn .hand-icon {
-    width: 28px;
-    height: 28px;
-    flex-shrink: 0;
-    object-fit: contain;
-  }
-  
-  .service-btn .service-icon {
-    width: 28px;
-    height: 28px;
-    flex-shrink: 0;
-    margin-left: auto;
-  }
-  
-  .contact-info-box {
-    flex: 1;
-    min-width: 300px;
-    background: linear-gradient(135deg, #FFF4D4 0%, #FFEAA7 100%);
-    border-radius: 40px;
-    padding: 40px 35px;
-    color: #000;
-  }
-  
-  .contact-info-box h3 {
-    font-size: 28px;
-    font-weight: 700;
-    margin-bottom: 25px;
-    color: #000;
-  }
-  
-  .contact-info-box ul {
-    list-style: none;
-    padding: 0;
-    margin: 0 0 40px 0;
-  }
-  
-  .contact-info-box ul li {
-    padding: 10px 0 10px 35px;
-    font-size: 17px;
-    font-weight: 600;
-    position: relative;
-    color: #000;
-  }
-  
-  .contact-info-box ul li:before {
-    content: "✔️";
-    position: absolute;
-    left: 0;
-    font-weight: 700;
-    font-size: 20px;
-  }
-  
-  .contact-details {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 35px 40px;
-    margin-top: 40px;
-  }
-  
-  .contact-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-  
-  .contact-item svg {
-    width: 55px;
-    height: 55px;
-    margin-bottom: 15px;
-  }
-  
-  .contact-item h4 {
-    font-size: 16px;
-    font-weight: 700;
-    margin: 0 0 8px 0;
-    color: #000;
-  }
-  
-  .contact-item p {
-    font-size: 14px;
-    font-weight: 600;
-    margin: 0;
-    color: #000;
-    line-height: 1.4;
-    word-break: keep-all;
-    white-space: normal;
-    overflow-wrap: break-word;
-    hyphens: none;
-    max-width: 100%;
-  }
-  
-  .contact-item a {
-    color: #000;
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-  
-  .contact-item a:hover {
-    color: #3eabbf;
-  }
-  
-  .packages-section {
-    max-width: 1200px;
-    margin: 60px auto;
-    padding: 50px 20px;
-    background: #3eabbf;
-    border-radius: 50px;
-  }
-  
-  .packages-section h2 {
-    color: white;
-    font-size: 48px;
-    font-weight: 500;
-    text-align: center;
-    margin-bottom: 50px;
-  }
-  
-  .packages-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 40px;
-    max-width: 900px;
-    margin: 0 auto;
-  }
-  
-  .package-card {
-    background: linear-gradient(135deg, #FFF4D4 0%, #FFEAA7 100%);
-    border-radius: 20px 20px 20px 20px;
-    padding: 60px 40px 50px;
-    text-align: center;
-    position: relative;
-    overflow: visible;
-  }
-  
-  /* Folded corner/ribbon effect like sticky note */
-  .package-card::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 0 0 50px 50px;
-    border-color: transparent transparent #3eabbf transparent;
-    border-radius: 0 0 20px 0;
-  }
-  
-  .package-card::before {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 50px;
-    height: 50px;
-    background: linear-gradient(135deg, rgba(0,0,0,0.1) 0%, transparent 100%);
-    border-radius: 0 0 20px 0;
-    pointer-events: none;
-  }
-  
-  .package-card h3 {
-    font-size: 36px;
-    font-weight: 700;
-    margin-bottom: 40px;
-    line-height: 1.3;
-    color: #000;
-  }
-  
-  .learn-more-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 12px;
-    background: transparent;
-    border: 3px solid #3eabbf;
-    border-radius: 50px;
-    padding: 14px 32px;
-    font-size: 14px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.2s;
-    text-decoration: none;
-    color: #3eabbf;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    position: relative;
-    z-index: 1;
-  }
-  
-  .learn-more-btn:hover {
-    background: #3eabbf;
-    color: white;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(62, 171, 191, 0.3);
-  }
-  
-  .learn-more-btn .hand-icon {
-    width: 20px;
-    height: 20px;
-    object-fit: contain;
-  }
-  
-  .work-places {
-    max-width: 1200px;
-    margin: 60px auto;
-    padding: 0 20px;
-  }
-  
-  .work-places h2 {
-    color: #3eabbf;
-    font-size: 36px;
-    font-weight: 600;
-    text-align: center;
-    margin-bottom: 40px;
-    position: relative;
-  }
-  
-  .work-places h2:after {
-    content: '';
-    display: block;
-    width: 80px;
-    height: 3px;
-    background: #3eabbf;
-    margin: 15px auto 0;
-  }
-  
-  .locations-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 40px;
-  }
-  
-  .location-card {
-    border: 2px solid #e0e0e0;
-    border-radius: 20px;
-    padding: 25px;
-    transition: box-shadow 0.2s;
-  }
-  
-  .location-card:hover {
-    box-shadow: 0 5px 20px rgba(62, 171, 191, 0.2);
-  }
-  
-  .location-card h3 {
-    color: #3eabbf;
-    font-size: 20px;
-    font-weight: 600;
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  
-  .location-card h3 svg {
-    width: 22px;
-    height: 22px;
-  }
-  
-  .location-card p {
-    font-size: 14px;
-    color: #666;
-    margin-bottom: 15px;
-  }
-  
-  .location-card iframe {
-    width: 100%;
-    height: 220px;
-    border: 0;
-    border-radius: 15px;
-  }
 
-  /* NEW: Directions button style */
-  .directions-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 12px;
-    padding: 10px 20px;
-    border-radius: 999px;
-    border: 2px solid #3eabbf;
-    background: #ffffff;
-    font-size: 13px;
-    font-weight: 600;
-    color: #3eabbf;
-    text-decoration: none;
-    text-transform: uppercase;
-    letter-spacing: 0.4px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-  }
+<div class="contact-form-section font-sans">
+  <div class="max-w-[1200px] mx-auto my-[60px] px-5 flex flex-col md:flex-row gap-10 flex-wrap">
+    <div class="flex-1 min-w-[300px] bg-[#3eabbf] rounded-[50px] p-[50px_40px] relative">
+      <h3 class="text-white text-4xl font-medium mb-[30px]">Know More About:</h3>
 
-  .directions-btn:hover {
-    background: #3eabbf;
-    color: #ffffff;
-    box-shadow: 0 5px 15px rgba(62, 171, 191, 0.25);
-  }
-  
-  @media (max-width: 768px) {
-    .contact-main {
-      flex-direction: column;
-    }
-    
-    .contact-details {
-      grid-template-columns: 1fr;
-      gap: 30px;
-    }
-    
-    .packages-section h2 {
-      font-size: 36px;
-    }
-    
-    .packages-grid {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  /* Popup base + active state */
-  .contact-popup {
-    display: none;
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.6);
-    z-index: 1000;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .contact-popup.active {
-    display: flex;
-  }
-
-  .contact-popup input[type="text"],
-  .contact-popup input[type="email"],
-  .contact-popup input[type="tel"],
-  .contact-popup textarea {
-    border: 2px solid #3eabbf;
-    border-radius: 10px;
-    font-size: 17px;
-    color: #222;
-    background: #f8fcfc;
-    box-sizing: border-box;
-    margin-bottom: 15px;
-    transition: border-color 0.2s;
-  }
-
-  .contact-popup input:focus,
-  .contact-popup textarea:focus {
-    outline: none;
-    border-color: #007e99;
-    background: #fff;
-  }
-
-  .image-popup {
-    display: none;
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.65);
-    z-index: 1100;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .image-popup.active {
-    display: flex;
-  }
-
-  .image-popup__content {
-    max-width: 450px;
-    width: 95%;
-    background: #fff;
-    border-radius: 16px;
-    position: relative;
-    padding: 28px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    box-shadow: 0 10px 32px rgba(62,171,191,0.12);
-  }
-
-  .image-popup__close {
-    position: absolute;
-    top: 3px;
-    right: 10px;
-    background: none;
-    border: none;
-    font-size: 32px;
-    font-weight: bold;
-    cursor: pointer;
-    color: #3eabbf;
-    z-index: 1;
-  }
-
-  .image-popup img {
-    max-width: 100%;
-    max-height: 400px;
-    border-radius: 10px;
-    border: 2px solid #3eabbf;
-    margin-top: 10px;
-    box-shadow: 0 6px 24px rgba(62,171,191,0.14);
-  }
-</style>
-
-<div class="contact-form-section">
-  <div class="contact-main">
-    <div class="services-box">
-      <h3>Know More About:</h3>
-      
-      <button class="service-btn js-open-contact-popup">
-        <img src="https://madhavatechnology.com/wp-content/uploads/2025/11/hand.png" alt="Hand" class="hand-icon">
+      <button
+        class="js-open-contact-popup flex items-center gap-[15px] bg-gradient-to-br from-[#FFF4D4] to-[#FFEAA7] border-[3px] border-black rounded-[50px] px-[30px] py-[18px] mb-5 text-lg font-semibold cursor-pointer transition-transform duration-200 shadow-none hover:-translate-y-[2px] hover:shadow-[0_8px_20px_rgba(0,0,0,0.2)] text-black w-full justify-start relative">
+        <img src="https://madhavatechnology.com/wp-content/uploads/2025/11/hand.png" alt="Hand"
+          class="w-7 h-7 shrink-0 object-contain">
         <span>Web Design & Development</span>
-        <svg class="service-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-          <path d="M3 3h7v7H3V3zm0 11h7v7H3v-7zm11-11h7v7h-7V3zm0 11h7v7h-7v-7z"/>
+        <svg class="w-7 h-7 shrink-0 ml-auto" viewBox="0 0 24 24" fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg">
+          <path d="M3 3h7v7H3V3zm0 11h7v7H3v-7zm11-11h7v7h-7V3zm0 11h7v7h-7v-7z" />
         </svg>
       </button>
-      
-      <button class="service-btn js-open-contact-popup">
-        <img src="https://madhavatechnology.com/wp-content/uploads/2025/11/hand.png" alt="Hand" class="hand-icon">
+
+      <button
+        class="js-open-contact-popup flex items-center gap-[15px] bg-gradient-to-br from-[#FFF4D4] to-[#FFEAA7] border-[3px] border-black rounded-[50px] px-[30px] py-[18px] mb-5 text-lg font-semibold cursor-pointer transition-transform duration-200 shadow-none hover:-translate-y-[2px] hover:shadow-[0_8px_20px_rgba(0,0,0,0.2)] text-black w-full justify-start relative">
+        <img src="https://madhavatechnology.com/wp-content/uploads/2025/11/hand.png" alt="Hand"
+          class="w-7 h-7 shrink-0 object-contain">
         <span>SEO & Content Marketing</span>
-        <svg class="service-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-          <path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zM6 20V4h7v5h5v11H6z"/>
+        <svg class="w-7 h-7 shrink-0 ml-auto" viewBox="0 0 24 24" fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg">
+          <path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zM6 20V4h7v5h5v11H6z" />
         </svg>
       </button>
-      
-      <button class="service-btn js-open-contact-popup">
-        <img src="https://madhavatechnology.com/wp-content/uploads/2025/11/hand.png" alt="Hand" class="hand-icon">
+
+      <button
+        class="js-open-contact-popup flex items-center gap-[15px] bg-gradient-to-br from-[#FFF4D4] to-[#FFEAA7] border-[3px] border-black rounded-[50px] px-[30px] py-[18px] mb-5 text-lg font-semibold cursor-pointer transition-transform duration-200 shadow-none hover:-translate-y-[2px] hover:shadow-[0_8px_20px_rgba(0,0,0,0.2)] text-black w-full justify-start relative">
+        <img src="https://madhavatechnology.com/wp-content/uploads/2025/11/hand.png" alt="Hand"
+          class="w-7 h-7 shrink-0 object-contain">
         <span>Paid Ads (PPC)</span>
-        <svg class="service-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-          <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zM4 18V6h16v12H4zm8-6c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+        <svg class="w-7 h-7 shrink-0 ml-auto" viewBox="0 0 24 24" fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zM4 18V6h16v12H4zm8-6c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" />
         </svg>
       </button>
-      
-      <button class="service-btn js-open-contact-popup">
-        <img src="https://madhavatechnology.com/wp-content/uploads/2025/11/hand.png" alt="Hand" class="hand-icon">
+
+      <button
+        class="js-open-contact-popup flex items-center gap-[15px] bg-gradient-to-br from-[#FFF4D4] to-[#FFEAA7] border-[3px] border-black rounded-[50px] px-[30px] py-[18px] mb-5 text-lg font-semibold cursor-pointer transition-transform duration-200 shadow-none hover:-translate-y-[2px] hover:shadow-[0_8px_20px_rgba(0,0,0,0.2)] text-black w-full justify-start relative">
+        <img src="https://madhavatechnology.com/wp-content/uploads/2025/11/hand.png" alt="Hand"
+          class="w-7 h-7 shrink-0 object-contain">
         <span>Brand & Creative</span>
-        <svg class="service-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-          <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>
+        <svg class="w-7 h-7 shrink-0 ml-auto" viewBox="0 0 24 24" fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z" />
         </svg>
       </button>
-      
-      <button class="service-btn js-open-contact-popup">
-        <img src="https://madhavatechnology.com/wp-content/uploads/2025/11/hand.png" alt="Hand" class="hand-icon">
+
+      <button
+        class="js-open-contact-popup flex items-center gap-[15px] bg-gradient-to-br from-[#FFF4D4] to-[#FFEAA7] border-[3px] border-black rounded-[50px] px-[30px] py-[18px] mb-5 text-lg font-semibold cursor-pointer transition-transform duration-200 shadow-none hover:-translate-y-[2px] hover:shadow-[0_8px_20px_rgba(0,0,0,0.2)] text-black w-full justify-start relative">
+        <img src="https://madhavatechnology.com/wp-content/uploads/2025/11/hand.png" alt="Hand"
+          class="w-7 h-7 shrink-0 object-contain">
         <span>Analytics & CRO</span>
-        <svg class="service-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-          <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+        <svg class="w-7 h-7 shrink-0 ml-auto" viewBox="0 0 24 24" fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z" />
         </svg>
       </button>
-      
-      <button class="service-btn js-open-contact-popup">
-        <img src="https://madhavatechnology.com/wp-content/uploads/2025/11/hand.png" alt="Hand" class="hand-icon">
+
+      <button
+        class="js-open-contact-popup flex items-center gap-[15px] bg-gradient-to-br from-[#FFF4D4] to-[#FFEAA7] border-[3px] border-black rounded-[50px] px-[30px] py-[18px] mb-5 text-lg font-semibold cursor-pointer transition-transform duration-200 shadow-none hover:-translate-y-[2px] hover:shadow-[0_8px_20px_rgba(0,0,0,0.2)] text-black w-full justify-start relative">
+        <img src="https://madhavatechnology.com/wp-content/uploads/2025/11/hand.png" alt="Hand"
+          class="w-7 h-7 shrink-0 object-contain">
         <span>Email & Automation</span>
-        <svg class="service-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-          <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+        <svg class="w-7 h-7 shrink-0 ml-auto" viewBox="0 0 24 24" fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
         </svg>
       </button>
     </div>
 
-    <div class="contact-info-box">
-      <h3>Why Choose Us?</h3>
-      <ul>
-        <li>24/7 Support</li>
-        <li>Experienced Marketing Team</li>
-        <li>ROI-Driven Campaigns</li>
-        <li>Free Initial Consultation</li>
+    <div
+      class="flex-1 min-w-[300px] bg-gradient-to-br from-[#FFF4D4] to-[#FFEAA7] rounded-[40px] p-[40px_35px] text-black">
+      <h3 class="text-[28px] font-bold mb-[25px] text-black">Why Choose Us?</h3>
+      <ul class="list-none p-0 m-[0_0_40px_0]">
+        <li
+          class="pl-[35px] py-[10px] text-[17px] font-semibold relative text-black before:content-['✔️'] before:absolute before:left-0 before:font-bold before:text-xl">
+          24/7 Support</li>
+        <li
+          class="pl-[35px] py-[10px] text-[17px] font-semibold relative text-black before:content-['✔️'] before:absolute before:left-0 before:font-bold before:text-xl">
+          Experienced Marketing Team</li>
+        <li
+          class="pl-[35px] py-[10px] text-[17px] font-semibold relative text-black before:content-['✔️'] before:absolute before:left-0 before:font-bold before:text-xl">
+          ROI-Driven Campaigns</li>
+        <li
+          class="pl-[35px] py-[10px] text-[17px] font-semibold relative text-black before:content-['✔️'] before:absolute before:left-0 before:font-bold before:text-xl">
+          Free Initial Consultation</li>
       </ul>
-      
-      <div class="contact-details">
-        <div class="contact-item">
-          <svg viewBox="0 0 24 24" fill="#000" xmlns="http://www.w3.org/2000/svg">
-            <path d="M20.01 15.38C18.78 15.38 17.59 15.18 16.48 14.82C16.13 14.7 15.74 14.79 15.47 15.06L13.9 17.03C11.07 15.68 8.42 13.13 7.01 10.2L8.96 8.54C9.23 8.26 9.31 7.87 9.2 7.52C8.83 6.41 8.64 5.22 8.64 3.99C8.64 3.45 8.19 3 7.65 3H4.19C3.65 3 3 3.24 3 3.99C3 13.28 10.73 21 20.01 21C20.72 21 21 20.37 21 19.82V16.37C21 15.83 20.55 15.38 20.01 15.38Z"/>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-[35px_40px] mt-10">
+        <div class="flex flex-col items-center text-center">
+          <svg class="w-[55px] h-[55px] mb-[15px]" viewBox="0 0 24 24" fill="#000" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M20.01 15.38C18.78 15.38 17.59 15.18 16.48 14.82C16.13 14.7 15.74 14.79 15.47 15.06L13.9 17.03C11.07 15.68 8.42 13.13 7.01 10.2L8.96 8.54C9.23 8.26 9.31 7.87 9.2 7.52C8.83 6.41 8.64 5.22 8.64 3.99C8.64 3.45 8.19 3 7.65 3H4.19C3.65 3 3 3.24 3 3.99C3 13.28 10.73 21 20.01 21C20.72 21 21 20.37 21 19.82V16.37C21 15.83 20.55 15.38 20.01 15.38Z" />
           </svg>
-          <h4>Phone:</h4>
-          <p><a href="tel:+917078211946" target="_blank">+91 7078211946</a></p>
+          <h4 class="text-base font-bold mb-2 text-black">Phone:</h4>
+          <p class="text-sm font-semibold m-0 text-black leading-[1.4] break-words whitespace-normal"><a
+              href="tel:+917078211946" target="_blank"
+              class="text-black no-underline transition-colors duration-200 hover:text-[#3eabbf]">+91 7078211946</a></p>
         </div>
-        
-        <div class="contact-item">
-          <svg viewBox="0 0 24 24" fill="#000" xmlns="http://www.w3.org/2000/svg">
-            <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+
+        <div class="flex flex-col items-center text-center">
+          <svg class="w-[55px] h-[55px] mb-[15px]" viewBox="0 0 24 24" fill="#000" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
           </svg>
-          <h4>Email:</h4>
-          <p><a href="mailto:info@madhavatechnology.com" target="_blank">info@madhavatechnology.com</a></p>
+          <h4 class="text-base font-bold mb-2 text-black">Email:</h4>
+          <p class="text-sm font-semibold m-0 text-black leading-[1.4] break-words whitespace-normal"><a
+              href="mailto:info@madhavatechnology.com" target="_blank"
+              class="text-black no-underline transition-colors duration-200 hover:text-[#3eabbf]">info@madhavatechnology.com</a>
+          </p>
         </div>
-        
-        <div class="contact-item">
-          <svg viewBox="0 0 24 24" fill="#000" xmlns="http://www.w3.org/2000/svg">
-            <path d="M16.75 13.96c.25.13.41.2.46.3.06.11.04.61-.21 1.18-.2.56-1.24 1.1-1.7 1.12-.46.02-.47.36-2.96-.73-2.49-1.09-3.99-3.75-4.11-3.92-.12-.17-.96-1.38-.92-2.61.05-1.22.69-1.8.95-2.04.24-.26.51-.29.68-.26h.47c.15 0 .36-.06.55.45l.69 1.87c.06.13.1.28.01.44l-.27.41-.39.42c-.12.12-.26.25-.12.5.12.26.62 1.09 1.32 1.78.91.88 1.71 1.17 1.95 1.3.24.14.39.12.54-.04l.81-.94c.19-.25.35-.19.58-.11l1.67.88M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10c-1.97 0-3.8-.57-5.35-1.55L2 22l1.55-4.65A9.969 9.969 0 0 1 2 12 10 10 0 0 1 12 2m0 2a8 8 0 0 0-8 8c0 1.72.54 3.31 1.46 4.61L4.5 19.5l2.89-.96A7.95 7.95 0 0 0 12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8z"/>
+
+        <div class="flex flex-col items-center text-center">
+          <svg class="w-[55px] h-[55px] mb-[15px]" viewBox="0 0 24 24" fill="#000" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M16.75 13.96c.25.13.41.2.46.3.06.11.04.61-.21 1.18-.2.56-1.24 1.1-1.7 1.12-.46.02-.47.36-2.96-.73-2.49-1.09-3.99-3.75-4.11-3.92-.12-.17-.96-1.38-.92-2.61.05-1.22.69-1.8.95-2.04.24-.26.51-.29.68-.26h.47c.15 0 .36-.06.55.45l.69 1.87c.06.13.1.28.01.44l-.27.41-.39.42c-.12.12-.26.25-.12.5.12.26.62 1.09 1.32 1.78.91.88 1.71 1.17 1.95 1.3.24.14.39.12.54-.04l.81-.94c.19-.25.35-.19.58-.11l1.67.88M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10c-1.97 0-3.8-.57-5.35-1.55L2 22l1.55-4.65A9.969 9.969 0 0 1 2 12 10 10 0 0 1 12 2m0 2a8 8 0 0 0-8 8c0 1.72.54 3.31 1.46 4.61L4.5 19.5l2.89-.96A7.95 7.95 0 0 0 12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8z" />
           </svg>
-          <h4>WhatsApp:</h4>
-          <p><a href="https://wa.me/918307656488" target="_blank">+91 8307656488</a></p>
+          <h4 class="text-base font-bold mb-2 text-black">WhatsApp:</h4>
+          <p class="text-sm font-semibold m-0 text-black leading-[1.4] break-words whitespace-normal"><a
+              href="https://wa.me/918307656488" target="_blank"
+              class="text-black no-underline transition-colors duration-200 hover:text-[#3eabbf]">+91 8307656488</a></p>
         </div>
-        
-        <div class="contact-item">
-          <svg viewBox="0 0 24 24" fill="#000" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9C9.5 7.62 10.62 6.5 12 6.5C13.38 6.5 14.5 7.62 14.5 9C14.5 10.38 13.38 11.5 12 11.5Z"/>
+
+        <div class="flex flex-col items-center text-center">
+          <svg class="w-[55px] h-[55px] mb-[15px]" viewBox="0 0 24 24" fill="#000" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9C9.5 7.62 10.62 6.5 12 6.5C13.38 6.5 14.5 7.62 14.5 9C14.5 10.38 13.38 11.5 12 11.5Z" />
           </svg>
-          <h4>Address:</h4>
-          <p><a href="https://www.google.com/maps?q=A4,+Logix+Technova,+B-320+Sector+132,+Noida,+U.P+201304" target="_blank">A4, Logix Technnova, B-320 Sector 132, Noida, U.P (201304)</a></p>
+          <h4 class="text-base font-bold mb-2 text-black">Address:</h4>
+          <p class="text-sm font-semibold m-0 text-black leading-[1.4] break-words whitespace-normal"><a
+              href="https://www.google.com/maps?q=A4,+Logix+Technova,+B-320+Sector+132,+Noida,+U.P+201304"
+              target="_blank" class="text-black no-underline transition-colors duration-200 hover:text-[#3eabbf]">A4,
+              Logix Technnova, B-320 Sector 132, Noida, U.P (201304)</a></p>
         </div>
       </div>
     </div>
   </div>
 
-  <section class="packages-section">
-    <h2>Our Packages:</h2>
-    <div class="packages-grid">
-      <div class="package-card">
-        <h3>Web<br>Development</h3>
-        <a href="/packages/web-development" class="learn-more-btn">
+  <section class="max-w-[1200px] mx-auto my-[60px] px-5 py-[50px] bg-[#3eabbf] rounded-[50px]">
+    <h2 class="text-white text-5xl font-medium text-center mb-[50px] md:text-4xl">Our Packages:</h2>
+    <div class="grid grid-cols-1 md:grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-10 max-w-[900px] mx-auto">
+      <div
+        class="bg-gradient-to-br from-[#FFF4D4] to-[#FFEAA7] rounded-[20px] p-[60px_40px_50px] text-center relative overflow-visible after:content-[''] after:absolute after:bottom-0 after:right-0 after:w-0 after:h-0 after:border-solid after:border-b-[50px] after:border-l-[50px] after:border-t-transparent after:border-r-transparent after:border-b-[#3eabbf] after:border-l-transparent after:rounded-br-[20px] before:content-[''] before:absolute before:bottom-0 before:right-0 before:w-[50px] before:h-[50px] before:bg-gradient-to-br before:from-[rgba(0,0,0,0.1)] before:to-transparent before:rounded-br-[20px] before:pointer-events-none">
+        <h3 class="text-4xl font-bold mb-10 leading-[1.3] text-black">Web<br>Development</h3>
+        <a href="/packages/web-development"
+          class="learn-more-btn inline-flex items-center gap-3 bg-transparent border-[3px] border-[#3eabbf] rounded-[50px] px-8 py-[14px] text-sm font-bold cursor-pointer transition-all duration-200 no-underline text-[#3eabbf] uppercase tracking-[0.5px] relative z-10 hover:bg-[#3eabbf] hover:text-white hover:-translate-y-[2px] hover:shadow-[0_5px_15px_rgba(62,171,191,0.3)]">
           Learn More
-          <img src="https://madhavatechnology.com/wp-content/uploads/2025/11/hand.png" alt="Hand" class="hand-icon">
+          <img src="https://madhavatechnology.com/wp-content/uploads/2025/11/hand.png" alt="Hand"
+            class="w-5 h-5 object-contain">
         </a>
       </div>
-      
-      <div class="package-card">
-        <h3>Digital<br>Marketing</h3>
-        <a href="/packages/digital-marketing" class="learn-more-btn">
+
+      <div
+        class="bg-gradient-to-br from-[#FFF4D4] to-[#FFEAA7] rounded-[20px] p-[60px_40px_50px] text-center relative overflow-visible after:content-[''] after:absolute after:bottom-0 after:right-0 after:w-0 after:h-0 after:border-solid after:border-b-[50px] after:border-l-[50px] after:border-t-transparent after:border-r-transparent after:border-b-[#3eabbf] after:border-l-transparent after:rounded-br-[20px] before:content-[''] before:absolute before:bottom-0 before:right-0 before:w-[50px] before:h-[50px] before:bg-gradient-to-br before:from-[rgba(0,0,0,0.1)] before:to-transparent before:rounded-br-[20px] before:pointer-events-none">
+        <h3 class="text-4xl font-bold mb-10 leading-[1.3] text-black">Digital<br>Marketing</h3>
+        <a href="/packages/digital-marketing"
+          class="learn-more-btn inline-flex items-center gap-3 bg-transparent border-[3px] border-[#3eabbf] rounded-[50px] px-8 py-[14px] text-sm font-bold cursor-pointer transition-all duration-200 no-underline text-[#3eabbf] uppercase tracking-[0.5px] relative z-10 hover:bg-[#3eabbf] hover:text-white hover:-translate-y-[2px] hover:shadow-[0_5px_15px_rgba(62,171,191,0.3)]">
           Learn More
-          <img src="https://madhavatechnology.com/wp-content/uploads/2025/11/hand.png" alt="Hand" class="hand-icon">
+          <img src="https://madhavatechnology.com/wp-content/uploads/2025/11/hand.png" alt="Hand"
+            class="w-5 h-5 object-contain">
         </a>
       </div>
     </div>
   </section>
 
-  <section class="work-places">
-    <h2>Our Work Place:</h2>
-    <div class="locations-grid">
-      <div class="location-card">
-        <h3>
-          <svg viewBox="0 0 24 24" fill="#3eabbf" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9C9.5 7.62 10.62 6.5 12 6.5C13.38 6.5 14.5 7.62 14.5 9C14.5 10.38 13.38 11.5 12 11.5Z"/>
+  <section class="max-w-[1200px] mx-auto my-[60px] px-5">
+    <h2
+      class="text-[#3eabbf] text-4xl font-semibold text-center mb-10 relative after:content-[''] after:block after:w-20 after:h-[3px] after:bg-[#3eabbf] after:mx-auto after:mt-[15px]">
+      Our Work Place:</h2>
+    <div class="grid grid-cols-1 md:grid-cols-[repeat(auto-fit,minmax(320px,1fr))] gap-10">
+      <div
+        class="border-2 border-[#e0e0e0] rounded-[20px] p-[25px] transition-shadow duration-200 hover:shadow-[0_5px_20px_rgba(62,171,191,0.2)]">
+        <h3 class="text-[#3eabbf] text-xl font-semibold mb-[10px] flex items-center gap-[10px]">
+          <svg class="w-[22px] h-[22px]" viewBox="0 0 24 24" fill="#3eabbf" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9C9.5 7.62 10.62 6.5 12 6.5C13.38 6.5 14.5 7.62 14.5 9C14.5 10.38 13.38 11.5 12 11.5Z" />
           </svg>
           Noida Office (HQ)
         </h3>
-        <p>A4, Logix Technova, B-320 Sector 132, Noida, U.P (201304)</p>
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3503.0123456789!2d77.4!3d28.54!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjjCsDMyJzI0LjAiTiA3N8KwMjQnMDAuMCJF!5e0!3m2!1sen!2sin!4v1" loading="lazy"></iframe>
+        <p class="text-sm text-[#666] mb-[15px]">A4, Logix Technova, B-320 Sector 132, Noida, U.P (201304)</p>
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3503.0123456789!2d77.4!3d28.54!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjjCsDMyJzI0LjAiTiA3N8KwMjQnMDAuMCJF!5e0!3m2!1sen!2sin!4v1"
+          loading="lazy" class="w-full h-[220px] border-0 rounded-[15px]"></iframe>
 
         {# NEW: Directions link for Noida #}
-        <a
-          class="directions-btn"
+        <a class="inline-flex items-center justify-center mt-3 px-5 py-[10px] rounded-full border-2 border-[#3eabbf] bg-white text-[13px] font-semibold text-[#3eabbf] no-underline uppercase tracking-[0.4px] cursor-pointer transition-all duration-200 hover:bg-[#3eabbf] hover:text-white hover:shadow-[0_5px_15px_rgba(62,171,191,0.25)]"
           href="https://www.google.com/maps/dir/?api=1&destination=A4+Logix+Technova+B-320+Sector+132+Noida+Uttar+Pradesh+201304"
-          target="_blank"
-          rel="noopener"
-        >
+          target="_blank" rel="noopener">
           Get Directions
         </a>
       </div>
-      
-      <div class="location-card">
-        <h3>
-          <svg viewBox="0 0 24 24" fill="#3eabbf" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9C9.5 7.62 10.62 6.5 12 6.5C13.38 6.5 14.5 7.62 14.5 9C14.5 10.38 13.38 11.5 12 11.5Z"/>
+
+      <div
+        class="border-2 border-[#e0e0e0] rounded-[20px] p-[25px] transition-shadow duration-200 hover:shadow-[0_5px_20px_rgba(62,171,191,0.2)]">
+        <h3 class="text-[#3eabbf] text-xl font-semibold mb-[10px] flex items-center gap-[10px]">
+          <svg class="w-[22px] h-[22px]" viewBox="0 0 24 24" fill="#3eabbf" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9C9.5 7.62 10.62 6.5 12 6.5C13.38 6.5 14.5 7.62 14.5 9C14.5 10.38 13.38 11.5 12 11.5Z" />
           </svg>
           Agra Branch
         </h3>
-        <p>Fatehabad Road, Agra, Uttar Pradesh, India</p>
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d28030.25!2d78.00!3d27.18!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjfCsDEwJzQ4LjAiTiA3OMKwMDAnMDAuMCJF!5e0!3m2!1sen!2sin!4v1" loading="lazy"></iframe>
+        <p class="text-sm text-[#666] mb-[15px]">Fatehabad Road, Agra, Uttar Pradesh, India</p>
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d28030.25!2d78.00!3d27.18!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjfCsDEwJzQ4LjAiTiA3OMKwMDAnMDAuMCJF!5e0!3m2!1sen!2sin!4v1"
+          loading="lazy" class="w-full h-[220px] border-0 rounded-[15px]"></iframe>
 
         {# NEW: Directions link for Agra #}
-        <a
-          class="directions-btn"
+        <a class="inline-flex items-center justify-center mt-3 px-5 py-[10px] rounded-full border-2 border-[#3eabbf] bg-white text-[13px] font-semibold text-[#3eabbf] no-underline uppercase tracking-[0.4px] cursor-pointer transition-all duration-200 hover:bg-[#3eabbf] hover:text-white hover:shadow-[0_5px_15px_rgba(62,171,191,0.25)]"
           href="https://www.google.com/maps/dir/?api=1&destination=Fatehabad+Road+Agra+Uttar+Pradesh+India"
-          target="_blank"
-          rel="noopener"
-        >
+          target="_blank" rel="noopener">
           Get Directions
         </a>
       </div>
@@ -626,45 +223,56 @@
   </section>
 </div>
 
-<div class="contact-popup" id="contactPopup">
-  <div class="contact-popup__content" style="background:#fff; padding:30px; border-radius:15px; max-width:500px; width:90%; position:relative;">
-    <button class="contact-popup__close" id="closeContactPopup" style="position:absolute; top:15px; right:15px; border:none; background:none; font-size:24px; cursor:pointer;">×</button>
-    <h2 style="margin-top:0;">Contact Us</h2>
+<div class="hidden fixed inset-0 bg-black/60 z-[1000] items-center justify-center" id="contactPopup">
+  <div class="bg-white p-[30px] rounded-[15px] max-w-[500px] w-[90%] relative">
+    <button class="absolute top-[15px] right-[15px] border-none bg-none text-2xl cursor-pointer"
+      id="closeContactPopup">×</button>
+    <h2 class="mt-0">Contact Us</h2>
 
     <form id="contactForm">
       <label for="contactName">Full Name </label>
-      <input type="text" id="contactName" name="contactName" required style="width:100%; padding:8px; margin-bottom:15px;">
+      <input type="text" id="contactName" name="contactName" required
+        class="w-full p-2 mb-[15px] border-2 border-[#3eabbf] rounded-[10px] text-[17px] text-[#222] bg-[#f8fcfc] transition-colors duration-200 focus:outline-none focus:border-[#007e99] focus:bg-white">
 
       <label for="contactEmail">Email Address </label>
-      <input type="email" id="contactEmail" name="contactEmail" required style="width:100%; padding:8px; margin-bottom:15px;">
+      <input type="email" id="contactEmail" name="contactEmail" required
+        class="w-full p-2 mb-[15px] border-2 border-[#3eabbf] rounded-[10px] text-[17px] text-[#222] bg-[#f8fcfc] transition-colors duration-200 focus:outline-none focus:border-[#007e99] focus:bg-white">
 
       <label for="contactPhone">Phone Number </label>
-      <input type="tel" id="contactPhone" name="contactPhone" required style="width:100%; padding:8px; margin-bottom:15px;">
+      <input type="tel" id="contactPhone" name="contactPhone" required
+        class="w-full p-2 mb-[15px] border-2 border-[#3eabbf] rounded-[10px] text-[17px] text-[#222] bg-[#f8fcfc] transition-colors duration-200 focus:outline-none focus:border-[#007e99] focus:bg-white">
 
       <label for="contactAddress">Address</label>
-      <textarea id="contactAddress" name="contactAddress" style="width:100%; padding:8px; margin-bottom:15px;"></textarea>
+      <textarea id="contactAddress" name="contactAddress"
+        class="w-full p-2 mb-[15px] border-2 border-[#3eabbf] rounded-[10px] text-[17px] text-[#222] bg-[#f8fcfc] transition-colors duration-200 focus:outline-none focus:border-[#007e99] focus:bg-white"></textarea>
 
       <label for="contactAdditional">Additional Information</label>
-      <textarea id="contactAdditional" name="contactAdditional" style="width:100%; padding:8px; margin-bottom:15px;"></textarea>
+      <textarea id="contactAdditional" name="contactAdditional"
+        class="w-full p-2 mb-[15px] border-2 border-[#3eabbf] rounded-[10px] text-[17px] text-[#222] bg-[#f8fcfc] transition-colors duration-200 focus:outline-none focus:border-[#007e99] focus:bg-white"></textarea>
 
       <input type="hidden" id="contactService" name="contactService" value="">
 
-      <button type="submit" style="background:#3eabbf; color:#fff; padding:12px 20px; border:none; border-radius:8px; cursor:pointer;">Submit</button>
+      <button type="submit"
+        class="bg-[#3eabbf] text-white py-3 px-5 border-none rounded-lg cursor-pointer">Submit</button>
     </form>
 
     <div id="contactSuccess" style="display:none; text-align:center; padding:20px;">
       <h3>Thank You!</h3>
       <p>Your message has been sent. We will get back to you soon.</p>
-      <button id="closeSuccessBtn" style="background:#3eabbf; color:#fff; border:none; border-radius:8px; padding:10px 18px; cursor:pointer;">Close</button>
+      <button id="closeSuccessBtn"
+        class="bg-[#3eabbf] text-white border-none rounded-lg py-[10px] px-[18px] cursor-pointer">Close</button>
     </div>
   </div>
 </div>
 
 <!-- Image Popup Modal -->
-<div class="image-popup" id="imagePopup">
-  <div class="image-popup__content">
-    <button id="closeImagePopup" class="image-popup__close">&times;</button>
-    <img id="popupImage" src="" alt="Package Image" />
+<div class="hidden fixed inset-0 bg-black/65 z-[1100] items-center justify-center" id="imagePopup">
+  <div
+    class="max-w-[450px] w-[95%] bg-white rounded-2xl relative p-7 flex flex-col items-center shadow-[0_10px_32px_rgba(62,171,191,0.12)]">
+    <button id="closeImagePopup"
+      class="absolute top-[3px] right-[10px] bg-none border-none text-[32px] font-bold cursor-pointer text-[#3eabbf] z-10">&times;</button>
+    <img id="popupImage" src="" alt="Package Image"
+      class="max-w-full max-h-[400px] rounded-[10px] border-2 border-[#3eabbf] mt-[10px] shadow-[0_6px_24px_rgba(62,171,191,0.14)]" />
   </div>
 </div>
 
@@ -673,7 +281,7 @@
 <script>
   window.contactNonce = "{{ function('wp_create_nonce', 'contact_form_nonce') }}";
 
-  document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('DOMContentLoaded', function () {
     const popup = document.getElementById('contactPopup');
     const closeBtn = document.getElementById('closeContactPopup');
     const form = document.getElementById('contactForm');
@@ -685,12 +293,13 @@
     const popupButtons = document.querySelectorAll('.js-open-contact-popup');
 
     popupButtons.forEach(button => {
-      button.addEventListener('click', function(e) {
+      button.addEventListener('click', function (e) {
         e.preventDefault();
         const serviceName = button.querySelector('span') ? button.querySelector('span').textContent : 'General Inquiry';
         serviceInput.value = serviceName;
 
-        popup.classList.add('active');
+        popup.classList.remove('hidden');
+        popup.classList.add('flex');
         document.body.style.overflow = 'hidden';
 
         form.style.display = 'block';
@@ -700,7 +309,8 @@
     });
 
     function closePopup() {
-      popup.classList.remove('active');
+      popup.classList.add('hidden');
+      popup.classList.remove('flex');
       document.body.style.overflow = '';
     }
 
@@ -708,13 +318,13 @@
     closeSuccessBtn.addEventListener('click', closePopup);
 
     // Clicking on dark background closes popup
-    popup.addEventListener('click', function(e) {
+    popup.addEventListener('click', function (e) {
       if (e.target === popup) {
         closePopup();
       }
     });
 
-    form.addEventListener('submit', function(e) {
+    form.addEventListener('submit', function (e) {
       e.preventDefault();
       const formData = new FormData(form);
 
@@ -731,18 +341,18 @@
           nonce: window.contactNonce // <-- Pass the nonce from Twig
         })
       })
-      .then(response => response.json())
-      .then(result => {
-        if (result.success) {
-          form.style.display = 'none';
-          successMessage.style.display = 'block';
-        } else {
-          alert(result.data.message || 'Submission failed. Please try again.');
-        }
-      })
-      .catch(() => {
-        alert('Error submitting form. Please try later.');
-      });
+        .then(response => response.json())
+        .then(result => {
+          if (result.success) {
+            form.style.display = 'none';
+            successMessage.style.display = 'block';
+          } else {
+            alert(result.data.message || 'Submission failed. Please try again.');
+          }
+        })
+        .catch(() => {
+          alert('Error submitting form. Please try later.');
+        });
     });
   });
 
@@ -756,32 +366,35 @@
   const learnBtnDM = document.querySelector('a.learn-more-btn[href="/packages/digital-marketing"]');
 
   if (learnBtnWeb) {
-    learnBtnWeb.addEventListener('click', function(e) {
+    learnBtnWeb.addEventListener('click', function (e) {
       e.preventDefault();
       popupImage.src = "https://madhavatechnology.com/wp-content/uploads/2025/11/SILVER.png";
-      imagePopup.classList.add('active');
+      imagePopup.classList.remove('hidden');
+      imagePopup.classList.add('flex');
       document.body.style.overflow = 'hidden';
     });
   }
 
   if (learnBtnDM) {
-    learnBtnDM.addEventListener('click', function(e) {
+    learnBtnDM.addEventListener('click', function (e) {
       e.preventDefault();
       popupImage.src = "https://madhavatechnology.com/wp-content/uploads/2025/11/Digital-Marketing-Package.png";
-      imagePopup.classList.add('active');
+      imagePopup.classList.remove('hidden');
+      imagePopup.classList.add('flex');
       document.body.style.overflow = 'hidden';
     });
   }
 
   function closeImagePopupHandler() {
-    imagePopup.classList.remove('active');
+    imagePopup.classList.add('hidden');
+    imagePopup.classList.remove('flex');
     document.body.style.overflow = '';
     popupImage.src = ''; // clear image
   }
 
   closeImageBtn.addEventListener('click', closeImagePopupHandler);
 
-  imagePopup.addEventListener('click', function(e) {
+  imagePopup.addEventListener('click', function (e) {
     if (e.target === imagePopup) {
       closeImagePopupHandler();
     }
